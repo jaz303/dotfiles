@@ -1,4 +1,4 @@
-function fix_lcd() {
-    defaults -currentHost write -globalDomain AppleFontSmoothing -int 2
+function fix_fonts() {
+    defaults -currentHost write -globalDomain AppleFontSmoothing -int 3
 }
 
