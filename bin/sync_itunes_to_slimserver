@@ -1,0 +1,2 @@
+#!/bin/bash
+cd $HOME/Music/iTunes && rsync -r --ignore-existing --delete "iTunes Music/" phoenix.magiclamp.co.uk:/home/media/music/jason

@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+if ($_SERVER['argc'] < 2) {
+	die("Usage: imagesize filename\n");
+}
+
+var_dump(getimagesize($_SERVER['argv'][1]));
+?>

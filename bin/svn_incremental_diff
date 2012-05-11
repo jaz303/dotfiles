@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+unless (url = ARGV[0])
+  puts "Usage: svn_incremental_diff url"
+  exit
+end
+
+last = nil
+revisions = `svn log #{url}`.grep(/r(\d+)/) do
+  puts `svn diff -r #{$1}:#{last} #{url}` if last
+  last = $1
+end

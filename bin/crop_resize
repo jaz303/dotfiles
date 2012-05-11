@@ -1,0 +1,2 @@
+#!/bin/bash
+convert "$3" -geometry x$2 -geometry "$1<" -gravity Center +repage -crop $1x$2+0+0 "$4"

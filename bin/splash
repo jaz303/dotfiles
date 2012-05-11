@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+<?php
+$app = basename(array_shift($_SERVER['argv']));
+
+if (count($_SERVER['argv']) < 2) {
+	die("Usage: {$app} image background_colour [title] [footer]\n");
+}
+
+$IMAGE		= trim($_SERVER['argv'][0]);
+$BG			= trim($_SERVER['argv'][1]);
+$TITLE		= isset($_SERVER['argv'][2]) ? $_SERVER['argv'][2] : '';
+$FOOTER		= isset($_SERVER['argv'][3]) ? $_SERVER['argv'][3] : '';
+$FOOTER_C	= in_array($BG, array('black', '#000000', '#000', 'rgb(0,0,0)')) ? 'white' : 'black';
+
+if (!$image_size = getimagesize($IMAGE)) {
+	die("Could not work out dimensions of image '$IMAGE'; exiting.\n");
+}
+
+$WIDTH		= $image_size[0];
+$HEIGHT		= $image_size[1];
+$H_WIDTH	= floor($WIDTH / 2);
+$H_HEIGHT	= floor($HEIGHT / 2);
+$F_TOP		= $H_HEIGHT + 3;
+
+$TEMPLATE =
+"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
+	\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+	
+<html>
+  <head>
+    <title>{$TITLE}</title>
+    <style type='text/css'>
+      html, body { height: 100%; background-color: {$BG} }
+      #container { position: absolute; width: {$WIDTH}px; height: {$HEIGHT}px; left: 50%; top: 50%; margin-left: -{$H_WIDTH}px; margin-top: -{$H_HEIGHT}px; background: url($IMAGE) }
+      #footer { position: absolute; color: {$FOOTER_C}; font: 11px/1.2 Arial, Helvetica; position: absolute; left: 50%; top: 50%; margin-left: -{$H_WIDTH}px; margin-top: {$F_TOP}px; text-align: center; width: {$WIDTH}px }
+      #footer a { text-decoration: underline; color: {$FOOTER_C} }
+    </style>
+  </head>
+  <body>
+    <div id='container'></div>
+    <div id='footer'>{$FOOTER}</div>
+  </body>
+</html>
+";
+
+echo $TEMPLATE;
+?>
