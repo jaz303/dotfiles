@@ -1,0 +1,27 @@
+[user]
+	email = jason@onehackoranother.com
+	name = Jason Frame
+[alias]
+    co = checkout
+    ci = commit
+    me = merge
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+[apply]
+    whitespace = nowarn
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+[color "branch"]
+    current = green
+    local = blue
+    remote = cyan
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+[github]
+    user = jaz303
+[core]
+	editor = /usr/bin/vim
+	quotepath = false
