@@ -1,0 +1,10 @@
+startup_message off
+defscrollback   2000
+autodetach      on
+
+hardstatus on
+hardstatus alwayslastline
+hardstatus string "%{=b}%{R}[%H]  %{B}%-w%{bY}[%n %t]%{dB}%+w %=%{kG} %c %d/%m/%Y "
+
+bind ' ' windowlist -b
+bind G screen -t 'google' links www.google.com
