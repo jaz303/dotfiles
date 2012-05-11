@@ -1,0 +1,41 @@
+# Use TextMate as graphical editor
+export GUI_EDITOR="mate -nw"
+
+# Fix font smoothing
+function osx_fix_fonts() {
+    defaults -currentHost write -globalDomain AppleFontSmoothing -int 3
+}
+
+# Copy public key to clipboard
+function copy_pubkey {
+    cat ~/.ssh/id_rsa.pub | pbcopy
+}
+
+# Nice man pages
+function pman() {
+    man -t $* | ps2pdf - - | open -g -f -a /Applications/Preview.app
+}
+
+function tman() {
+    MANWIDTH=80 MANPAGER='col -bx' man $@ | mate
+}
+
+# Open current dir's project in Xcode
+function xcode {
+    open *.xcodeproj
+}
+
+# Send files to trashcan
+function trash {
+    for f in "$@"
+    do
+        osascript -e "tell app \"Finder\" to delete POSIX file \"${PWD}/$b\"" 1>/dev/null
+    done
+}
+
+# Install TextMate module
+function textmate_install_bundle {
+    pushd ~/.dotfiles
+    git submodule add https://github.com/textmate/$1.tmbundle TextMate/Bundles/$1.tmbundle
+    popd
+}

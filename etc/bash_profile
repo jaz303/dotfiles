@@ -1,0 +1,179 @@
+################################################################################
+# path                                                                         #
+################################################################################
+
+TRY_PATHS="
+	${HOME}/bin
+	${HOME}/.dotiles/bin
+    ${HOME}/dev/arm/toolchain/eabi/bin
+	/Developer/SDKs/flex_sdk_4/bin
+	/usr/local/pear/bin
+	/opt/local/bin
+	/opt/local/sbin
+	/opt/jruby/bin
+    /opt/scala/bin
+	/usr/local/mysql/bin
+    ${HOME}/dev/tools/depot_tools
+"
+
+for try_path in $TRY_PATHS
+do
+	test -d $try_path && export PATH=$PATH:$try_path
+done
+
+################################################################################
+# defaults                                                                     #
+################################################################################
+
+export CLICOLOR=1
+export LSCOLORS=ExFxCxDxBxegedabagacad
+export PS_ARGS="aux"
+export CLI_EDITOR="vim"
+export GUI_EDITOR="vim"
+
+################################################################################
+# prompt                                                                       #
+################################################################################
+
+function __prompt_smiley {
+    if [ $? = 0 ]; then
+      printf $1
+    else
+      printf $2
+    fi
+    return $?
+}
+
+function parse_git_dirty {
+    [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+}
+
+function parse_git_branch {
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
+}
+
+export PS1='$(__prompt_smiley "\[\033[01;32m\]-\[\033[00m\]" "\[\033[01;31m\]!\[\033[00m\]") \[\033[01;32m\]\u@\h \[\033[01;34m\]\W $(parse_git_branch)\$ \[\033[00m\]'
+
+################################################################################
+# system specific settings                                                     #
+################################################################################
+
+# TODO: detect Linux etc...
+source ~/.dotfiles/etc/bash_profile_osx
+
+################################################################################
+# text editor                                                                  #
+################################################################################
+
+export EDITOR=$GUI_EDITOR; [ "$DISPLAY" == "" ] && export EDITOR=$CLI_EDITOR
+
+function m {
+    if [[ ! -n $1 ]]
+    then
+        $EDITOR .
+    else
+        $EDITOR $1
+    fi
+}
+
+################################################################################
+# random password generator                                                    #
+################################################################################
+
+function pw {
+    if [[ ! -n $1 ]]
+    then
+        length=8
+    else
+        length=$1
+    fi
+    pwgen $length 1
+}
+
+
+################################################################################
+# simple aliases                                                               #
+################################################################################
+
+alias wrk="cd ~/work/client/active"
+
+alias h="history"
+alias hf="history | grep "
+
+alias p="ps ${PS_ARGS}"
+function pf {
+    ps $PS_ARGS | grep -i $* | grep -v grep
+}
+
+# Wikipedia search
+function wp {
+    dig +short txt $1.wp.dg.cx
+}
+
+################################################################################
+# svn shortcuts                                                                #
+################################################################################
+
+alias svaa="svn stat | grep '^?' | cut -c5- | xargs svn add"
+alias svda="svn stat | grep '^!' | cut -c5- | xargs svn del"
+alias svs="svn stat"
+alias svsu="svn stat -u"
+alias svdiff="svn diff | colordiff"
+alias svci="svn commit -m "
+
+################################################################################
+# git shortcuts                                                                #
+################################################################################
+
+alias gba="git branch -a"
+alias gda="git status | grep 'deleted:' | awk '{print \$3}' | xargs git rm"
+
+################################################################################
+# directory warping                                                            #
+################################################################################
+
+# Use `::` to record the current directory, then `::` again from your home
+# dir to jump back. Great for opening a series of tabs in the same place.
+function dir_warp {
+    if [ "$(pwd)" == "$HOME" ]
+    then
+        cd "`pbpaste`"
+    else
+        pwd | pbcopy
+    fi
+}
+
+alias ::="dir_warp"
+
+################################################################################
+# Ruby/Gems/rvm                                                                #
+################################################################################
+
+export JEWELER_OPTS="--testunit"
+
+alias bx="bundle exec"
+alias irb='irb --readline -r irb/completion -rubygems'
+
+function cdgem {
+	cd $(rvm gemdir)/gems
+	cd $(ls | grep "^${1}-[0-9]" | sort | tail -1)
+}
+
+function egem {
+	pushd $(rvm gemdir)/gems
+	$GUI_EDITOR $(ls | grep "^${1}-[0-9]" | sort | tail -1) 
+	popd
+}
+
+################################################################################
+# plubming/rvm loader                                                          #
+################################################################################
+
+[[ -s "$HOME/.plumbing.php/scripts/plumbing" ]] && source "$HOME/.plumbing.php/scripts/plumbing"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+################################################################################
+# return true, always                                                          #
+################################################################################
+
+true
