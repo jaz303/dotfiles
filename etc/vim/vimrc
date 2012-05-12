@@ -1,0 +1,190 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Encoding                                                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set encoding=utf8
+try
+    lang en_GB
+catch
+endtry
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" No Bells                                                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set noerrorbells
+set novisualbell
+set t_vb=
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Editing                                                                      "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set history=300
+set shiftwidth=4
+set tabstop=4
+set expandtab
+set autoindent
+set smarttab
+set so=7                            " 7 lines clearance when scrolling vertically
+set backspace=eol,start,indent      " Backspace behaviour
+set showmatch                       " Matching brackets
+set mat=2                           " How many tenths of a second to blink
+set ignorecase                      " Ignore case when searching
+set hlsearch                        " Highlight search terms
+set incsearch                       " Incremental search
+set magic
+set autoread                        " Auto-read buffer when file changes outside editor
+set fileformats=unix,dos,mac        " Default file types
+
+"set wrap                           " Line wrap
+"set linebreak
+"set textwidth=500
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Backup                                                                       "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set backup 
+set backupdir=,~/tmp,/tmp 
+set backupskip=/tmp/*,/private/tmp/* 
+set directory=~/tmp,/tmp 
+set writebackup
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Display                                                                      "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+syntax on
+
+set showmode                        " Indicates input or replace mode at bottom
+set showcmd
+set number                          " Line numbers
+set ruler                           " Ruler
+set cmdheight=2
+
+set laststatus=2 "Always hide statusline
+set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
+
+function! CurDir()
+    let curdir = substitute(getcwd(), '/Users/jason', "~", "g")
+    let curdir = substitute(curdir, '/home/jason', "~", "g")
+    return curdir
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Filetypes                                                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+filetype plugin on
+filetype indent on
+
+autocmd FileType make set noexpandtab
+autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NERDTree                                                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let NERDTreeChDirMode=2                                         " CWD whenever nerd tree root changes
+let NERDTreeIgnore=['\.svn$', '\.git$', '\.DS_Store$', '\~$\']  " Stuff to ignore
+let NERDTreeWinPos="right"                                      " Put it on the right
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Buffer explorer                                                              "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:bufExplorerDefaultHelp=0
+let g:bufExplorerShowRelativePath=1
+let g:bufExplorerSortBy = "name"
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Minibuffer                                                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:miniBufExplModSelTarget = 1
+let g:miniBufExplorerMoreThanOne = 2
+let g:miniBufExplModSelTarget = 0
+let g:miniBufExplUseSingleClick = 1
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplVSplit = 25
+let g:miniBufExplSplitBelow=1
+
+autocmd BufRead,BufNew :call UMiniBufExplorer
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Keyboard                                                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let mapleader = ","
+let g:mapleader = ","
+
+" Quicksave
+nmap <leader>w :w!<cr>
+
+" NERDTree
+map <leader>nt :NERDTree
+
+" Change tab width
+map <leader>t2 :setlocal shiftwidth=2<cr>
+map <leader>t4 :setlocal shiftwidth=4<cr>
+map <leader>t8 :setlocal shiftwidth=8<cr>
+
+" Between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+map <C-<up>> <C-W>j
+map <C-<down>> <C-W>k
+map <C-<left>> <C-W>h
+map <C-<right>> <C-W>l
+
+" Arrows for moving between buffers
+" map <right> :bn!<cr>
+" map <left> :bp!<cr>
+
+" Command-T
+nmap <silent> <Leader>t :CommandT<CR>
+if has("gui_macvim")
+    map <D-d> :CommandT<CR>
+else
+    map <C-d> :CommandT<CR>
+end
+
+" Mini buffer explorer
+map<leader>u :TMiniBufExplorer<cr>:TMiniBufExplorer<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Meta                                                                         "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" reload vimrc when it is edited
+autocmd! bufwritepost vimrc source ~/.vimrc
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Colors                                                                       "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+if MySys() == "mac"
+    set gfn=Menlo\ Regular:h11
+    set shell=/bin/bash
+elseif MySys() == "windows"
+    set gfn=Bitstream\ Vera\ Sans\ Mono:h10
+elseif MySys() == "linux"
+    set gfn=Monospace\ 10
+    set shell=/bin/bash
+endif
+
+if has("gui_running")
+    set guioptions-=T
+    set background=dark
+    set t_Co=256
+    set background=dark
+    colorscheme peaksea
+else
+    set t_Co=256
+    colorscheme evening
+    " set background=dark
+endif
