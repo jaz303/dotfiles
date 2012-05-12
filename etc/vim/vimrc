@@ -153,8 +153,8 @@ else
     map <C-d> :CommandT<CR>
 end
 
-" Mini buffer explorer
-map<leader>u :TMiniBufExplorer<cr>:TMiniBufExplorer<cr>
+map <leader>o :BufExplorer<cr>
+map <leader>u :TMiniBufExplorer<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Meta                                                                         "
