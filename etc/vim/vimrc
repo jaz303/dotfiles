@@ -46,7 +46,7 @@ set fileformats=unix,dos,mac        " Default file types
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set backup 
-set backupdir=,~/tmp,/tmp 
+set backupdir=~/tmp,/tmp 
 set backupskip=/tmp/*,/private/tmp/* 
 set directory=~/tmp,/tmp 
 set writebackup
