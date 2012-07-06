@@ -34,3 +34,6 @@
 [submodule "TextMate/Bundles/scheme.tmbundle"]
 	path = TextMate/Bundles/scheme.tmbundle
 	url = https://github.com/textmate/scheme.tmbundle
+[submodule "TextMate/Bundles/SCSS.tmbundle"]
+	path = TextMate/Bundles/SCSS.tmbundle
+	url = https://github.com/kuroir/SCSS.tmbundle.git
