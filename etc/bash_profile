@@ -95,7 +95,7 @@ function pw {
 # simple aliases                                                               #
 ################################################################################
 
-alias wrk="cd ~/work/client/active"
+alias work="cd ~/work/client/active"
 
 alias h="history"
 alias hf="history | grep "
