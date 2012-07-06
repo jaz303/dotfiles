@@ -39,3 +39,8 @@ function textmate_install_bundle {
     git submodule add https://github.com/textmate/$1.tmbundle TextMate/Bundles/$1.tmbundle
     popd
 }
+
+# Make reduced versions of all retina graphics in the current dir
+function retina_reduce {
+    for i in *@2x*; do convert $i -geometry 50% $(echo $i | sed 's/@2x//'); done
+}
