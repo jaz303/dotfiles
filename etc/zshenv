@@ -1,0 +1,20 @@
+# All shells (1)
+
+#
+# Paths
+
+TRY_PATHS="
+	${HOME}/bin
+	${HOME}/.dotfiles/bin
+	/opt/local/bin
+	/opt/local/sbin
+	/opt/jruby/bin
+  /opt/scala/bin
+	/usr/local/mysql/bin
+  ${HOME}/dev/tools/depot_tools
+"
+
+for try_path in $TRY_PATHS
+do
+	test -d $try_path && export PATH=$PATH:$try_path
+done
