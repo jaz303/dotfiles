@@ -1,0 +1,26 @@
+#!/bin/bash
+
+DATE=$(date +"%Y-%m/%d.md")
+
+FILE="${HOME}/.diary/${DATE}"
+
+if [ ! -f $FILE ]
+then
+    mkdir -p $(dirname $FILE)
+    echo "## $(date +'%A %-d %B %Y')" >> $FILE
+    echo "" >> $FILE
+fi
+
+vim + $FILE
+
+LINES=$(wc -l $FILE | awk '{print $1}')
+
+if [ $LINES -gt "2" ]
+then
+    cd ${HOME}/.diary
+    git add $DATE && git commit -m "$DATE" && git push origin master
+else
+    cd ${HOME}/.diary
+    git rm -f $DATE && git commit -m "removed $DATE" && git push origin master
+fi
+
