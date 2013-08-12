@@ -1,9 +1,38 @@
 servers = (
   { address = "irc.stealth.net"; chatnet = "IRCnet"; port = "6668"; },
-  { address = "irc.efnet.org"; chatnet = "EFNet"; port = "6667"; autoconnect = "yes"; },
-  { address = "irc.undernet.org"; chatnet = "Undernet"; port = "6667"; },
+  {
+    address = "irc.efnet.org";
+    chatnet = "EFNet";
+    port = "6667";
+    autoconnect = "yes";
+  },
+  { 
+    address = "irc.undernet.org";
+    chatnet = "Undernet";
+    port = "6667";
+  },
   { address = "irc.dal.net"; chatnet = "DALnet"; port = "6667"; },
-  { address = "irc.quakenet.org"; chatnet = "QuakeNet"; port = "6667"; }
+  { 
+    address = "irc.quakenet.org";
+    chatnet = "QuakeNet";
+    port = "6667";
+  },
+  {
+    address = "adams.freenode.net";
+    chatnet = "Freenode";
+    port = "6667";
+  },
+  {
+    address = "holmes.freenode.net";
+    chatnet = "Freenode";
+    port = "6667";
+  },
+  {
+    address = "wolfe.freenode.net";
+    chatnet = "Freenode";
+    port = "6667";
+    autoconnect = "yes";
+  }
 );
 
 chatnets = {
@@ -38,12 +67,13 @@ chatnets = {
     max_msgs = "3";
     max_whois = "30";
   };
+  Freenode = { type = "IRC"; };
 };
 
 channels = (
   { name = "#php"; chatnet = "efnet"; autojoin = "no"; },
-  { name = "#ohoa"; chatnet = "efnet"; autojoin = "yes"; },
-  { name = "#whattheboat"; chatnet = "efnet"; autojoin = "yes"; }
+  { name = "#whattheboat"; chatnet = "efnet"; autojoin = "yes"; },
+  { name = "#stackvm"; chatnet = "Freenode"; autojoin = "yes"; }
 );
 
 aliases = {

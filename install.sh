@@ -5,6 +5,7 @@ ln -s .dotfiles/etc/gitignore               .gitignore
 ln -s .dotfiles/etc/inputrc                 .inputrc
 ln -s .dotfiles/etc/screenrc                .screenrc
 ln -s .dotfiles/etc/irssi                   .irssi
+ln -s .dotfiles/etc/tmux.conf               .tmux.conf
 
 ln -s .dotfiles/etc/zprofile                .zprofile
 ln -s .dotfiles/etc/zshenv                  .zshenv
