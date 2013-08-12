@@ -11,6 +11,12 @@ function copy_pubkey {
     cat ~/.ssh/id_rsa.pub | pbcopy
 }
 
+# Init env for compiling/running CUDA
+function init_cuda {
+    export PATH=/Developer/NVIDIA/CUDA-5.0/bin:$PATH
+    export DYLD_LIBRARY_PATH=/Developer/NVIDIA/CUDA-5.0/lib:$DYLD_LIBRARY_PATH
+}
+
 # Nice man pages
 function pman() {
     man -t $* | ps2pdf - - | open -g -f -a /Applications/Preview.app

@@ -5,9 +5,6 @@
 TRY_PATHS="
 	${HOME}/bin
 	${HOME}/.dotiles/bin
-    ${HOME}/dev/arm/toolchain/eabi/bin
-	/Developer/SDKs/flex_sdk_4/bin
-	/usr/local/pear/bin
 	/opt/local/bin
 	/opt/local/sbin
 	/opt/jruby/bin
@@ -58,8 +55,15 @@ export PS1='$(__prompt_smiley "\[\033[01;32m\]-\[\033[00m\]" "\[\033[01;31m\]!\[
 # system specific settings                                                     #
 ################################################################################
 
-# TODO: detect Linux etc...
-#source ~/.dotfiles/etc/bash_profile_osx
+platform='unknown'
+uname=`uname`
+if [[ "$uname" == "Darwin" ]]; then
+  platform="mac"
+  source ~/.dotfiles/etc/bash_profile_osx
+elif [[ "$uname" == "Linux" ]]; then
+  platform="linux"
+  source ~/.dotfiles/etc/bash_profile_linux
+fi
 
 ################################################################################
 # text editor                                                                  #
@@ -105,9 +109,15 @@ function pf {
     ps $PS_ARGS | grep -i $* | grep -v grep
 }
 
+alias nw="/Applications/node-webkit.app/Contents/MacOS/node-webkit"
+
 # Wikipedia search
 function wp {
     dig +short txt $1.wp.dg.cx
+}
+
+function tunnel {
+    ssh -g $1
 }
 
 ################################################################################
@@ -127,6 +137,18 @@ alias svci="svn commit -m "
 
 alias gba="git branch -a"
 alias gda="git status | grep 'deleted:' | awk '{print \$3}' | xargs git rm"
+
+function rebase {
+    git stash && git rebase ${1:-master} && git stash apply
+}
+
+################################################################################
+# avr toolchain                                                                #
+################################################################################
+
+function avr_toolchain_setup {
+    PATH=/opt/toolchains/avr/bin:$PATH
+}
 
 ################################################################################
 # directory warping                                                            #

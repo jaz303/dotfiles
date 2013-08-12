@@ -127,8 +127,10 @@ alias irb='irb --readline -r irb/completion -rubygems'
 
 export PATH="/usr/local/bin:$PATH"
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+if [[ -d $HOME/.rbenv/bin ]]; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+fi
 
 [[ -s $HOME/.nvm/nvm.sh ]] && . /Users/jason/.nvm/nvm.sh
 
