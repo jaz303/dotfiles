@@ -67,15 +67,23 @@ RPS1='$(git_prompt_string)%{$fg_bold[yellow]%}#%h%{$reset_color%}'
 # simple aliases                                                               #
 ################################################################################
 
-alias ls='ls -G'
-alias ll='ls -lh'
-alias lll='ls -lah'
+if [[ $(uname) == "Darwin" ]]; then
+  export LS_OPTIONS='-G'
+else
+  export LS_OPTIONS='--color'
+fi
+  
+alias ls='ls $LS_OPTIONS -G'
+alias ll='ls $LS_OPTIONS -lh'
+alias lll='ls $LS_OPTIONS -lah'
 alias grep='grep --color=auto'
 
 alias work="cd ~/work/client/active"
 
 alias h="fc -l"
 alias hf="fc -lm"
+
+alias edit="subl -n"
 
 alias p="ps ${PS_ARGS}"
 function pf {
@@ -99,6 +107,12 @@ function rebase {
     git stash && git rebase ${1:-master} && git stash apply
 }
 
+##
+# node shortcuts
+#
+
+alias gyp="node-gyp rebuild"
+
 ################################################################################
 # Ruby/Gems/rvm                                                                #
 ################################################################################
@@ -106,17 +120,14 @@ function rebase {
 alias bx="bundle exec"
 alias irb='irb --readline -r irb/completion -rubygems'
 
-# function cdgem {
-#   cd $(rvm gemdir)/gems
-#   cd $(ls | grep "^${1}-[0-9]" | sort | tail -1)
-# }
-# 
-# function egem {
-#   pushd $(rvm gemdir)/gems
-#   $GUI_EDITOR $(ls | grep "^${1}-[0-9]" | sort | tail -1) 
-#   popd
-# }
-
 function fix_mysql2_bundle() {
     install_name_tool -change libmysqlclient.18.dylib /usr/local/mysql/lib/libmysqlclient.18.dylib $1
 }
+
+export PATH="/usr/local/bin:$PATH"
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+[[ -s /Users/jason/.nvm/nvm.sh ]] && . /Users/jason/.nvm/nvm.sh
+

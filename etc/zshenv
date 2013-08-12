@@ -12,9 +12,10 @@ TRY_PATHS=(
   "/opt/scala/bin"
   "/usr/local/mysql/bin"
   "${HOME}/dev/tools/depot_tools"
+  "/Applications/Racket v5.3.3/bin"
 )
 
 for try_path in $TRY_PATHS
 do
-  [[ -d $try_path ]] && export PATH="${PATH}:${try_path}"
+  [[ -d "$try_path" ]] && export PATH="${PATH}:${try_path}"
 done
