@@ -21,6 +21,7 @@ then
     git add $DATE && git commit -m "$DATE" && git push origin master
 else
     cd ${HOME}/.diary
+    rm -f $DATE
     git rm -f $DATE && git commit -m "removed $DATE" && git push origin master
 fi
 
