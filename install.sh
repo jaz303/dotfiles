@@ -1,6 +1,5 @@
 cd ~
 
-ln -s .dotfiles/etc/bash_profile            .bash_profile
 ln -s .dotfiles/etc/gitconfig               .gitconfig
 ln -s .dotfiles/etc/gitignore               .gitignore
 ln -s .dotfiles/etc/inputrc                 .inputrc

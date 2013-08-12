@@ -6,8 +6,9 @@
 # autoload -U compinit
 # compinit
 
-#
-# Prompt
+################################################################################
+# prompt                                                                       #
+################################################################################
 
 autoload -U colors
 colors     
@@ -64,16 +65,24 @@ PS1="%(?,%{$fg_bold[green]%}-,%{$fg_bold[red]%}!)%{$reset_color%} %{$fg_bold[gre
 RPS1='$(git_prompt_string)%{$fg_bold[yellow]%}#%h%{$reset_color%}'
 
 ################################################################################
+# platform                                                                     #
+################################################################################
+
+platform='unknown'
+uname=`uname`
+if [[ "$uname" == "Darwin" ]]; then
+  platform="mac"
+  source ~/.dotfiles/etc/zshrc_mac
+elif [[ "$uname" == "Linux" ]]; then
+  platform="linux"
+  source ~/.dotfiles/etc/zshrc_linux
+fi
+
+################################################################################
 # simple aliases                                                               #
 ################################################################################
 
-if [[ $(uname) == "Darwin" ]]; then
-  export LS_OPTIONS='-G'
-else
-  export LS_OPTIONS='--color'
-fi
-  
-alias ls='ls $LS_OPTIONS -G'
+alias ls='ls $LS_OPTIONS'
 alias ll='ls $LS_OPTIONS -lh'
 alias lll='ls $LS_OPTIONS -lah'
 alias grep='grep --color=auto'
@@ -83,14 +92,10 @@ alias work="cd ~/work/client/active"
 alias h="fc -l"
 alias hf="fc -lm"
 
-alias edit="subl -n"
-
 alias p="ps ${PS_ARGS}"
 function pf {
     ps $PS_ARGS | grep -i $* | grep -v grep
 }
-
-alias nw="/Applications/node-webkit.app/Contents/MacOS/node-webkit"
 
 function tunnel {
     ssh -g $1
@@ -101,15 +106,15 @@ function tunnel {
 ################################################################################
 
 alias gba="git branch -a"
-alias gda="git status | grep 'deleted:' | awk '{print \$3}' | xargs git rm"
+alias gda="git status -s | egrep '^ D' | cut -c4- | xargs git rm"
 
 function rebase {
     git stash && git rebase ${1:-master} && git stash apply
 }
 
-##
-# node shortcuts
-#
+################################################################################
+# node shortcuts                                                               #
+################################################################################
 
 alias gyp="node-gyp rebuild"
 
@@ -120,14 +125,11 @@ alias gyp="node-gyp rebuild"
 alias bx="bundle exec"
 alias irb='irb --readline -r irb/completion -rubygems'
 
-function fix_mysql2_bundle() {
-    install_name_tool -change libmysqlclient.18.dylib /usr/local/mysql/lib/libmysqlclient.18.dylib $1
-}
-
 export PATH="/usr/local/bin:$PATH"
 
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
-[[ -s /Users/jason/.nvm/nvm.sh ]] && . /Users/jason/.nvm/nvm.sh
+[[ -s $HOME/.nvm/nvm.sh ]] && . /Users/jason/.nvm/nvm.sh
 
+true
