@@ -67,9 +67,10 @@ RPS1='$(git_prompt_string)%{$fg_bold[yellow]%}#%h%{$reset_color%}'
 # simple aliases                                                               #
 ################################################################################
 
-alias ls='ls -G'
-alias ll='ls -lh'
-alias lll='ls -lah'
+export LS_OPTIONS='--color'
+alias ls='ls $LS_OPTIONS -G'
+alias ll='ls $LS_OPTIONS -lh'
+alias lll='ls $LS_OPTIONS -lah'
 alias grep='grep --color=auto'
 
 alias work="cd ~/work/client/active"
