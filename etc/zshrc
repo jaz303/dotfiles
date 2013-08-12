@@ -67,7 +67,12 @@ RPS1='$(git_prompt_string)%{$fg_bold[yellow]%}#%h%{$reset_color%}'
 # simple aliases                                                               #
 ################################################################################
 
-export LS_OPTIONS='--color'
+if [[ $(uname) == "Darwin" ]]; then
+  export LS_OPTIONS='-G'
+else
+  export LS_OPTIONS='--color'
+fi
+  
 alias ls='ls $LS_OPTIONS -G'
 alias ll='ls $LS_OPTIONS -lh'
 alias lll='ls $LS_OPTIONS -lah'
