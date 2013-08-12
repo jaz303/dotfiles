@@ -1,0 +1,122 @@
+# Interactive shells (3)
+
+#
+# Completion
+
+# autoload -U compinit
+# compinit
+
+#
+# Prompt
+
+autoload -U colors
+colors     
+setopt prompt_subst
+
+# Modify the colors and symbols in these variables as desired.
+GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}["
+GIT_PROMPT_SUFFIX="]%{$reset_color%}"
+GIT_PROMPT_MERGING="%{$fg_bold[magenta]%}⚡"
+GIT_PROMPT_UNTRACKED="%{$fg_bold[red]%}●"
+GIT_PROMPT_MODIFIED="%{$fg_bold[yellow]%}●"
+GIT_PROMPT_STAGED="%{$fg_bold[green]%}●"
+
+# Show Git branch/tag, or name-rev if on detached head
+parse_git_branch() {
+  (git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
+}
+
+# Show different symbols as appropriate for various Git repository states
+parse_git_state() {
+
+  local GIT_STATE=""
+
+  local GIT_DIR="$(git rev-parse --git-dir 2> /dev/null)"
+  if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
+    GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
+  fi
+
+  if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+    GIT_STATE=$GIT_STATE$GIT_PROMPT_UNTRACKED
+  fi
+
+  if ! git diff --quiet 2> /dev/null; then
+    GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
+  fi
+
+  if ! git diff --cached --quiet 2> /dev/null; then
+    GIT_STATE=$GIT_STATE$GIT_PROMPT_STAGED
+  fi
+
+  if [[ -n $GIT_STATE ]]; then
+    echo "$GIT_STATE "
+  fi
+
+}
+
+# If inside a Git repository, print its branch and state
+git_prompt_string() {
+  local git_where="$(parse_git_branch)"
+  [ -n "$git_where" ] && echo "$(parse_git_state)$GIT_PROMPT_PREFIX${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX "
+}
+
+PS1="%(?,%{$fg_bold[green]%}-,%{$fg_bold[red]%}!)%{$reset_color%} %{$fg_bold[green]%}%n@%m %{$fg_bold[blue]%}%1~ %#%{$reset_color%} "
+RPS1='$(git_prompt_string)%{$fg_bold[yellow]%}#%h%{$reset_color%}'
+
+################################################################################
+# simple aliases                                                               #
+################################################################################
+
+alias ls='ls -G'
+alias ll='ls -lh'
+alias lll='ls -lah'
+alias grep='grep --color=auto'
+
+alias work="cd ~/work/client/active"
+
+alias h="fc -l"
+alias hf="fc -lm"
+
+alias p="ps ${PS_ARGS}"
+function pf {
+    ps $PS_ARGS | grep -i $* | grep -v grep
+}
+
+alias nw="/Applications/node-webkit.app/Contents/MacOS/node-webkit"
+
+function tunnel {
+    ssh -g $1
+}
+
+################################################################################
+# git shortcuts                                                                #
+################################################################################
+
+alias gba="git branch -a"
+alias gda="git status | grep 'deleted:' | awk '{print \$3}' | xargs git rm"
+
+function rebase {
+    git stash && git rebase ${1:-master} && git stash apply
+}
+
+################################################################################
+# Ruby/Gems/rvm                                                                #
+################################################################################
+
+alias bx="bundle exec"
+alias irb='irb --readline -r irb/completion -rubygems'
+
+# function cdgem {
+#   cd $(rvm gemdir)/gems
+#   cd $(ls | grep "^${1}-[0-9]" | sort | tail -1)
+# }
+# 
+# function egem {
+#   pushd $(rvm gemdir)/gems
+#   $GUI_EDITOR $(ls | grep "^${1}-[0-9]" | sort | tail -1) 
+#   popd
+# }
+
+function fix_mysql2_bundle() {
+    install_name_tool -change libmysqlclient.18.dylib /usr/local/mysql/lib/libmysqlclient.18.dylib $1
+}

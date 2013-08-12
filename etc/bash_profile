@@ -165,6 +165,10 @@ function egem {
 	popd
 }
 
+function fix_mysql2_bundle {
+    install_name_tool -change libmysqlclient.18.dylib /usr/local/mysql/lib/libmysqlclient.18.dylib $1
+}
+
 ################################################################################
 # Wordpress quick install                                                      #
 ################################################################################
