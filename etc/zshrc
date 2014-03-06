@@ -117,6 +117,7 @@ function rebase {
 ################################################################################
 
 alias gyp="node-gyp rebuild"
+alias boom="git push origin master --tags && npm publish"
 
 ################################################################################
 # Ruby/Gems/rvm                                                                #
