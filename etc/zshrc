@@ -88,6 +88,7 @@ alias lll='ls $LS_OPTIONS -lah'
 alias grep='grep --color=auto'
 
 alias work="cd ~/work/client/active"
+alias jf="cd ~/dev/my-sites/jf-2013"
 
 alias h="fc -l"
 alias hf="fc -lm"

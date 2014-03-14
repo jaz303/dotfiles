@@ -13,6 +13,7 @@ TRY_PATHS=(
   "/usr/local/mysql/bin"
   "${HOME}/dev/tools/depot_tools"
   "/Applications/Racket v5.3.3/bin"
+  "/usr/local/heroku/bin"
 )
 
 for try_path in $TRY_PATHS
