@@ -128,6 +128,22 @@ function rebase {
 alias gyp="node-gyp rebuild"
 alias boom="git push origin master --tags && npm publish"
 
+function create-npm-module {
+    git clone --depth=1 git@github.com:jaz303/npm-module-skeleton.git $1
+    if [[ $? -eq 0 ]]; then
+        cd $1
+        rm -rf .git
+        sed -i .bak "s/MODULE_NAME/$1/" README.md && rm -f README.md.bak
+        sed -i .bak "s/MODULE_NAME/$1/" Makefile && rm -f Makefile.bak
+        sed -i .bak "s/MODULE_NAME/$1/" package.json && rm -f package.json.bak
+        rm lib/.gitkeep
+        npm install
+        cd ..
+    else
+        false
+    fi
+}
+
 ################################################################################
 # Ruby/Gems/rvm                                                                #
 ################################################################################
