@@ -11,9 +11,9 @@ export LS_OPTIONS='-G'
 # Use `::` to record the current directory, then `::` again from your home
 # dir to jump back. Great for opening a series of tabs in the same place.
 function dir_warp {
-    if [ "$(pwd)" == "$HOME" ]
+    if [[ "$(pwd)" == "$HOME" ]]
     then
-        cd "`pbpaste`"
+        cd "$(pbpaste)"
     else
         pwd | pbcopy
     fi
