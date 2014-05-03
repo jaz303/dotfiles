@@ -102,6 +102,14 @@ function tunnel {
     ssh -g $1
 }
 
+function tabs_to_spaces {
+    for f in $(find $1 -name "*.$2")
+    do
+        expand -t 4 $f > $f.spaces
+        mv $f.spaces $f
+    done
+}
+
 ################################################################################
 # git shortcuts                                                                #
 ################################################################################
