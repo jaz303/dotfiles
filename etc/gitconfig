@@ -23,5 +23,4 @@
 [github]
     user = jaz303
 [core]
-	editor = /usr/bin/vim
 	quotepath = false
