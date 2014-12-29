@@ -1,0 +1,5 @@
+command alias bp breakpoint set --name %1
+command alias vars frame variable
+command alias u up
+command alias d down
+
