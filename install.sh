@@ -16,6 +16,6 @@ ln -s .dotfiles/etc/vim                     .vim
 ln -s .vim/vimrc-mac                        .vimrc
 
 mkdir -p .ssh
-ln -s Google\ Drive/dotfiles/ssh_config     .ssh/config
+ln -s ../Dropbox/dotfiles/ssh_config        .ssh/config
 
 mkdir -p ~/tmp
