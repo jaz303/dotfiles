@@ -150,4 +150,11 @@ if [[ -d $HOME/.rbenv/bin ]]; then
   eval "$(rbenv init -)"
 fi
 
+###############################################################################
+# ocaml                                                                       #
+###############################################################################
+
+if [[ -f $HOME/.opam/opam-init/init.sh ]]; then
+  . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+fi
 
