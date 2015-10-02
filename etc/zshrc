@@ -150,6 +150,4 @@ if [[ -d $HOME/.rbenv/bin ]]; then
   eval "$(rbenv init -)"
 fi
 
-[[ -s $HOME/.nvm/nvm.sh ]] && . /Users/jason/.nvm/nvm.sh
 
-true
