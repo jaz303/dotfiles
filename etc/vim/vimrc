@@ -182,9 +182,9 @@ if has("gui_running")
     set background=dark
     set t_Co=256
     set background=dark
-    colorscheme peaksea
+    colorscheme afterglow
 else
     set t_Co=256
-    colorscheme evening
+    colorscheme afterglow
     " set background=dark
 endif
