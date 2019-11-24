@@ -2,6 +2,7 @@
 	email = jason@onehackoranother.com
 	name = Jason Frame
 [alias]
+    branches = branch -a
     co = checkout
     ci = commit
     me = merge

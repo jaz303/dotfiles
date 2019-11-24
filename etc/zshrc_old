@@ -1,0 +1,79 @@
+
+
+
+autoload -U colors
+setopt prompt_subst
+colors
+
+
+
+
+# parse_git_dirty() {
+#   if command git diff-index --quiet HEAD 2> /dev/null; then
+#     echo ""
+#   else
+#     echo "%F{red}%B*%b%f"
+#   fi
+# }
+
+# prompt_git_status() {
+#   local git_where="$(parse_git_branch)"
+#   [ -n "$git_where" ] && echo "$(parse_git_dirty)%F{cyan}${git_where#(refs/heads/|tags/)}%f"
+# }
+
+# Modify the colors and symbols in these variables as desired.
+GIT_PROMPT_PREFIX="%{$fg_bold[cyan]%}["
+GIT_PROMPT_SUFFIX="]%{$reset_color%}"
+GIT_PROMPT_MERGING="%{$fg_bold[magenta]%}⚡"
+GIT_PROMPT_UNTRACKED="%{$fg_bold[red]%}●"
+GIT_PROMPT_MODIFIED="%{$fg_bold[yellow]%}●"
+GIT_PROMPT_STAGED="%{$fg_bold[green]%}●"
+
+# Show Git branch/tag, or name-rev if on detached head
+parse_git_branch() {
+  (git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
+}
+
+# Show different symbols as appropriate for various Git repository states
+parse_git_state() {
+
+  local GIT_STATE=""
+
+  local GIT_DIR="$(git rev-parse --git-dir 2> /dev/null)"
+  if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
+    GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
+  fi
+
+  if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+    GIT_STATE=$GIT_STATE$GIT_PROMPT_UNTRACKED
+  fi
+
+  if ! git diff --quiet 2> /dev/null; then
+    GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
+  fi
+
+  if ! git diff --cached --quiet 2> /dev/null; then
+    GIT_STATE=$GIT_STATE$GIT_PROMPT_STAGED
+  fi
+
+  if [[ -n $GIT_STATE ]]; then
+    echo "$GIT_STATE "
+  fi
+
+}
+
+# If inside a Git repository, print its branch and state
+git_prompt_string() {
+  local git_where="$(parse_git_branch)"
+  [ -n "$git_where" ] && echo "$(parse_git_state)$GIT_PROMPT_PREFIX${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX "
+}
+
+PS1="%(?,%{$fg_bold[green]%}-,%{$fg_bold[red]%}!)%{$reset_color%} %{$fg_bold[green]%}%n@%m %{$fg_bold[blue]%}%1~ %#%{$reset_color%} "
+RPS1='$(git_prompt_string)%{$fg_bold[yellow]%}#%h%{$reset_color%}'
+
+# PROMPT='%(?.%F{green}√.%K{red}%F{black}%?)%f%k %(!.%F{red}.%F{green})%n@%m%f %F{blue}%1~%f %# '
+# RPROMPT='$(prompt_git_status) %F{yellow}[%h]%f'
+
+#
+# Functions
+

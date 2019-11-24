@@ -1,10 +1,26 @@
 # Interactive shells (3)
 
-#
-# Completion
+# General notes
+# https://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout
+# https://scriptingosx.com/2019/06/moving-to-zsh/
 
-# autoload -U compinit
-# compinit
+# Prompt customisation
+# https://github.com/zsh-users/zsh/blob/master/Misc/vcs_info-examples
+# http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
+# https://arjanvandergaag.nl/blog/customize-zsh-prompt-with-vcs-info.html
+# https://github.com/sindresorhus/pure
+# https://github.com/denysdovhan/spaceship-prompt
+# http://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
+# https://gist.github.com/mislav/1712320
+
+export CLICOLOR=1
+
+################################################################################
+# completion                                                                   #
+################################################################################
+
+autoload -U compinit
+compinit
 
 ################################################################################
 # prompt                                                                       #
@@ -15,7 +31,7 @@ colors
 setopt prompt_subst
 
 # Modify the colors and symbols in these variables as desired.
-GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}["
+GIT_PROMPT_PREFIX="%{$fg_bold[magenta]%}["
 GIT_PROMPT_SUFFIX="]%{$reset_color%}"
 GIT_PROMPT_MERGING="%{$fg_bold[magenta]%}⚡"
 GIT_PROMPT_UNTRACKED="%{$fg_bold[red]%}●"
@@ -50,7 +66,7 @@ parse_git_state() {
   fi
 
   if [[ -n $GIT_STATE ]]; then
-    echo "$GIT_STATE "
+    echo "$GIT_STATE"
   fi
 
 }
@@ -61,7 +77,8 @@ git_prompt_string() {
   [ -n "$git_where" ] && echo "$(parse_git_state)$GIT_PROMPT_PREFIX${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX "
 }
 
-PS1="%(?,%{$fg_bold[green]%}-,%{$fg_bold[red]%}!)%{$reset_color%} %{$fg_bold[green]%}%n@%m %{$fg_bold[blue]%}%1~ %#%{$reset_color%} "
+PS1='%B%(?.%F{green}-.%K{red}%F{black}%?)%f%k%b %B%(!.%F{red}.%F{green})%n@%m%f%b %B%F{blue}%1~%f%b %# '
+#PS1="%(?,%{$fg_bold[green]%}-,%{$fg_bold[red]%}!)%{$reset_color%} %{$fg_bold[green]%}%n@%m %{$fg_bold[blue]%}%1~ %#%{$reset_color%} "
 RPS1='$(git_prompt_string)%{$fg_bold[yellow]%}#%h%{$reset_color%}'
 
 ################################################################################
@@ -79,16 +96,13 @@ elif [[ "$uname" == "Linux" ]]; then
 fi
 
 ################################################################################
-# simple aliases                                                               #
+# simple aliases + functions                                                   #
 ################################################################################
 
 alias ls='ls $LS_OPTIONS'
 alias ll='ls $LS_OPTIONS -lh'
 alias lll='ls $LS_OPTIONS -lah'
 alias grep='grep --color=auto'
-
-alias work="cd ~/work/client/active"
-alias jf="cd ~/dev/my-sites/jf-2013"
 
 alias h="fc -l"
 alias hf="fc -lm"
@@ -98,35 +112,23 @@ function pf {
     ps $PS_ARGS | grep -i $* | grep -v grep
 }
 
-function tunnel {
-    ssh -g $1
-}
-
 function tabs_to_spaces {
-    for f in $(find $1 -name "*.$2")
-    do
-        expand -t 4 $f > $f.spaces
-        mv $f.spaces $f
-    done
+  for f in $(find $1 -name "*.$2")
+  do
+    expand -t 4 "${f}" > "${f}.spaces"
+    mv "${f}.spaces" "${f}"
+  done
 }
 
-################################################################################
-# C programming                                                                #
-################################################################################
-
-function debug {
-    lldb $(find build -perm +0111 -type f -not -name '*.dylib' | head -n1)
-}
-
-################################################################################
-# git shortcuts                                                                #
-################################################################################
-
-alias gba="git branch -a"
-alias gda="git status -s | egrep '^ D' | cut -c4- | xargs git rm"
-
-function rebase {
-    git stash && git rebase ${1:-master} && git stash apply
+# Generate a password
+function pw() {
+  if [[ ! -n "$1" ]]
+  then
+    length=32
+  else
+    length=$1
+  fi
+  pwgen $length 1
 }
 
 ################################################################################
@@ -135,26 +137,3 @@ function rebase {
 
 alias gyp="node-gyp rebuild"
 alias boom="git push origin master --tags && npm publish"
-
-################################################################################
-# Ruby/Gems/rvm                                                                #
-################################################################################
-
-alias bx="bundle exec"
-alias irb='irb --readline -r irb/completion -rubygems'
-
-export PATH="/usr/local/bin:$PATH"
-
-if [[ -d $HOME/.rbenv/bin ]]; then
-  export PATH="$HOME/.rbenv/bin:$PATH"
-  eval "$(rbenv init -)"
-fi
-
-###############################################################################
-# ocaml                                                                       #
-###############################################################################
-
-if [[ -f $HOME/.opam/opam-init/init.sh ]]; then
-  . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-fi
-

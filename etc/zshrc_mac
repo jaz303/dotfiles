@@ -1,70 +1,12 @@
 ################################################################################
-# Mac-specific config                                                          #
+# C programming                                                                #
 ################################################################################
 
-export LS_OPTIONS='-G'
-
-################################################################################
-# directory warping                                                            #
-################################################################################
-
-# Use `::` to record the current directory, then `::` again from your home
-# dir to jump back. Great for opening a series of tabs in the same place.
-function dir_warp {
-    if [[ "$(pwd)" == "$HOME" ]]
-    then
-        cd "$(pbpaste)"
-    else
-        pwd | pbcopy
-    fi
-}
-
-alias ::="dir_warp"
-
-################################################################################
-# misc                                                                         #
-################################################################################
-
-# Use `edit` to launch a new sublime window
-alias edit="subl -n"
-
-# node-webkit launcher
-alias nw="/Applications/node-webkit.app/Contents/MacOS/node-webkit"
-
-# nimrod launcher
-alias nimrod="/usr/local/Cellar/nimrod/0.9.2/libexec/bin/nimrod"
-
-alias hc="hub clone"
-alias prq="hub pull-request"
-
-
-# Fix font smoothing
-function osx_fix_fonts() {
-    defaults -currentHost write -globalDomain AppleFontSmoothing -int 3
+function debug {
+    lldb $(find build -perm +0111 -type f -not -name '*.dylib' | head -n1)
 }
 
 # Copy public key to clipboard
-function copy_pubkey {
+function copy_pubkey() {
     cat ~/.ssh/id_rsa.pub | pbcopy
-}
-
-# Init env for compiling/running CUDA
-function init_cuda {
-    export PATH=/Developer/NVIDIA/CUDA-5.0/bin:$PATH
-    export DYLD_LIBRARY_PATH=/Developer/NVIDIA/CUDA-5.0/lib:$DYLD_LIBRARY_PATH
-}
-
-# Make reduced versions of all retina graphics in the current dir
-function retina_reduce {
-    for i in *@2x*; do convert $i -geometry 50% $(echo $i | sed 's/@2x//'); done
-}
-
-# Open current dir's project in Xcode
-function xcode {
-    open *.xcodeproj
-}
-
-# Fix "image not found" issue when using stuff that links against MySQL
-function fix_mysql2_bundle() {
-    install_name_tool -change libmysqlclient.18.dylib /usr/local/mysql/lib/libmysqlclient.18.dylib $1
 }
