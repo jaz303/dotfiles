@@ -149,3 +149,4 @@ function armify() {
 
 alias gyp="node-gyp rebuild"
 alias boom="git push origin master --tags && npm publish"
+
