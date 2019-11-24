@@ -132,6 +132,18 @@ function pw() {
 }
 
 ################################################################################
+# toolchain imports                                                            #
+################################################################################
+
+function avrify() {
+    export PATH="/Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin:$PATH"
+}
+
+function armify() {
+    export PATH="/opt/toolchains/gcc-arm-none-eabi/bin:$PATH"
+}
+
+################################################################################
 # node shortcuts                                                               #
 ################################################################################
 
