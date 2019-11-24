@@ -35,7 +35,7 @@ GIT_PROMPT_PREFIX="%{$fg_bold[magenta]%}["
 GIT_PROMPT_SUFFIX="]%{$reset_color%}"
 GIT_PROMPT_MERGING="%{$fg_bold[magenta]%}⚡"
 GIT_PROMPT_UNTRACKED="%{$fg_bold[red]%}●"
-GIT_PROMPT_MODIFIED="%{$fg_bold[yellow]%}●"
+GIT_PROMPT_MODIFIED="%{$fg_bold[cyan]%}●"
 GIT_PROMPT_STAGED="%{$fg_bold[green]%}●"
 
 # Show Git branch/tag, or name-rev if on detached head
@@ -66,7 +66,7 @@ parse_git_state() {
   fi
 
   if [[ -n $GIT_STATE ]]; then
-    echo "$GIT_STATE"
+    echo "$GIT_STATE "
   fi
 
 }
