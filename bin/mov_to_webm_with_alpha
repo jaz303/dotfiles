@@ -1,0 +1,3 @@
+#!/bin/bash
+ffmpeg -i $1 -c:v libvpx -b:v 2M -auto-alt-ref 0 -pix_fmt yuva420p -strict -2 $2
+
