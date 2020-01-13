@@ -10,3 +10,7 @@ function debug {
 function copy_pubkey() {
     cat ~/.ssh/id_rsa.pub | pbcopy
 }
+
+function pgify() {
+	export PATH="/Applications/Postgres.app/Contents/Versions/$1/bin:$PATH"
+}
