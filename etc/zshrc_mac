@@ -15,5 +15,5 @@ function pgify() {
 	export PATH="/Applications/Postgres.app/Contents/Versions/$1/bin:$PATH"
 }
 
-alias gg="smerge ."
+alias gg="fork open
 
