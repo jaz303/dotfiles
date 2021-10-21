@@ -160,3 +160,11 @@ function armify() {
 
 alias gyp="node-gyp rebuild"
 alias boom="git push origin master --tags && npm publish"
+
+# find open ports
+# arg1: port number
+# arg2: host e.g. 192.168.0.0/24
+function portscan() {
+    nmap -p $1 --open -sV $2
+}
+
