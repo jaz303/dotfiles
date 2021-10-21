@@ -121,6 +121,8 @@ function pf {
     ps $PS_ARGS | grep -i $* | grep -v grep
 }
 
+alias tasks='grep --exclude-dir="{.*,node_modules}" -rnEIo "(TODO|FIXME|HACK).*?$" . 2>/dev/null'
+
 function tabs_to_spaces {
   for f in $(find $1 -name "*.$2")
   do
