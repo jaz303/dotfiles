@@ -154,6 +154,10 @@ function armify() {
     export PATH="/opt/toolchains/gcc-arm-none-eabi/bin:$PATH"
 }
 
+function rbenvify() {
+    eval "$(rbenv init -)"
+}
+
 ################################################################################
 # node shortcuts                                                               #
 ################################################################################
