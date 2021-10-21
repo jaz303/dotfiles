@@ -22,6 +22,10 @@ export CLICOLOR=1
 autoload -U compinit
 compinit
 
+# Up/down keys search based on text already entered
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
+
 ################################################################################
 # prompt                                                                       #
 ################################################################################
