@@ -17,3 +17,7 @@ function pgify() {
 
 alias gg="fork open"
 
+function spotlight {
+    mdfind "kMDItemDisplayName == '*$1*.$2'c"
+}
+
