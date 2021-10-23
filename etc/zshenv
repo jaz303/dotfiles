@@ -4,13 +4,17 @@
 # Paths
 
 TRY_PATHS=(
-  "${HOME}/bin"
-  "${HOME}/.dotfiles/bin"
-  "${HOME}/.cargo/bin"
-  "/usr/local/go/bin"
+    "${HOME}/bin"
+    "${HOME}/.dotfiles/bin"
 )
 
 for try_path in $TRY_PATHS
 do
-  [[ -d "$try_path" ]] && export PATH="${try_path}:${PATH}"
+    [[ -d "$try_path" ]] && export PATH=$PATH:$try_path
 done
+
+if [[ -f "$HOME/.path" ]]
+then
+    export PATH=$PATH:$(cat $HOME/.path)
+fi
+
