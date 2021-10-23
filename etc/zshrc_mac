@@ -1,12 +1,7 @@
-################################################################################
-# C programming                                                                #
-################################################################################
-
 function debug {
     lldb $(find build -perm +0111 -type f -not -name '*.dylib' | head -n1)
 }
 
-# Copy public key to clipboard
 function copy_pubkey() {
     cat ~/.ssh/id_rsa.pub | pbcopy
 }
