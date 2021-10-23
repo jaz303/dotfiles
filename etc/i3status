@@ -12,7 +12,6 @@ general {
 }
 
 order += "volume master"
-# order += ¨ipv6¨
 order += "disk /"
 order += "wireless _first_"
 order += "ethernet _first_"
@@ -33,14 +32,19 @@ ethernet _first_ {
 
 battery all {
         format = "%status %percentage %remaining"
+        format_down = "No battery"
+        status_chr = "⚡"
+        status_bat = "🔋"
+        status_unk = "?"
+        status_full = ""
 }
 
 tztime local {
-        format = "%Y-%m-%d %H:%M:%S"
+        format = "%d/%m/%Y %H:%M:%S"
 }
 
 load {
-        format = "%1min"
+        format = "Load: %1min"
 }
 
 disk "/" {
