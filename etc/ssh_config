@@ -5,5 +5,5 @@ Host 192.168.*.*
     StrictHostKeyChecking no
     UserKnownHostsFile=/dev/null
 
-# Load local (non-git) config
+# Load local (non-git) config from ~/.ssh/config.d
 Include config.d/*
