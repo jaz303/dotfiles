@@ -1,0 +1,9 @@
+# Disable host key checking for hosts on local network
+# Useful for Raspberry Pi's etc. with frequently changing
+# OS
+Host 192.168.*.*
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+
+# Load local (non-git) config
+Include config.d/*
