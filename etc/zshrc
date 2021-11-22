@@ -117,6 +117,10 @@ function t() {
     tree -d -L $1
 }
 
+function f() {
+    find . -name $1
+}
+
 alias h="fc -l"
 alias hf="fc -lm"
 

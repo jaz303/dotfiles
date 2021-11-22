@@ -1,0 +1,26 @@
+mod+p           - 1password
+mod+b           - browser
+mod+m           - email in browser
+mod+x           - sublime text
+mod+n           - file browser
+
+mod+s           - stacking
+mod+w           - tabbed
+mod+e           - split
+
+mod+tab         - next workspace
+mod+shift+tab   - prev workspace
+mod+shift+n     - rename workspace
+
+mod+shift+space - toggle tiling/float
+mod+space       - toggle focus between tiling/float
+mod+a           - focus parent
+
+Startup
+-------
+
+1password
+configure-input (repeat rate, scrolling)
+open PLAN.md on workspace 10
+dropbox
+
