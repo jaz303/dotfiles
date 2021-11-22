@@ -30,6 +30,21 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
+# Start Dropbox at startup
+exec --no-startup-id dropbox start
+
+# Start 1password at startup
+# mod-p to launch 1password and make sure it's floating
+exec --no-startup-id 1password --silent
+bindsym $mod+p exec 1password
+for_window [class="^1Password$" instance="1password"] floating enable
+
+# Set keyboard repeat rate, scrolling
+exec --no-startup-id /home/jason/.config/i3/configure-input
+
+# Open PLAN.md on workspace 10 at startup
+exec --no-startup-id i3-msg 'workspace 10; exec gnome-terminal -- vim ~/Dropbox/PLAN.md; workspace 1'
+
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
@@ -187,15 +202,24 @@ bar {
         font pango:monospace 9
 }
 
-bindsym $mod+b exec chromium
-bindsym $mod+m exec chromium --app=https://www.fastmail.com
-bindsym $mod+x exec subl --launch-or-new-window
+# mod+b - launch browser
+bindsym $mod+b exec --no-startup-id chromium
+bindsym $mod+m exec --no-startup-id chromium --app=https://www.fastmail.com
+
+# mod+x - launch sublime text
+bindsym $mod+x exec --no-startup-id subl --launch-or-new-window
+
+# mod-tab/mod-shift-tab for prev/next workspace
 bindsym $mod+Tab workspace next
 bindsym $mod+shift+Tab workspace prev
 
-#floating_minimum_size 640 x 480
-#floating_maximum_size 600 x 400
+# mod-n - start file browser
+bindsym $mod+n exec --no-startup-id nautilus ~
 
+# backlight controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 5
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5
+
+# mod+shift+n to rename the active workspace
+bindsym $mod+shift+n exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
 
