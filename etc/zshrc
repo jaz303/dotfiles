@@ -176,3 +176,16 @@ function portscan() {
     nmap -p $1 --open -sV $2
 }
 
+function httpserver() {
+    static . -p $1 -H '{"Cache-Control": "no-store"}'
+}
+
+function base64_bytes() {
+    dd if=/dev/urandom bs=$1 count=1 2>/dev/null | base64
+}
+
+function hex_bytes() {
+    dd if=/dev/urandom bs=$1 count=1 2>/dev/null | hexdump -v -e '/1 "%02X"'
+    echo ""
+}
+

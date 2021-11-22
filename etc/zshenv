@@ -5,8 +5,14 @@
 
 TRY_PATHS=(
   "${HOME}/bin"
+  "${HOME}/go/bin"
+  "${HOME}/.npm/bin"
   "${HOME}/.dotfiles/bin"
   "${HOME}/.cargo/bin"
+  "${HOME}/.yarn/bin"
+  "${HOME}/.composer/vendor/bin"
+  "${HOME}/dev/sdks/flutter/bin"
+  "/opt/aws/aws-cli"
 )
 
 for try_path in $TRY_PATHS
