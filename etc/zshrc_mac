@@ -6,13 +6,19 @@ function copy_pubkey() {
     cat ~/.ssh/id_rsa.pub | pbcopy
 }
 
-function pgify() {
-	export PATH="/Applications/Postgres.app/Contents/Versions/$1/bin:$PATH"
-}
-
-alias gg="fork open"
+alias gg="smerge ."
 
 function spotlight {
     mdfind "kMDItemDisplayName == '*$1*.$2'c"
 }
 
+# Source an AVR toolchain from Arduino
+function avrify() {
+    export PATH="/Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin:$PATH"
+}
+
+# Usage: pgify $VERSION
+# Add Postgres binaries for a specific version to $PATH.
+function pgify() {
+    export PATH="/Applications/Postgres.app/Contents/Versions/$1/bin:$PATH"
+}

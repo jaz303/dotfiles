@@ -113,14 +113,6 @@ alias ll='ls $LS_OPTIONS -lh'
 alias lll='ls $LS_OPTIONS -lah'
 alias grep='grep --color=auto'
 
-function t() {
-    tree -d -L $1
-}
-
-function f() {
-    find . -name $1
-}
-
 alias h="fc -l"
 alias hf="fc -lm"
 
@@ -129,38 +121,9 @@ function pf {
     ps $PS_ARGS | grep -i $* | grep -v grep
 }
 
-alias tasks='grep --exclude-dir="{.*,node_modules}" -rnEIo "(TODO|FIXME|HACK).*?$" . 2>/dev/null'
-
-function tabs_to_spaces {
-  for f in $(find $1 -name "*.$2")
-  do
-    expand -t 4 "${f}" > "${f}.spaces"
-    mv "${f}.spaces" "${f}"
-  done
-}
-
-# Generate a password
-function pw() {
-  if [[ ! -n "$1" ]]
-  then
-    length=32
-  else
-    length=$1
-  fi
-  pwgen $length 1
-}
-
 ################################################################################
 # toolchain imports                                                            #
 ################################################################################
-
-function avrify() {
-    export PATH="/Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin:$PATH"
-}
-
-function armify() {
-    export PATH="/opt/toolchains/gcc-arm-none-eabi/bin:$PATH"
-}
 
 function rbenvify() {
     eval "$(rbenv init -)"
@@ -173,23 +136,70 @@ function rbenvify() {
 alias gyp="node-gyp rebuild"
 alias boom="git push origin master --tags && npm publish"
 
-# find open ports
-# arg1: port number
-# arg2: host e.g. 192.168.0.0/24
+################################################################################
+# Useful functions                                                             #
+################################################################################
+
+# Usage: portscan $PORT $HOST
+# Find open ports. $HOST can be be a network spec e.g. 192.168.0.0/24
 function portscan() {
     nmap -p $1 --open -sV $2
 }
 
+# Usage: httpserver $PORT
+# Serve the current directory over HTTP
 function httpserver() {
     static . -p $1 -H '{"Cache-Control": "no-store"}'
 }
 
+# Usage: base64_bytes $N
+# Generate $N random bytes and output as base64
 function base64_bytes() {
     dd if=/dev/urandom bs=$1 count=1 2>/dev/null | base64
 }
 
+# Usage: hex_bytes $N
+# Generate $N random bytes and output as hex
 function hex_bytes() {
     dd if=/dev/urandom bs=$1 count=1 2>/dev/null | hexdump -v -e '/1 "%02X"'
     echo ""
 }
 
+# Usage: pw [$LENGTH=32]
+# Generate a password of a specified length
+function pw() {
+  if [[ ! -n "$1" ]]
+  then
+    length=32
+  else
+    length=$1
+  fi
+  pwgen $length 1
+}
+
+# Usage: tabs_to_spaces $DIR $EXT
+# Convert tabs to 4 spaces in all files with the given extension found in $DIR
+# or any of its subdirectories.
+function tabs_to_spaces {
+  for f in $(find $1 -name "*.$2")
+  do
+    expand -t 4 "${f}" > "${f}.spaces"
+    mv "${f}.spaces" "${f}"
+  done
+}
+
+# Usage: tasks
+# Find all TODOs etc. in current project/dir
+alias tasks='grep --exclude-dir="{.*,node_modules}" -rnEIo "(TODO|FIXME|HACK).*?$" . 2>/dev/null'
+
+# Usage: f $NAME
+# Find all files with $NAME in current directory or any of its subdirectories.
+function f() {
+    find . -name $1
+}
+
+# Usage: t $DEPTH
+# Display directory tree to specified depth
+function t() {
+    tree -d -L $1
+}

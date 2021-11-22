@@ -1,4 +1,4 @@
-# Disable host key checking for hosts on local network
+# Disable host key checking for DHCP hosts on local network
 # Useful for Raspberry Pi's etc. with frequently changing
 # OS
 Host 192.168.*.*
@@ -7,3 +7,4 @@ Host 192.168.*.*
 
 # Load local (non-git) config from ~/.ssh/config.d
 Include config.d/*
+

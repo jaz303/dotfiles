@@ -25,12 +25,7 @@
     user = jaz303
 [core]
 	quotepath = false
-
 [url "ssh://git@github.com/"]
     insteadOf = https://github.com/
-
-[credential]
-	helper = !aws codecommit credential-helper $@
-	UseHttpPath = true
 [pull]
 	rebase = false
