@@ -1,7 +1,7 @@
 # Disable host key checking for DHCP hosts on local network
 # Useful for Raspberry Pi's etc. with frequently changing
 # OS
-Host 192.168.*.*
+Host 172.20.250.*
     StrictHostKeyChecking no
     UserKnownHostsFile=/dev/null
 
