@@ -141,10 +141,17 @@ alias boom="git push origin master --tags && npm publish"
 # Useful functions                                                             #
 ################################################################################
 
-# Usage: portscan $PORT $HOST
+# Usage: portscan $PORT [$HOST]
 # Find open ports. $HOST can be be a network spec e.g. 192.168.0.0/24
+# If omitted, $HOST defaults to the DHCP range for my home network
 function portscan() {
-    nmap -p $1 --open -sV $2
+    if [[ ! -n "$2" ]]
+    then
+        host="172.20.20.0/24"
+    else
+        host=$2
+    fi
+    nmap -p $1 --open -sV $host
 }
 
 # Usage: httpserver $PORT
