@@ -116,7 +116,6 @@ alias grep='grep --color=auto'
 alias h="fc -l"
 alias hf="fc -lm"
 
-alias p="ps ${PS_ARGS}"
 function pf {
     ps $PS_ARGS | grep -i $* | grep -v grep
 }
@@ -215,6 +214,11 @@ function f() {
 function t() {
     tree -d -L $1
 }
+
+function p() {
+    cd ~/projects/$1
+}
+
 function wake_windows {
     wakeonlan "94:c6:91:1b:33:87"
 }
