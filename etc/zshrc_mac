@@ -12,7 +12,7 @@ function spotlight {
     mdfind "kMDItemDisplayName == '*$1*.$2'c"
 }
 
-# Source an AVR toolchain from Arduino
+# Source an AVR toolchain from Arduino app
 function avrify() {
     export PATH="/Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin:$PATH"
 }
