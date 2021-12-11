@@ -22,3 +22,13 @@ function avrify() {
 function pgify() {
     export PATH="/Applications/Postgres.app/Contents/Versions/$1/bin:$PATH"
 }
+
+# Usage: flash_iso $FILE $TARGET
+# Convert .iso to .img, then flash to a drive
+# NOTE: this doesn't work for Windows installers. They need to be flashed
+# using Rufus or similar!
+function flash_iso {
+    hdiutil convert -format UDRW -o $1.img $1 && \
+        sudo dd if=$1.img.dmg of=$2 bs=1m && \
+        rm $1.img.dmg
+}
