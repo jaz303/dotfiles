@@ -173,6 +173,10 @@ function hex_bytes() {
     echo ""
 }
 
+function hex64() {
+    echo $1 | xxd -r -p | base64
+}
+
 # Usage: pw [$LENGTH=32]
 # Generate a password of a specified length
 function pw() {
