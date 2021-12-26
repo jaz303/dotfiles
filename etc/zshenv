@@ -2,6 +2,7 @@
 
 TRY_PATHS=(
   "${HOME}/bin"
+  "${HOME}/.local/bin"
   "${HOME}/.dotfiles/bin"
 )
 
