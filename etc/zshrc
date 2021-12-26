@@ -215,11 +215,14 @@ function t() {
     tree -d -L $1
 }
 
-function p() {
-    cd ~/projects/$1
-}
-
 function wake_windows {
     wakeonlan "94:c6:91:1b:33:87"
 }
+
+p() { cd $HOME/projects/$1; }
+um() { cd $HOME/projects/um/$1; }
+sm() { cd $HOME/projects/sm/$1; }
+compctl -W $HOME/projects/ -/ p
+compctl -W $HOME/projects/um/ -/ um
+compctl -W $HOME/projects/sm/ -/ sm
 
