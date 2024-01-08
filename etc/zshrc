@@ -156,7 +156,7 @@ function portscan() {
 # Usage: httpserver $PORT
 # Serve the current directory over HTTP
 function httpserver() {
-    static . -p $1 -H '{"Cache-Control": "no-store"}'
+    static . -a 0.0.0.0 -p $1 -H '{"Cache-Control": "no-store"}'
 }
 
 # Usage: base64_bytes $N
@@ -233,3 +233,6 @@ compctl -W $HOME/projects/ -/ p
 compctl -W $HOME/projects/um/ -/ um
 compctl -W $HOME/projects/sm/ -/ sm
 
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

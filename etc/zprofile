@@ -1,1 +1,21 @@
 # Login shells (2)
+
+# Load Homebrew on macOS
+if [[ $(uname) == "Darwin" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+
+# Setting PATH for Python 3.6
+# The original version is saved in .zprofile.pysave
+#PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
+#export PATH
+
+# Setting PATH for Python 3.11
+# The original version is saved in .zprofile.pysave
+#PATH="/Library/Frameworks/Python.framework/Versions/3.11/bin:${PATH}"
+#export PATH
+
+
+# Added by Toolbox App
+#export PATH="$PATH:/Users/jason/Library/Application Support/JetBrains/Toolbox/scripts"
