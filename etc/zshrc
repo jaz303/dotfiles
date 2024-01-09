@@ -236,3 +236,9 @@ compctl -W $HOME/projects/sm/ -/ sm
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# Source local configuration if present
+if [ -f $HOME/.zshrc_local ]; then
+    source $HOME/.zshrc_local
+fi
+
