@@ -43,7 +43,8 @@ for_window [class="^1Password$" instance="1password"] floating enable
 exec --no-startup-id /home/jason/.config/i3/configure-input
 
 # Open PLAN.md on workspace 10 at startup
-exec --no-startup-id i3-msg 'workspace 10; exec gnome-terminal -- emacs ~/projects/PERSONAL.org; workspace 1'
+exec --no-startup-id i3-msg 'rename workspace 10 to "10:plan"'
+exec --no-startup-id i3-msg 'workspace "10:plan"; exec gnome-terminal -- emacs ~/projects/PERSONAL.org; workspace 1'
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status

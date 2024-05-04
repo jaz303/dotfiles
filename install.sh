@@ -18,7 +18,7 @@ ln -s .dotfiles/etc/screenrc                .screenrc
 ln -s .dotfiles/etc/tmux.conf               .tmux.conf
 
 ln -s .dotfiles/etc/vim                     .vim
-ln -s .vim/vimrc-mac                        .vimrc
+ln -s .vim/vimrc-linux                      .vimrc
 
 #ln -s .dotfiles/etc/inputrc                 .inputrc
 #ln -s .dotfiles/etc/irssi                   .irssi
