@@ -1,0 +1,16 @@
+/* Google: Sign in with Google */
+div#credential_picker_container > iframe[src="https://accounts.google.com/"],
+iframe#credential_picker_iframe[src="https://accounts.google.com/"] {
+	display: none !important;
+}
+
+/* Google: Google recommends using Chrome */
+div[data-hveid="1"] > div:nth-child(1) iframe[role="presentation"][name="callout"] {
+	display: none !important;
+}
+
+/* YouTube: Promo*/
+yt-mealbar-promo-renderer[has-full-height-image] {
+	display: none !important;
+}
+
