@@ -1,5 +1,13 @@
 cd ~
 
+#
+# Temp Dir
+
+mkdir -p ~/tmp
+
+#
+# Basic Config
+
 ln -s .dotfiles/etc/zprofile                .zprofile
 ln -s .dotfiles/etc/zshenv                  .zshenv
 ln -s .dotfiles/etc/zshrc                   .zshrc
@@ -10,15 +18,27 @@ ln -s .dotfiles/etc/screenrc                .screenrc
 ln -s .dotfiles/etc/tmux.conf               .tmux.conf
 
 ln -s .dotfiles/etc/vim                     .vim
-ln -s .vim/vimrc-mac                        .vimrc
+ln -s .vim/vimrc-linux                      .vimrc
 
 #ln -s .dotfiles/etc/inputrc                 .inputrc
 #ln -s .dotfiles/etc/irssi                   .irssi
 #ln -s .dotfiles/etc/lldbinit                .lldbinit
 
-mkdir -p .ssh/config.d
-ln -s .dotfiles/etc/ssh/config											.ssh/config
-ln -s .dotifles/etc/ssh/config.d/disable-dhcp-host-key-checking.conf	.ssh/config.d/disable-dhcp-host-key-checking.conf
-chmod -R a=,u=rwX .ssh
+#
+# SSH
 
-mkdir -p ~/tmp
+mkdir -p .ssh/config.d
+
+pushd ~/.ssh
+ln -s ../.dotfiles/etc/ssh/config
+
+pushd config.d
+for FILE in ../../.dotfiles/etc/ssh/config.d/*
+do
+	ln -s $FILE
+done
+
+popd
+popd
+
+chmod -R a=,u=rwX .ssh

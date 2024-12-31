@@ -1,3 +1,6 @@
+# Use "brew" user for anything homebrew related
+alias brew='sudo -Hu brew brew'
+
 function debug {
     lldb $(find build -perm +0111 -type f -not -name '*.dylib' | head -n1)
 }

@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+font pango:monospace 7
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -43,7 +43,8 @@ for_window [class="^1Password$" instance="1password"] floating enable
 exec --no-startup-id /home/jason/.config/i3/configure-input
 
 # Open PLAN.md on workspace 10 at startup
-exec --no-startup-id i3-msg 'workspace 10; exec gnome-terminal -- vim ~/Dropbox/PLAN.md; workspace 1'
+exec --no-startup-id i3-msg 'rename workspace 10 to "10:plan"'
+exec --no-startup-id i3-msg 'workspace "10:plan"; exec gnome-terminal -- emacs ~/projects/PERSONAL.org; workspace 1'
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -62,11 +63,11 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+#bindsym $mod+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+j focus left
@@ -199,12 +200,12 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3status
-        font pango:monospace 9
+        font pango:monospace 8
 }
 
 # mod+b - launch browser
-bindsym $mod+b exec --no-startup-id chromium
-bindsym $mod+m exec --no-startup-id chromium --app=https://www.fastmail.com
+bindsym $mod+b exec --no-startup-id firefox
+bindsym $mod+m exec --no-startup-id firefox --app=https://www.fastmail.com
 
 # mod+x - launch sublime text
 bindsym $mod+x exec --no-startup-id subl --launch-or-new-window
@@ -214,7 +215,7 @@ bindsym $mod+Tab workspace next
 bindsym $mod+shift+Tab workspace prev
 
 # mod-n - start file browser
-bindsym $mod+n exec --no-startup-id nautilus ~
+bindsym $mod+n exec --no-startup-id thunar ~
 
 # backlight controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 5
