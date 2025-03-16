@@ -1,4 +1,4 @@
---- Lazy
+-- Lazy
 require("config.lazy")
 
 -- Tabstop stuff
@@ -37,6 +37,3 @@ vim.keymap.set('n', '<C-enter>', ':Neotree show filesystem toggle left<CR>')
 vim.keymap.set('n', '<C-f>', ':Neotree focus filesystem left<CR>')
 vim.keymap.set('n', '<C-b>', ':Neotree focus buffers float<CR>')
 
---vim.keymap.set('n', '<leader>nf', function() vim.cmd("Neotree show filesystem") end, { desc = 'Show Neotree filesystem' })
---vim.keymap.set('n', '<leader>nb', function() vim.cmd("Neotree show buffers") end, { desc = 'Show Neotree buffers' })
--- lots to think about here
