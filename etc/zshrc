@@ -116,6 +116,11 @@ alias grep='grep --color=auto'
 alias h="fc -l"
 alias hf="fc -lm"
 
+nvim_path=$(which nvim)
+if [ -x "$nvim_path" ]; then
+    alias vim="nvim"
+fi
+
 function pf {
     ps $PS_ARGS | grep -i $* | grep -v grep
 }
@@ -245,4 +250,3 @@ fi
 if [ -f $HOME/.zshrc_local ]; then
     source $HOME/.zshrc_local
 fi
-

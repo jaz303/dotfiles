@@ -1,4 +1,5 @@
 [font]
-normal = { family = "DejaVu Sans Mono" }
-size = 9
+normal = { family = "MesloLGL Nerd Font", style = "Regular" }
+size = 8.5
+
 
