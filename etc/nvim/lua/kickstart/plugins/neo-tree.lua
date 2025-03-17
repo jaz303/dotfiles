@@ -12,6 +12,9 @@ return {
   cmd = 'Neotree',
   keys = {
     { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+    { '<C-enter>', ':Neotree show filesystem toggle left<CR>', desc = 'Toggle filesystem' },
+    { '<C-f>', ':Neotree focus filesystem left<CR>', desc = 'Focus filesystem' },
+    { '<C-b>', ':Neotree focus buffers float<CR>', desc = 'Show buffers popup' },
   },
   opts = {
     filesystem = {
@@ -22,9 +25,4 @@ return {
       },
     },
   },
-  config = function()
-    vim.keymap.set('n', '<C-enter>', ':Neotree show filesystem toggle left<CR>')
-    vim.keymap.set('n', '<C-f>', ':Neotree focus filesystem left<CR>')
-    vim.keymap.set('n', '<C-b>', ':Neotree focus buffers float<CR>')
-  end,
 }
