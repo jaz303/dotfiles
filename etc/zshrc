@@ -19,8 +19,7 @@ export CLICOLOR=1
 # completion                                                                   #
 ################################################################################
 
-autoload -U compinit
-compinit
+autoload -Uz compinit && compinit -i > /dev/null
 
 # Up/down keys search based on text already entered
 bindkey "^[[A" history-beginning-search-backward
@@ -50,7 +49,6 @@ parse_git_branch() {
 
 # Show different symbols as appropriate for various Git repository states
 parse_git_state() {
-
   local GIT_STATE=""
 
   local GIT_DIR="$(git rev-parse --git-dir 2> /dev/null)"
@@ -73,7 +71,6 @@ parse_git_state() {
   if [[ -n $GIT_STATE ]]; then
     echo "$GIT_STATE "
   fi
-
 }
 
 # If inside a Git repository, print its branch and state
@@ -86,6 +83,7 @@ PS1='%B%(?.%F{green}-.%K{red}%F{black}%?)%f%k%b %B%(!.%F{red}.%F{green})%n@%m%f%
 #PS1="%(?,%{$fg_bold[green]%}-,%{$fg_bold[red]%}!)%{$reset_color%} %{$fg_bold[green]%}%n@%m %{$fg_bold[blue]%}%1~ %#%{$reset_color%} "
 RPS1='$(git_prompt_string)${HISTORY_PROMPT}'
 
+# Disable git prompt; useful for massive repos
 function disable_git_prompt() {
     export RPS1="${HISTORY_PROMPT}"
 }
@@ -124,9 +122,15 @@ function pf {
 # toolchain imports                                                            #
 ################################################################################
 
-function rbenvify() {
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    eval "$(rbenv init -)"
+function rvmify {
+    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+}
+
+# Initialise nvm
+function nvmify {
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 }
 
 ################################################################################
@@ -226,20 +230,9 @@ function wake_windows {
     wakeonlan "94:c6:91:1b:33:87"
 }
 
+# Jump to project directories
 p() { cd $HOME/projects/$1; }
-um() { cd $HOME/projects/um/$1; }
-sm() { cd $HOME/projects/sm/$1; }
 compctl -W $HOME/projects/ -/ p
-compctl -W $HOME/projects/um/ -/ um
-compctl -W $HOME/projects/sm/ -/ sm
-
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-if [ -d $HOME/go/bin ]; then
-    export PATH="$PATH:$HOME/go/bin"
-fi
 
 # Source local configuration if present
 if [ -f $HOME/.zshrc_local ]; then

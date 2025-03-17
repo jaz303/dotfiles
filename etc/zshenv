@@ -4,6 +4,7 @@ TRY_PATHS=(
   "${HOME}/bin"
   "${HOME}/.local/bin"
   "${HOME}/.dotfiles/bin"
+  "${HOME}/go/bin"
 )
 
 for try_path in $TRY_PATHS
@@ -11,7 +12,3 @@ do
     [[ -d "$try_path" ]] && export PATH=$PATH:$try_path
 done
 
-if [[ -f "$HOME/.path" ]]
-then
-    export PATH=$PATH:$(cat $HOME/.path)
-fi
