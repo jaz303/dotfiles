@@ -185,8 +185,9 @@ function portscan() {
 
 # Usage: httpserver $PORT
 # Serve the current directory over HTTP
-function httpserver() {
-    static . -a 0.0.0.0 -p $1 -H '{"Cache-Control": "no-store"}'
+function servedir() {
+    nvmify
+    http-server . -a 0.0.0.0 -p $1 -i -c-1 
 }
 
 # Usage: base64_bytes $N
