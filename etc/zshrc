@@ -33,6 +33,9 @@ autoload -U colors
 colors     
 setopt prompt_subst
 
+#
+# git
+
 # Modify the colors and symbols in these variables as desired.
 GIT_PROMPT_PREFIX="%{$fg_bold[magenta]%}["
 GIT_PROMPT_SUFFIX="]%{$reset_color%}"
@@ -79,9 +82,27 @@ git_prompt_string() {
   [ -n "$git_where" ] && echo "$(parse_git_state)$GIT_PROMPT_PREFIX${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX "
 }
 
+#
+# Terraform
+
+TF_PROMPT_PREFIX="%{$fg_bold[blue]%}["
+TF_PROMPT_SUFFIX="]%{$reset_color%}"
+
+terraform_prompt() {
+    if [ -d .terraform ]; then
+        workspace="$(command terraform workspace show 2>/dev/null)"
+        if [ -n "$workspace" ]; then
+            echo "${TF_PROMPT_PREFIX}tf:$workspace${TF_PROMPT_SUFFIX} "
+        fi
+    fi
+}
+
+#
+# Put it all together
+
 PS1='%B%(?.%F{green}-.%K{red}%F{black}%?)%f%k%b %B%(!.%F{red}.%F{green})%n@%m%f%b %B%F{blue}%1~%f%b %# '
 #PS1="%(?,%{$fg_bold[green]%}-,%{$fg_bold[red]%}!)%{$reset_color%} %{$fg_bold[green]%}%n@%m %{$fg_bold[blue]%}%1~ %#%{$reset_color%} "
-RPS1='$(git_prompt_string)${HISTORY_PROMPT}'
+RPS1='$(terraform_prompt)$(git_prompt_string)${HISTORY_PROMPT}'
 
 # Disable git prompt; useful for massive repos
 function disable_git_prompt() {
