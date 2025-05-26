@@ -24,6 +24,13 @@ ln -s .vim/vimrc-linux                      .vimrc
 #ln -s .dotfiles/etc/irssi                   .irssi
 #ln -s .dotfiles/etc/lldbinit                .lldbinit
 
+mkdir -p .config
+pushd .config
+ln -s ../.dotfiles/etc/nvim
+# TODO: i3, i3status
+# TODO: alacritty (need different configs for Mac/Linux)
+popd
+
 #
 # SSH
 
