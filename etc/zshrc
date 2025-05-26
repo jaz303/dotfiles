@@ -260,7 +260,16 @@ function wake_windows {
 p() { cd $HOME/projects/$1; }
 compctl -W $HOME/projects/ -/ p
 
+# Source environment variables from a file
+function sourcex {
+	set -o allexport
+	source "${1:-.env}"
+	set +o allexport
+}
+
+
 # Source local configuration if present
 if [ -f $HOME/.zshrc_local ]; then
     source $HOME/.zshrc_local
 fi
+
