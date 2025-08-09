@@ -8,7 +8,7 @@ vim.keymap.set({ 'n', 'x' }, '<Up>', 'gk', { desc = 'Navigate up (visual line)' 
 vim.keymap.set('i', '<Down>', '<C-\\><C-o>gj', { desc = 'Navigate down (visual line)' })
 vim.keymap.set('i', '<Up>', '<C-\\><C-o>gk', { desc = 'Navigate up (visual line)' })
 
--- Ctl-Backspace to delete words
+-- "C-backspace" - delete words
 -- This is pretty non-standard but I can't shake the muscle memory...
 -- According to some sources it's not compatible with all terminals but working
 -- fine here on Alacritty/Linux.
@@ -30,6 +30,13 @@ vim.keymap.set({ 'n', 'x' }, '<leader>p', '"+p', { desc = 'Paste from system cli
 vim.keymap.set({ 'n', 'x' }, '<leader>P', '"+P', { desc = 'Paste from system clipboard before the cursor position' })
 
 --
+-- Use LSP
+
+vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", { desc = 'Goto declaration', noremap = true, silent = true })
+vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", { desc = 'Goto definition', noremap = true, silent = true })
+
+
+--
 -- Navigating buffers
 
 vim.keymap.set('n', '<leader>bb', '<C-^>', { desc = 'Alternate buffer' })
@@ -37,8 +44,11 @@ vim.keymap.set('n', '<leader>bn', ':bnext<cr>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<leader>bp', ':bprevious<cr>', { desc = 'Previous buffer' })
 vim.keymap.set('n', '<leader>bt', ts.buffers, { desc = 'Telescope buffers' })
 
--- Double leader to show telescope buffer switcher
+-- "leader leader" to show telescope buffer switcher
 vim.keymap.set('n', '<leader><leader>', ts.buffers, { desc = 'Telescope buffers' })
+
+-- "leader backspace" - quick jump to previous buffer
+vim.keymap.set('n', '<leader><BS>', ':bprevious<cr>', { desc = 'Previous buffer' })
 
 --
 --
@@ -51,4 +61,8 @@ vim.keymap.set('n', '<C-l>', ':set hlsearch!<cr><C-l>', { desc = 'Toggle search 
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- A couple of VSCode bindings that by now are too far ingrained
+vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', { desc = 'Rename' })
+vim.keymap.set('n', '<F12>', '<cmd>lua vim.lsp.buf.definition()<cr>', { desc = 'Goto' })
 

@@ -12,6 +12,41 @@ require('plugins.telescope')
 require('plugins.nvim-tree')
 require('plugins.goto-preview')
 require('plugins.which-key')
+require('plugins.lualine')
 
 require('config.autocmd')
 require('config.keymap')
+
+-- Launch a floating terminal with the given working directory
+function LaunchFloatingTerminalInDir(dir, cmd)
+  local exec = "exec alacritty --class floating_term -o 'window.dimensions.columns=150' -o 'window.dimensions.lines=35' --working-directory '" .. dir .. "'"
+
+  if cmd then
+    exec = exec .. " -e '" .. cmd .. "'"
+  end
+
+  vim.fn.system({"i3-msg", exec})
+end
+
+-- Launch a floating terminal in the workspace dir
+function LaunchFloatingTerminalInWorkspaceDir()
+  LaunchFloatingTerminalInDir(vim.fn.getcwd())
+end
+
+-- Launch a floating terminal in the file dir
+function LaunchFloatingTerminalInFileDir()
+  local file_path = vim.api.nvim_buf_get_name(0)
+  LaunchFloatingTerminalInDir(vim.fs.dirname(file_path))
+end
+
+function LaunchFloatingGitClient()
+  LaunchFloatingTerminalInDir(vim.fn.getcwd(), "lazygit")
+end
+
+vim.api.nvim_create_user_command('LaunchFloatingTerminalWS', LaunchFloatingTerminalInWorkspaceDir, {desc = 'Launch workspace terminal'})
+vim.api.nvim_create_user_command('LaunchFloatingTerminalF', LaunchFloatingTerminalInFileDir, {desc = 'Launch file terminal'})
+vim.api.nvim_create_user_command('LaunchGitClient', LaunchFloatingGitClient, {desc = 'Launch Lazygit'})
+
+vim.keymap.set('n', '<M-Enter>', ':LaunchFloatingTerminalWS<cr>', { desc = 'Launch workspace terminal' })
+vim.keymap.set('n', '<M-S-Enter>', ':LaunchFloatingTerminalF<cr>', { desc = 'Launch file terminal' })
+vim.keymap.set('n', '<leader>g', ':LaunchGitClient<cr>', { desc = 'Launch git client' })
