@@ -1,15 +1,19 @@
 -- Default colourscheme; will be overridden by some plugin
+-- This is just here so we get something acceptable in macOS terminal,
+-- which doesn't support exotic colourschemes.
 vim.cmd.colorscheme('sorbet')
 
 require('config.globals')
 require('config.options')
 require('config.lsp')
 
+require('local.wm')
+
 require('plugins.deps')
 require('plugins.theme')
 require('plugins.nvim-treesitter')
 require('plugins.telescope')
-require('plugins.nvim-tree')
+require('plugins.neotree')
 require('plugins.goto-preview')
 require('plugins.which-key')
 require('plugins.lualine')
@@ -50,3 +54,14 @@ vim.api.nvim_create_user_command('LaunchGitClient', LaunchFloatingGitClient, {de
 vim.keymap.set('n', '<M-Enter>', ':LaunchFloatingTerminalWS<cr>', { desc = 'Launch workspace terminal' })
 vim.keymap.set('n', '<M-S-Enter>', ':LaunchFloatingTerminalF<cr>', { desc = 'Launch file terminal' })
 vim.keymap.set('n', '<leader>g', ':LaunchGitClient<cr>', { desc = 'Launch git client' })
+
+vim.keymap.set('n', '<M-1>', ':SwitchToNthWindow 1<cr>', { desc = 'Switch to window 1' })
+vim.keymap.set('n', '<M-2>', ':SwitchToNthWindow 2<cr>', { desc = 'Switch to window 2' })
+vim.keymap.set('n', '<M-3>', ':SwitchToNthWindow 3<cr>', { desc = 'Switch to window 3' })
+vim.keymap.set('n', '<M-4>', ':SwitchToNthWindow 4<cr>', { desc = 'Switch to window 4' })
+
+vim.keymap.set('n', '<M-S-1>', ':MoveActiveBufferToNthWindow 1<cr>', { desc = 'Move active buffer to window 1' })
+vim.keymap.set('n', '<M-S-2>', ':MoveActiveBufferToNthWindow 2<cr>', { desc = 'Move active buffer to window 2' })
+vim.keymap.set('n', '<M-S-3>', ':MoveActiveBufferToNthWindow 3<cr>', { desc = 'Move active buffer to window 3' })
+vim.keymap.set('n', '<M-S-4>', ':MoveActiveBufferToNthWindow 4<cr>', { desc = 'Move active buffer to window 4' })
+

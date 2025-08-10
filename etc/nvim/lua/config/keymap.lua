@@ -39,16 +39,16 @@ vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", { desc = 'Got
 --
 -- Navigating buffers
 
+vim.keymap.set('n', '<leader><leader>', ts.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader><BS>', '<C-^>', { desc = 'Alternate buffer' })
+vim.keymap.set('n', '<leader>]', ':bnext<cr>', { desc = 'Next buffer' })
+vim.keymap.set('n', '<leader>[', ':bprevious<cr>', { desc = 'Previous buffer' })
+
 vim.keymap.set('n', '<leader>bb', '<C-^>', { desc = 'Alternate buffer' })
 vim.keymap.set('n', '<leader>bn', ':bnext<cr>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<leader>bp', ':bprevious<cr>', { desc = 'Previous buffer' })
 vim.keymap.set('n', '<leader>bt', ts.buffers, { desc = 'Telescope buffers' })
 
--- "leader leader" to show telescope buffer switcher
-vim.keymap.set('n', '<leader><leader>', ts.buffers, { desc = 'Telescope buffers' })
-
--- "leader backspace" - quick jump to previous buffer
-vim.keymap.set('n', '<leader><BS>', ':bprevious<cr>', { desc = 'Previous buffer' })
 
 --
 --
