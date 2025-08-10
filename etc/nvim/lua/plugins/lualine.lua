@@ -49,6 +49,11 @@ local function modes()
 end
 
 require('lualine').setup({
+  options = {
+    disabled_filetypes = {
+      statusline = { 'neo-tree', 'neo-tree-popup' }
+    }
+  },
   sections = {
     lualine_a = {modes},
     lualine_b = {'filename'},
