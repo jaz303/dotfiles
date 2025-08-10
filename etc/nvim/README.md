@@ -2,10 +2,16 @@
 
 ## Shortcuts
 
-After many years of VSCode these are deeply ingrained, no point fighting it...
+These aren't all necessarily custom... more of an aide-memoire for me...
 
-  - `<F2>` - rename
-  - `<F12>` - goto definition
+  - `<F2>` - rename (VSCode muscle memory...)
+  - `<F12>` - goto definition (ditto...)
+  - `=` - LSP reformat
+
+### Autocompletion
+
+  - `<C-space>` - summon autocompleter
+  - `<C-{n,p}>` - next/previous autocompletion
 
 ### Buffer navigation
 
@@ -24,6 +30,7 @@ After many years of VSCode these are deeply ingrained, no point fighting it...
 ## Editing
 
   - (I) `<C-BS>` - delete word
+  - (N/I) - `<M-S-{Up,Down}>` - move line up/down
 
 ## Windows
 

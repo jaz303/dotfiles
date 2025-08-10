@@ -14,7 +14,6 @@ require('plugins.theme')
 require('plugins.nvim-treesitter')
 require('plugins.telescope')
 require('plugins.neotree')
-require('plugins.goto-preview')
 require('plugins.which-key')
 require('plugins.lualine')
 
