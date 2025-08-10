@@ -1,6 +1,6 @@
 local wm = {}
 
-function IsValidTarget(win_id)
+local function is_valid_target(win_id)
   local buf = vim.api.nvim_win_get_buf(win_id)
   local buf_type = vim.api.nvim_buf_get_option(buf, "buftype")
   if buf_type ~= "" then
@@ -24,7 +24,7 @@ function wm.GetCandidateWindows()
         local height = vim.api.nvim_win_get_height(id)
         local width = vim.api.nvim_win_get_width(id)
 
-        if IsValidTarget(id) then
+        if is_valid_target(id) then
             table.insert(targets, {
                 id = id,
                 x = pos[1],
