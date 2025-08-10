@@ -66,3 +66,12 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', { desc = 'Rename' })
 vim.keymap.set('n', '<F12>', '<cmd>lua vim.lsp.buf.definition()<cr>', { desc = 'Goto' })
 
+--
+-- Telescope stuff
+
+vim.keymap.set('n', '<leader>ff', ts.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', ts.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fh', ts.help_tags, { desc = 'Telescope help tags' })
+vim.keymap.set('n', '<leader>ls', ts.lsp_document_symbols, { desc = 'Telescope document syms' })
+vim.keymap.set('n', '<leader>lw', ts.lsp_workspace_symbols, { desc = 'Telescope workspace syms' })
+
