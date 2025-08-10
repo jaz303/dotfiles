@@ -13,7 +13,6 @@ require('tokyonight')
 
 vim.cmd.colorscheme('tokyonight-night')
 
-
 --  
 --return {
 --  'folke/tokyonight.nvim',

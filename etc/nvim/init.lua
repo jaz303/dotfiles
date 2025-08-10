@@ -58,6 +58,8 @@ vim.keymap.set('n', '<M-1>', ':SwitchToNthWindow 1<cr>', { desc = 'Switch to win
 vim.keymap.set('n', '<M-2>', ':SwitchToNthWindow 2<cr>', { desc = 'Switch to window 2' })
 vim.keymap.set('n', '<M-3>', ':SwitchToNthWindow 3<cr>', { desc = 'Switch to window 3' })
 vim.keymap.set('n', '<M-4>', ':SwitchToNthWindow 4<cr>', { desc = 'Switch to window 4' })
+vim.keymap.set('n', '<M-Left>', ':SwitchToRelWindow -1<cr>', { desc = 'Switch window left' })
+vim.keymap.set('n', '<M-Right>', ':SwitchToRelWindow 1<cr>', { desc = 'Switch window right' })
 
 vim.keymap.set('n', '<M-S-1>', ':MoveActiveBufferToNthWindow 1<cr>', { desc = 'Move active buffer to window 1' })
 vim.keymap.set('n', '<M-S-2>', ':MoveActiveBufferToNthWindow 2<cr>', { desc = 'Move active buffer to window 2' })

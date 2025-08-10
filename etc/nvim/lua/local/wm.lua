@@ -46,6 +46,22 @@ function wm.GetCandidateWindows()
     return targets
 end
 
+function wm.SwitchToRelWindow(offset)
+  local windows = wm.GetCandidateWindows()
+  local curr = vim.api.nvim_get_current_win()
+  local target = nil
+  for ix, win in ipairs(windows) do
+    if win.id == curr then
+      target = ix + offset
+      break
+    end
+  end
+  if (not target) or (target < 1) or (target > #windows) then
+    return
+  end
+  vim.api.nvim_set_current_win(windows[target].id)
+end
+
 function wm.SwitchToNthWindow(n)
   local win = wm.GetCandidateWindows()[n]
   if not win then
@@ -94,6 +110,22 @@ vim.api.nvim_create_user_command(
   end,
   {
     desc = 'Switch to nth window',
+    nargs = 1,
+  }
+)
+
+vim.api.nvim_create_user_command(
+  'SwitchToRelWindow',
+  function(opts)
+    local n = tonumber(opts.args)
+    if n then
+      wm.SwitchToRelWindow(n)
+    else
+      print("Invalid window number")
+    end
+  end,
+  {
+    desc = 'Switch to relative window',
     nargs = 1,
   }
 )

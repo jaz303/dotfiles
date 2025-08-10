@@ -34,10 +34,11 @@ These aren't all necessarily custom... more of an aide-memoire for me...
 
 ## Windows
 
-Window numbering is derived on-demand based on geometry, increasing from left to right.
+Window numbering is derived on-demand based on geometry, increasing from left to right. 
 
   - `<M-{1-4}>` - jump to window 1-4
   - `<M-S-{1-4}>` - move active buffer to window 1-4
+  - `<M-{Left,Right}>` - move to left/right window
 
 In Neotree, pressing `{1-4}` will open file in the corresponding window (assumes target window exists).
 
