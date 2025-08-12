@@ -1,6 +1,7 @@
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('gopls')
 vim.lsp.enable('zls')
+vim.lsp.enable('ts')
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
