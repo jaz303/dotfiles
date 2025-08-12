@@ -100,7 +100,7 @@ function wm.EqualizeWindows()
 end
 
 function wm.FocusActiveWindow()
-  local focus_ratio = 0.75
+  local focus_ratio = 0.70
   local windows = wm.GetCandidateWindows()
   local tot = total_width(windows)
   local focus_width = math.floor(tot * focus_ratio)
