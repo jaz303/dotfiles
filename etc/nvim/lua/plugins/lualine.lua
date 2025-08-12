@@ -48,6 +48,10 @@ local function modes()
   return mode_map[vim_mode] or ("?? " .. vim_mode .. " ??")
 end
 
+local function width()
+  return "W" .. vim.api.nvim_win_get_width(0)
+end
+
 require('lualine').setup({
   options = {
     disabled_filetypes = {
@@ -60,6 +64,6 @@ require('lualine').setup({
     lualine_c = {'location', 'progress', 'diagnostics'},
     lualine_x = {'diff', 'branch'},
     lualine_y = {'filetype'},
-    lualine_z = {'encoding', 'fileformat', 'hostname'},
+    lualine_z = {'encoding', 'fileformat', width},
   }
 })
