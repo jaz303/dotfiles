@@ -70,3 +70,4 @@ vim.keymap.set('n', '<M-S-3>', ':MoveActiveBufferToNthWindow 3<cr>', { desc = 'M
 vim.keymap.set('n', '<M-S-4>', ':MoveActiveBufferToNthWindow 4<cr>', { desc = 'Move active buffer to window 4' })
 
 vim.keymap.set('n', '<M-=>', ':EqualizeWindows<cr>', { desc = 'Equalize windows' })
+vim.keymap.set('n', '<M-S-=>', ':FocusActiveWindow<cr>', { desc = 'Focus active window' })
