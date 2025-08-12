@@ -25,10 +25,22 @@ require("neo-tree").setup({
   filesystem = {
     window = {
       mappings = {
-        ["1"] = function(state) open_in_split(1, state) end,
-        ["2"] = function(state) open_in_split(2, state) end,
-        ["3"] = function(state) open_in_split(3, state) end,
-        ["4"] = function(state) open_in_split(4, state) end,
+        ["1"] = {
+          function(state) open_in_split(1, state) end,
+          desc = "Open in window 1",
+        },
+        ["2"] = {
+          function(state) open_in_split(2, state) end,
+          desc = "Open in window 2",
+        },
+        ["3"] = {
+          function(state) open_in_split(3, state) end,
+          desc = "Open in window 3",
+        },
+        ["4"] = {
+          function(state) open_in_split(4, state) end,
+          desc = "Open in window 4",
+        },
       },
     },
   },
