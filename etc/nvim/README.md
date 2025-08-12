@@ -57,6 +57,7 @@ In Neotree, pressing `{1-4}` will open file in the corresponding window (assumes
   - Full system clipboard integration
   - Paste with auto format/indent
   - Block commands (comment/indent)
+  - `ESC` should trigger `:noh` (and maybe clear search register too?)
 
 ### `shunt`
 
