@@ -56,8 +56,13 @@ function wm.SwitchToRelWindow(offset)
       break
     end
   end
-  if (not target) or (target < 1) or (target > #windows) then
+  if (not target) then
     return
+  end
+  if target < 1 then
+    target = #windows
+  elseif target > #windows then
+    target = 1
   end
   vim.api.nvim_set_current_win(windows[target].id)
 end
