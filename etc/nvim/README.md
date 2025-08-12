@@ -36,11 +36,12 @@ These aren't all necessarily custom... more of an aide-memoire for me...
 
 Window numbering is derived on-demand based on geometry, increasing from left to right. 
 
-  - `<M-0>` - neotree
+  - `<M-0>` - focus on Neotree, open if not visible
   - `<M-{1-4}>` - jump to window 1-4
   - `<M-S-{1-4}>` - move active buffer to window 1-4
   - `<M-{Left,Right}>` - cycle active window left/right
   - `<M-=>` - equalize width of all windows
+  - `<M-S-=>` - focus on active window (make it 70% of the available horizontal space)
 
 In Neotree, pressing `{1-4}` will open file in the corresponding window (assumes target window exists).
 
@@ -101,10 +102,6 @@ Once we've got something in place for this we can just assign `F5` - `F8` to the
 
 ### Window Stuff
 
-  - M-0 should jump to Neotree (and open it if not visible)
-  - maybe a command
-  - M-= should resize all content windows to equal width
-  - Does Neotree open-in-split need an auto-focus option?
   - Ability to cycle Neotree through files/docsyms/git/buffers
     (or maybe distinct command for each?)
   - Attempting to open file from Neotree into non-existent window should cause creation of a new split.
