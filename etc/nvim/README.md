@@ -57,7 +57,6 @@ In Neotree, pressing `{1-4}` will open file in the corresponding window (assumes
   - Full system clipboard integration
   - Paste with auto format/indent
   - Block commands (comment/indent)
-  - Per-file-type config (esp. indentation settings)
 
 ### `shunt`
 
@@ -105,3 +104,4 @@ Once we've got something in place for this we can just assign `F5` - `F8` to the
   - Ability to cycle Neotree through files/docsyms/git/buffers
     (or maybe distinct command for each?)
   - Attempting to open file from Neotree into non-existent window should cause creation of a new split.
+
