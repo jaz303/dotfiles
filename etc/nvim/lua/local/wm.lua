@@ -46,6 +46,27 @@ function wm.GetCandidateWindows()
     return targets
 end
 
+function wm.EqualizeWindows()
+  local windows = wm.GetCandidateWindows()
+
+  local total_width = 0
+  for _, win in ipairs(windows) do
+    total_width = total_width + win.width
+  end
+
+  local window_width = math.floor(total_width / #windows)
+  local window_rem = total_width % #windows
+
+  for _, win in ipairs(windows) do
+    local width = window_width
+    if window_rem > 0 then
+      width = width + 1
+      window_rem = window_rem - 1
+    end
+    vim.api.nvim_win_set_width(win.id, width)
+  end
+end
+
 function wm.SwitchToRelWindow(offset)
   local windows = wm.GetCandidateWindows()
   local curr = vim.api.nvim_get_current_win()
@@ -102,6 +123,14 @@ function wm.MoveActiveBufferToNthWindow(n)
     vim.cmd("enew")
   end
 end
+
+vim.api.nvim_create_user_command(
+  'EqualizeWindows',
+  wm.EqualizeWindows,
+  {
+    desc = 'Equalize window widths',
+  }
+)
 
 vim.api.nvim_create_user_command(
   'SwitchToNthWindow',

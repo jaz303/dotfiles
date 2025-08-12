@@ -54,6 +54,8 @@ vim.keymap.set('n', '<M-Enter>', ':LaunchFloatingTerminalWS<cr>', { desc = 'Laun
 vim.keymap.set('n', '<M-S-Enter>', ':LaunchFloatingTerminalF<cr>', { desc = 'Launch file terminal' })
 vim.keymap.set('n', '<leader>g', ':LaunchGitClient<cr>', { desc = 'Launch git client' })
 
+vim.keymap.set('n', '<M-0>', ':Neotree<cr>', { desc = 'Switch to Neotree' })
+
 vim.keymap.set('n', '<M-1>', ':SwitchToNthWindow 1<cr>', { desc = 'Switch to window 1' })
 vim.keymap.set('n', '<M-2>', ':SwitchToNthWindow 2<cr>', { desc = 'Switch to window 2' })
 vim.keymap.set('n', '<M-3>', ':SwitchToNthWindow 3<cr>', { desc = 'Switch to window 3' })
@@ -66,3 +68,4 @@ vim.keymap.set('n', '<M-S-2>', ':MoveActiveBufferToNthWindow 2<cr>', { desc = 'M
 vim.keymap.set('n', '<M-S-3>', ':MoveActiveBufferToNthWindow 3<cr>', { desc = 'Move active buffer to window 3' })
 vim.keymap.set('n', '<M-S-4>', ':MoveActiveBufferToNthWindow 4<cr>', { desc = 'Move active buffer to window 4' })
 
+vim.keymap.set('n', '<M-=>', ':EqualizeWindows<cr>', { desc = 'Equalize windows' })
