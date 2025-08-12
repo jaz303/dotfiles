@@ -16,6 +16,7 @@ require('plugins.telescope')
 require('plugins.neotree')
 require('plugins.which-key')
 require('plugins.lualine')
+require('plugins.scrollbar')
 
 require('config.autocmd')
 require('config.keymap')
