@@ -29,6 +29,7 @@ local function total_width(windows)
   return out
 end
 
+-- 
 local function distribute_missing_widths(windows, available)
   local without_size = 0
   for _, win in ipairs(windows) do
@@ -100,11 +101,17 @@ function wm.EqualizeWindows()
 end
 
 function wm.FocusActiveWindow()
-  local focus_ratio = 0.70
   local windows = wm.GetCandidateWindows()
-  local tot = total_width(windows)
-  local focus_width = math.floor(tot * focus_ratio)
-  local remain = tot - focus_width
+ 
+  -- if there's less than 2 windows we can't focus
+  if #windows <= 1 then
+    return
+  end
+    
+  local tot = total_width(windows) -- total available hspace
+  local focus_ratio = 0.70 -- proportion of available space taken by focused window
+  local focus_width = math.floor(tot * focus_ratio) -- abs width of focussed window
+  local remain = tot - focus_width -- amount of space left for remaining windows
   
   for _, win in ipairs(windows) do
     if win.id == vim.api.nvim_get_current_win() then
