@@ -1,5 +1,9 @@
 local wm = {}
 
+local function warn(msg)
+  vim.notify(msg, vim.log.levels.WARN)
+end
+
 local function is_valid_target(win_id)
   local buf = vim.api.nvim_win_get_buf(win_id)
   local buf_type = vim.api.nvim_buf_get_option(buf, "buftype")
@@ -149,7 +153,7 @@ end
 function wm.SwitchToNthWindow(n)
   local win = wm.GetCandidateWindows()[n]
   if not win then
-    print("No window " .. n)
+    warn("No window " .. n)
     return
   end
   vim.api.nvim_set_current_win(win.id)
@@ -158,7 +162,7 @@ end
 function wm.MoveActiveBufferToNthWindow(n)
   local win = wm.GetCandidateWindows()[n]
   if not win then
-    print("No window " .. n)
+    warn("No window " .. n)
     return
   end
 
@@ -180,6 +184,27 @@ function wm.MoveActiveBufferToNthWindow(n)
   else
     vim.cmd("enew")
   end
+end
+
+function wm.SwapActiveBufferWithNthWindow(n)
+  local windows = wm.GetCandidateWindows()
+  if n < 1 or n > #windows then
+    vim.notify("No window " .. n, vim.log.levels.WARN)
+    return
+  end
+
+  local cur = vim.api.nvim_get_current_win()
+  local tgt = windows[n].id
+
+  if cur == tgt then
+    return
+  end
+
+  local buf_cur = vim.api.nvim_win_get_buf(cur)
+  local buf_tgt = vim.api.nvim_win_get_buf(tgt)
+
+  vim.api.nvim_win_set_buf(cur, buf_tgt)
+  vim.api.nvim_win_set_buf(tgt, buf_cur)
 end
 
 vim.api.nvim_create_user_command(
@@ -205,7 +230,7 @@ vim.api.nvim_create_user_command(
     if n then
       wm.SwitchToNthWindow(n)
     else
-      print("Invalid window number")
+      warn("Invalid window number")
     end
   end,
   {
@@ -221,7 +246,7 @@ vim.api.nvim_create_user_command(
     if n then
       wm.SwitchToRelWindow(n)
     else
-      print("Invalid window number")
+      warn("Invalid window number")
     end
   end,
   {
@@ -237,7 +262,23 @@ vim.api.nvim_create_user_command(
     if n then
       wm.MoveActiveBufferToNthWindow(n)
     else
-      print("Invalid window number")
+      warn("Invalid window number")
+    end
+  end,
+  {
+    desc = 'Move active buffer to nth window',
+    nargs = 1,
+  }
+)
+
+vim.api.nvim_create_user_command(
+  'SwapActiveBufferWithNthWindow',
+  function(opts)
+    local n = tonumber(opts.args)
+    if n then
+      wm.SwapActiveBufferWithNthWindow(n)
+    else
+      warn("Invalid window number")
     end
   end,
   {

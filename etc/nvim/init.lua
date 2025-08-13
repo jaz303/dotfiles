@@ -57,17 +57,15 @@ vim.keymap.set('n', '<leader>g', ':LaunchGitClient<cr>', { desc = 'Launch git cl
 
 vim.keymap.set('n', '<M-0>', ':Neotree<cr>', { desc = 'Switch to Neotree' })
 
-vim.keymap.set('n', '<M-1>', ':SwitchToNthWindow 1<cr>', { desc = 'Switch to window 1' })
-vim.keymap.set('n', '<M-2>', ':SwitchToNthWindow 2<cr>', { desc = 'Switch to window 2' })
-vim.keymap.set('n', '<M-3>', ':SwitchToNthWindow 3<cr>', { desc = 'Switch to window 3' })
-vim.keymap.set('n', '<M-4>', ':SwitchToNthWindow 4<cr>', { desc = 'Switch to window 4' })
+for n = 1,4 do
+  vim.keymap.set('n', '<M-' .. n .. '>', ':SwitchToNthWindow ' .. n .. '<cr>', { desc = 'Switch to window ' .. n })
+  vim.keymap.set('n', '<M-S-' .. n .. '>', ':MoveActiveBufferToNthWindow ' .. n .. '<cr>', { desc = 'Move active buffer to window ' .. n })
+  vim.keymap.set('n', '<M-C-' .. n .. '>', ':SwapActiveBufferWithNthWindow ' .. n .. '<cr>', { desc = 'Swap active buffer with window ' .. n })
+end
+
 vim.keymap.set('n', '<M-Left>', ':SwitchToRelWindow -1<cr>', { desc = 'Switch window left' })
 vim.keymap.set('n', '<M-Right>', ':SwitchToRelWindow 1<cr>', { desc = 'Switch window right' })
 
-vim.keymap.set('n', '<M-S-1>', ':MoveActiveBufferToNthWindow 1<cr>', { desc = 'Move active buffer to window 1' })
-vim.keymap.set('n', '<M-S-2>', ':MoveActiveBufferToNthWindow 2<cr>', { desc = 'Move active buffer to window 2' })
-vim.keymap.set('n', '<M-S-3>', ':MoveActiveBufferToNthWindow 3<cr>', { desc = 'Move active buffer to window 3' })
-vim.keymap.set('n', '<M-S-4>', ':MoveActiveBufferToNthWindow 4<cr>', { desc = 'Move active buffer to window 4' })
-
 vim.keymap.set('n', '<M-=>', ':EqualizeWindows<cr>', { desc = 'Equalize windows' })
 vim.keymap.set('n', '<M-S-=>', ':FocusActiveWindow<cr>', { desc = 'Focus active window' })
+
