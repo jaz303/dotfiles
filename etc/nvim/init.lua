@@ -8,6 +8,7 @@ require('config.options')
 require('config.lsp')
 
 require('local.wm')
+require('local.shunt')
 
 require('plugins.deps')
 require('plugins.theme')

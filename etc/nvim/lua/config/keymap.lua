@@ -35,7 +35,6 @@ vim.keymap.set({ 'n', 'x' }, '<leader>P', '"+P', { desc = 'Paste from system cli
 vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", { desc = 'Goto declaration', noremap = true, silent = true })
 vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", { desc = 'Goto definition', noremap = true, silent = true })
 
-
 --
 -- Navigating buffers
 
@@ -48,7 +47,6 @@ vim.keymap.set('n', '<leader>bb', '<C-^>', { desc = 'Alternate buffer' })
 vim.keymap.set('n', '<leader>bn', ':bnext<cr>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<leader>bp', ':bprevious<cr>', { desc = 'Previous buffer' })
 vim.keymap.set('n', '<leader>bt', ts.buffers, { desc = 'Telescope buffers' })
-
 
 --
 --
@@ -74,4 +72,19 @@ vim.keymap.set('n', '<leader>fg', ts.live_grep, { desc = 'Telescope live grep' }
 vim.keymap.set('n', '<leader>fh', ts.help_tags, { desc = 'Telescope help tags' })
 vim.keymap.set('n', '<leader>ls', ts.lsp_document_symbols, { desc = 'Telescope document syms' })
 vim.keymap.set('n', '<leader>lw', ts.lsp_workspace_symbols, { desc = 'Telescope workspace syms' })
+
+--
+-- Shunt
+
+local shunt = require('local.shunt')
+
+vim.keymap.set('n', '<leader>ss', shunt.push_selection, { desc = 'Shunt selection' })
+vim.keymap.set('v', '<leader>ss', shunt.push_selection, { desc = 'Shunt selection' })
+vim.keymap.set('n', '<leader>st', ':ShuntPushType<cr>', { desc = 'Shunt type' })
+vim.keymap.set('n', '<leader>sh', ':ShuntHide<cr>', { desc = 'Hide shunt window' })
+vim.keymap.set('v', '<leader>sh', '<cmd>ShuntHide<cr>', { desc = 'Hide shunt window' })
+vim.keymap.set('n', '<leader>s<Enter>', ':ShuntToggle<cr>', { desc = 'Toggle shunt window' })
+vim.keymap.set('v', '<leader>s<Enter>', '<cmd>ShuntToggle<cr>', { desc = 'Toggle shunt window' })
+vim.keymap.set('n', '<leader>sc', ':ShuntClear<cr>', { desc = 'Clear shunt window' })
+vim.keymap.set('v', '<leader>sc', '<cmd>ShuntClear<cr>', { desc = 'Clear shunt window' })
 

@@ -10,6 +10,7 @@ wk.add({
   { "<leader>b", group = "Buffer" },
   { "<leader>l", group = "LSP" },
   { "<leader>r", group = "Refactor" },
+  { "<leader>s", group = "Shunt" },
 })
 
 
