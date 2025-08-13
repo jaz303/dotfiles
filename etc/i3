@@ -15,7 +15,9 @@ set $mod Mod4
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 7.5
+font pango:MesloLGL Nerd Font 9
+
+#title_format "<b>%title</b>"
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -26,27 +28,34 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
+#exec --no-startup-id nm-applet
 
 # Start Dropbox at startup
-#exec --no-startup-id dropbox start
+exec --no-startup-id dropbox start
+
+# Start xfsettingsd
+# This allows us to configure mouse, keyboard repeat etc inside xfce
+# (my secondary window manager) and have the same settings in i3.
+exec --no-startup-id xfsettingsd
 
 # Start 1password at startup
 # mod-p to launch 1password and make sure it's floating
-exec --no-startup-id 1password --silent
+#exec --no-startup-id 1password --silent
 bindsym $mod+p exec 1password
-for_window [class="^1Password$" instance="1password"] floating enable
+for_window [class="^1Password$" instance="1password"] floating enable, move position center
 
-# Flameshot for screenshotting
-bindsym $mod+grave exec --no-startup-id flameshot gui
-bindsym $mod+shift+grave exec --no-startup-id flameshot full
+# Screenshots
+bindsym $mod+grave exec --no-startup-id scrot -F '/home/jason/screenshots/%Y-%m-%d_%H%M%S_$wx$h.png'
+bindsym $mod+shift+grave exec --no-startup-id scrot -s -F '/home/jason/screenshots/%Y-%m-%d_%H%M%S_$wx$h.png'
 
 # Set keyboard repeat rate, scrolling
 #exec --no-startup-id /home/jason/.config/i3/configure-input
 
-# Open PLAN.md on workspace 10 at startup
-#exec --no-startup-id i3-msg 'rename workspace 10 to "10:plan"'
-#exec --no-startup-id i3-msg 'workspace "10:plan"; exec gnome-terminal -- emacs ~/projects/PERSONAL.org; workspace 1'
+# startup with ChatGPT and Org mode
+exec --no-startup-id i3-msg 'rename workspace 9 to "9:gpt"'
+exec --no-startup-id i3-msg 'rename workspace 10 to "10:org"'
+exec --no-startup-id i3-msg 'workspace "9:gpt"; exec firefox --new-window "https://chatgpt.com"; workspace 1'
+exec --no-startup-id i3-msg 'workspace "10:org"; exec emacs ~/Dropbox/org/index.org; workspace 1'
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -55,11 +64,17 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+# class for disposable floating windows
+for_window [class="floating"] floating enable, move position center
+for_window [class="floating-explorer"] resize set width 1000 px height 700 px, move position center
+for_window [class="floating-browser"] resize set width 1600 px height 1000 px, move position center
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec alacritty
+bindsym $mod+Shift+Return exec alacritty --class floating-term -o 'window.dimensions.columns=150' -o 'window.dimensions.lines=35'
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -69,7 +84,7 @@ bindsym $mod+Shift+q kill
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu='dmenu -i -fn "MesloLGL Nerd Font:regular:pixelsize=14"'
 
 # change focus
 bindsym $mod+h focus left
@@ -207,27 +222,29 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3status
-        font pango:DejaVu Sans Mono 8
+        font pango:MesloLGL Nerd Font 9.5
 }
 
 # mod+b - launch browser
+# TODO: work out how we can summon a temporary floating browser in the current workspace
 bindsym $mod+b exec --no-startup-id firefox
+bindsym $mod+Shift+b exec --no-startup-id /home/jason/bin/floatingfox
 bindsym $mod+m exec --no-startup-id firefox --app=https://www.fastmail.com
-
-# mod+x - launch sublime text
-bindsym $mod+x exec --no-startup-id subl --launch-or-new-window
 
 # mod-tab/mod-shift-tab for prev/next workspace
 bindsym $mod+Tab workspace next
 bindsym $mod+shift+Tab workspace prev
 
-# mod-n - start file browser
-bindsym $mod+n exec --no-startup-id thunar ~
+# mod-x - start file explorer (+ Shift modifier for floating)
+bindsym $mod+x exec --no-startup-id thunar ~
+bindsym $mod+Shift+x exec --no-startup-id thunar --class "floating-explorer" ~
 
 # backlight controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5
+bindsym XF86MonBrightnessUp exec brightnessctl s +5%
+bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
 
 # mod+shift+n to rename the active workspace
-bindsym $mod+shift+n exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
+bindsym $mod+shift+n exec i3-input -F 'rename workspace to "%s"' -P 'New name: ' -f 'pango:MesloLGL Nerd Font 12'
 
+gaps inner 0
+gaps outer 0
