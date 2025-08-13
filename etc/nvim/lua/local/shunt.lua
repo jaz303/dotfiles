@@ -56,7 +56,9 @@ local function redraw()
   end
 
   vim.bo[buf].modifiable = true
+  vim.bo[buf].readonly = false
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, out_lines)
+  vim.bo[buf].readonly = true
   vim.bo[buf].modifiable = false
 end
 
