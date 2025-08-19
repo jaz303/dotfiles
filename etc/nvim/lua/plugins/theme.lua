@@ -8,12 +8,16 @@ vim.pack.add({
   "https://github.com/folke/tokyonight.nvim.git"
 })
 
+vim.pack.add({
+  "https://github.com/catppuccin/nvim"
+})
+
 -- Not sure if this is needed?
 require('tokyonight')
 
 vim.cmd.colorscheme('tokyonight-night')
 
---  
+--
 --return {
 --  'folke/tokyonight.nvim',
 --  lazy = false,

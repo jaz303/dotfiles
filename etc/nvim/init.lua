@@ -9,6 +9,7 @@ require('config.lsp')
 
 require('local.wm')
 require('local.shunt')
+require('local.autoformat')
 
 require('plugins.deps')
 require('plugins.theme')
@@ -24,13 +25,15 @@ require('config.keymap')
 
 -- Launch a floating terminal with the given working directory
 function LaunchFloatingTerminalInDir(dir, cmd)
-  local exec = "exec alacritty --class floating_term -o 'window.dimensions.columns=150' -o 'window.dimensions.lines=35' --working-directory '" .. dir .. "'"
+  local exec =
+      "exec alacritty --class floating_term -o 'window.dimensions.columns=150' -o 'window.dimensions.lines=35' --working-directory '" ..
+      dir .. "'"
 
   if cmd then
     exec = exec .. " -e '" .. cmd .. "'"
   end
 
-  vim.fn.system({"i3-msg", exec})
+  vim.fn.system({ "i3-msg", exec })
 end
 
 -- Launch a floating terminal in the workspace dir
@@ -48,9 +51,11 @@ function LaunchFloatingGitClient()
   LaunchFloatingTerminalInDir(vim.fn.getcwd(), "lazygit")
 end
 
-vim.api.nvim_create_user_command('LaunchFloatingTerminalWS', LaunchFloatingTerminalInWorkspaceDir, {desc = 'Launch workspace terminal'})
-vim.api.nvim_create_user_command('LaunchFloatingTerminalF', LaunchFloatingTerminalInFileDir, {desc = 'Launch file terminal'})
-vim.api.nvim_create_user_command('LaunchGitClient', LaunchFloatingGitClient, {desc = 'Launch Lazygit'})
+vim.api.nvim_create_user_command('LaunchFloatingTerminalWS', LaunchFloatingTerminalInWorkspaceDir,
+  { desc = 'Launch workspace terminal' })
+vim.api.nvim_create_user_command('LaunchFloatingTerminalF', LaunchFloatingTerminalInFileDir,
+  { desc = 'Launch file terminal' })
+vim.api.nvim_create_user_command('LaunchGitClient', LaunchFloatingGitClient, { desc = 'Launch Lazygit' })
 
 vim.keymap.set('n', '<M-Enter>', ':LaunchFloatingTerminalWS<cr>', { desc = 'Launch workspace terminal' })
 vim.keymap.set('n', '<M-S-Enter>', ':LaunchFloatingTerminalF<cr>', { desc = 'Launch file terminal' })
@@ -58,10 +63,12 @@ vim.keymap.set('n', '<leader>g', ':LaunchGitClient<cr>', { desc = 'Launch git cl
 
 vim.keymap.set('n', '<M-0>', ':Neotree<cr>', { desc = 'Switch to Neotree' })
 
-for n = 1,4 do
+for n = 1, 4 do
   vim.keymap.set('n', '<M-' .. n .. '>', ':SwitchToNthWindow ' .. n .. '<cr>', { desc = 'Switch to window ' .. n })
-  vim.keymap.set('n', '<M-S-' .. n .. '>', ':MoveActiveBufferToNthWindow ' .. n .. '<cr>', { desc = 'Move active buffer to window ' .. n })
-  vim.keymap.set('n', '<M-C-' .. n .. '>', ':SwapActiveBufferWithNthWindow ' .. n .. '<cr>', { desc = 'Swap active buffer with window ' .. n })
+  vim.keymap.set('n', '<M-S-' .. n .. '>', ':MoveActiveBufferToNthWindow ' .. n .. '<cr>',
+    { desc = 'Move active buffer to window ' .. n })
+  vim.keymap.set('n', '<M-C-' .. n .. '>', ':SwapActiveBufferWithNthWindow ' .. n .. '<cr>',
+    { desc = 'Swap active buffer with window ' .. n })
 end
 
 vim.keymap.set('n', '<M-Left>', ':SwitchToRelWindow -1<cr>', { desc = 'Switch window left' })
@@ -69,4 +76,3 @@ vim.keymap.set('n', '<M-Right>', ':SwitchToRelWindow 1<cr>', { desc = 'Switch wi
 
 vim.keymap.set('n', '<M-=>', ':EqualizeWindows<cr>', { desc = 'Equalize windows' })
 vim.keymap.set('n', '<M-S-=>', ':FocusActiveWindow<cr>', { desc = 'Focus active window' })
-

@@ -7,10 +7,12 @@ These aren't all necessarily custom... more of an aide-memoire for me...
   - `<F2>` - rename (VSCode muscle memory...)
   - `<F12>` - goto definition (ditto...)
   - `=` - LSP reformat
+  - `<C-l>` - redraw the screen, clear search
 
-### Autocompletion
+### Autocompletion/LSP stuff
 
-  - `<C-space>` - summon autocompleter
+  - `<C-Enter>` - LSP code actions
+  - `<C-Space>` - summon autocompleter
   - `<C-{n,p}>` - next/previous autocompletion
 
 ### Buffer navigation
@@ -34,7 +36,7 @@ These aren't all necessarily custom... more of an aide-memoire for me...
 
 ## Windows
 
-Window numbering is derived on-demand based on geometry, increasing from left to right. 
+Window numbering is derived on-demand based on geometry, increasing from left to right.
 
   - `<M-0>` - focus on Neotree, open if not visible
   - `<M-{1-4}>` - jump to window 1-4
@@ -49,15 +51,32 @@ In Neotree, pressing `{1-4}` will open file in the corresponding window (assumes
 
 ## TODO
 
-  - Golang should have automatic imports, like in VSCode
-  - Review how I'm doing auto-formatting on save, right now it's just LSP but probably better to shell out to a proper tool for configurabillity?
-  - Popup type definition and documentation?
-  - Can autocomplete add argument placeholders?
-  - LLM integration
-  - Full system clipboard integration
-  - Paste with auto format/indent
-  - Block commands (comment/indent)
-  - `ESC` should trigger `:noh` (and maybe clear search register too?)
+### Typescript
+
+  - [x] need to auto-add imports like in VSCode
+    - done via code actions. doesn't always work in my test suites?
+
+### LSP Floats
+
+Using `K` to trigger hover. It would be better if pressing it again closed the popup, rather than focus.
+Look into the default LSP bindings; maybe remove the `K` binding and make our own function (should be an autocmd for LspAttach).
+
+We should setup `T` to trigger/toggle a popup for the "best possible" guess at the __type definition__ under consideration.
+
+### Misc
+
+  - [ ] Can autocomplete add argument placeholders?
+  - [ ] LLM integration
+  - [x] Full system clipboard integration
+  - [ ] Paste with auto format/indent
+  - [ ] Block comments - gc, gcc - but trying to get C-/ working to do it too
+  - [x] Block indents
+  - [x] `<C-l>` should trigger `:noh`
+  - [x] Golang should have automatic imports, like in VSCode
+    - code actions handling this
+  - [x] Review how I'm doing auto-formatting on save, right now it's just LSP but probably better to shell out to a proper tool for configurabillity?
+    - have got a local autocmd for this; just use LSP if available
+    - need to support external formatters on a per-project basis; wonder if there's something for this?
 
 ### `shunt`
 
@@ -93,6 +112,8 @@ Once we've got something in place for this we can just assign `F5` - `F8` to the
 
 ### Plugins
 
+  - nvim-treesitter-textobjects
+  - nvim-surround
   - snipe ?
   - easymotion ?
 

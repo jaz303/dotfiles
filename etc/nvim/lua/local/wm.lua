@@ -82,10 +82,10 @@ function wm.GetCandidateWindows()
   end
 
   table.sort(targets, function(a, b)
-    if a.y == b.y then
-      return a.x < b.x
-    else
+    if a.x == b.x then
       return a.y < b.y
+    else
+      return a.x < b.x
     end
   end)
 

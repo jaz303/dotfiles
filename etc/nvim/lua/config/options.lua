@@ -42,4 +42,3 @@ vim.opt.undofile = true
 
 -- Default floating window border
 vim.opt.winborder = 'rounded'
-

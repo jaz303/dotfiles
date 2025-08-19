@@ -3,6 +3,8 @@ Win = nil
 Entries = {}
 Visible = false
 
+local max_width = 0.3
+
 local renderers = {
   selection = function(entry, lines)
     for _, l in ipairs(entry.lines) do
@@ -16,6 +18,15 @@ local renderers = {
 
 local function get_visual_selection()
   return vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."))
+end
+
+-- check window is still valid (deals with situation where user has closed
+-- the shunt window manually)
+local function validate_window()
+  if Visible and not vim.api.nvim_win_is_valid(Win) then
+    Win = nil
+    Visible = false
+  end
 end
 
 local function get_shunt_buffer()
@@ -39,8 +50,38 @@ local function get_current_relative_path()
   return relpath
 end
 
+local function calc_window_bounds()
+  local ui = vim.api.nvim_list_uis()[1]
+  if not ui then
+    return { width = 0, height = 0, row = 0, col = 0 }
+  end
 
-local function redraw()
+  local total_width  = ui.width
+  local total_height = ui.height
+  local lines = vim.api.nvim_buf_get_lines(Buf, 0, -1, false)
+  local height = math.min(#lines, total_height)
+
+  local max_line_len = 0
+  for _, line in ipairs(lines) do
+    if #line > max_line_len then
+      max_line_len = #line
+    end
+  end
+  local width_cap = math.floor(total_width * max_width)
+  local width = math.min(max_line_len, width_cap)
+
+  local col = total_width - width
+  local row = 0
+
+  return {
+    width  = width,
+    height = height,
+    row    = row,
+    col    = col,
+  }
+end
+
+local function render()
   local buf = get_shunt_buffer()
   local out_lines = {}
 
@@ -64,42 +105,43 @@ end
 
 -- show shunt window
 local function show()
-  if Visible then return end
-
-  if #Entries == 0 then
-    print("Shunt buffer empty!")
-    return
-  end
-
-  local buf = get_shunt_buffer()
-  local ui = vim.api.nvim_list_uis()[1]
-  local win_height = ui.height
-  local win_width = ui.width
+  validate_window()
   
-  local height = math.min(vim.api.nvim_buf_line_count(buf), win_height)
-  height = 30
-  local width = 0
-  for _, line in ipairs(vim.api.nvim_buf_get_lines(buf, 0, -1, false)) do
-    width = math.max(width, #line)
+  local bounds = calc_window_bounds()
+  
+  if not Visible then
+    if #Entries == 0 then
+      print("Shunt buffer empty!")
+      return
+    end
+
+    local opts = {
+      relative = "editor",
+      width = bounds.width,
+      height = bounds.height,
+      row = bounds.row,
+      col = bounds.col,
+      style = "minimal",
+      border = "rounded",
+    }
+
+    Win = vim.api.nvim_open_win(get_shunt_buffer(), true, opts)
+    Visible = true
+  else
+    vim.api.nvim_win_set_config(Win, {
+      relative = 'editor',
+      width = bounds.width,
+      height = bounds.height,
+      row = bounds.row,
+      col = bounds.col,
+    })
   end
-
-  local opts = {
-    relative = "editor",
-    width = width,
-    height = height,
-    row = 0,
-    col = win_width - width,
-    style = "minimal",
-    border = "single", -- optional
-  }
-
-  Win = vim.api.nvim_open_win(get_shunt_buffer(), true, opts)
-
-  Visible = true
 end
 
 -- hide shunt window
 local function hide()
+  validate_window()
+  
   if not Visible then return end
 
   vim.api.nvim_win_close(Win, true)
@@ -182,13 +224,13 @@ local function push_selection()
 
   table.insert(Entries, entry)
 
-  redraw()
+  render()
   show()
 end
 
 -- push the type definition under the cursor in the active window
 local function push_type_def()
-  redraw()
+  render()
   show()
 end
 
@@ -201,12 +243,16 @@ local function remove(victim)
     end
   end
   Entries = new_entries
-  redraw()
+
+  render()
+  if Visible then
+    show()
+  end
 end
 
 local function clear()
   Entries = {}
-  redraw()
+  render()
   hide()
 end
 

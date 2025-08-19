@@ -11,6 +11,5 @@ wk.add({
   { "<leader>l", group = "LSP" },
   { "<leader>r", group = "Refactor" },
   { "<leader>s", group = "Shunt" },
+  { "<leader>.", group = "Floating" },
 })
-
-

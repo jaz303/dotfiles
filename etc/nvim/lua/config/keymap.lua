@@ -14,17 +14,22 @@ vim.keymap.set('i', '<Up>', '<C-\\><C-o>gk', { desc = 'Navigate up (visual line)
 -- fine here on Alacritty/Linux.
 vim.keymap.set('i', '<C-BS>', '<C-W>', { desc = 'Delete word' })
 
---
--- Move Lines Up/Down in normal/insert modes
+-- Visual-mode indent without clearing selection
+vim.keymap.set('v', '<C-.>', '>gv', { desc = 'Indent retaining selection' })
+vim.keymap.set('v', '<C-,>', '<gv', { desc = 'Dedent retaining selection' })
 
+-- C-/ to comment
+-- TODO: fix these
+vim.keymap.set('n', '<C-_>', 'gcc', { desc = 'Toggle linewise comment' })
+vim.keymap.set('v', '<C-_>', 'gc', { desc = 'Toggle linewise comment' })
+
+-- Move Lines Up/Down in normal/insert modes
 vim.keymap.set({ 'n', 'x' }, '<M-S-Up>', ':move -2<cr>', { desc = 'Move Line Up' })
 vim.keymap.set({ 'n', 'x' }, '<M-S-Down>', ':move +1<cr>', { desc = 'Move Line Down' })
 vim.keymap.set('i', '<M-S-Up>', '<C-o>:move -2<cr>', { desc = 'Move Line Up' })
 vim.keymap.set('i', '<M-S-Down>', '<C-o>:move +1<cr>', { desc = 'Move Line Down' })
 
---
 -- Easier interaction with the system clipboard
-
 vim.keymap.set({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'Copy to system clipboard' })
 vim.keymap.set({ 'n', 'x' }, '<leader>p', '"+p', { desc = 'Paste from system clipboard after the cursor position' })
 vim.keymap.set({ 'n', 'x' }, '<leader>P', '"+P', { desc = 'Paste from system clipboard before the cursor position' })
@@ -32,27 +37,37 @@ vim.keymap.set({ 'n', 'x' }, '<leader>P', '"+P', { desc = 'Paste from system cli
 --
 -- Use LSP
 
-vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", { desc = 'Goto declaration', noremap = true, silent = true })
-vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", { desc = 'Goto definition', noremap = true, silent = true })
+vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>",
+  { desc = 'Goto declaration', noremap = true, silent = true })
+vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>",
+  { desc = 'Goto definition', noremap = true, silent = true })
+vim.keymap.set({ 'n', 'i' }, '<C-Enter>', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code action' })
+
+vim.keymap.set('n', '<leader>,', '<cmd>lua vim.lsp.buf.signature_help()<cr>', { desc = "Signature help" })
+vim.keymap.set('n', '<leader>?', '<cmd>lua vim.diagnostic.open_float()<cr>', { desc = "Diagnostics" })
+vim.keymap.set('n', '<leader>.s', '<cmd>lua vim.lsp.buf.signature_help()<cr>', { desc = "Signature help" })
+vim.keymap.set('n', '<leader>.d', '<cmd>lua vim.diagnostic.open_float()<cr>', { desc = "Diagnostics" })
 
 --
 -- Navigating buffers
 
+-- Shortcuts
 vim.keymap.set('n', '<leader><leader>', ts.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader><BS>', '<C-^>', { desc = 'Alternate buffer' })
 vim.keymap.set('n', '<leader>]', ':bnext<cr>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<leader>[', ':bprevious<cr>', { desc = 'Previous buffer' })
 
+-- Discoverable versions
+vim.keymap.set('n', '<leader>bt', ts.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>bb', '<C-^>', { desc = 'Alternate buffer' })
 vim.keymap.set('n', '<leader>bn', ':bnext<cr>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<leader>bp', ':bprevious<cr>', { desc = 'Previous buffer' })
-vim.keymap.set('n', '<leader>bt', ts.buffers, { desc = 'Telescope buffers' })
 
 --
 --
 
 -- Ctrl-L redraws the screen by default. Now it will also toggle search highlighting.
-vim.keymap.set('n', '<C-l>', ':set hlsearch!<cr><C-l>', { desc = 'Toggle search highlighting' })
+vim.keymap.set('n', '<C-l>', ':nohl<cr><C-l>', { desc = 'Toggle search highlighting' })
 
 -- Toggle visible whitespace characters
 --vim.keymap.set('n', '<leader>l', ':listchars!<cr>', { desc = 'Toggle [l]istchars' })
@@ -87,4 +102,3 @@ vim.keymap.set('n', '<leader>s<Enter>', ':ShuntToggle<cr>', { desc = 'Toggle shu
 vim.keymap.set('v', '<leader>s<Enter>', '<cmd>ShuntToggle<cr>', { desc = 'Toggle shunt window' })
 vim.keymap.set('n', '<leader>sc', ':ShuntClear<cr>', { desc = 'Clear shunt window' })
 vim.keymap.set('v', '<leader>sc', '<cmd>ShuntClear<cr>', { desc = 'Clear shunt window' })
-
