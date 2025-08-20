@@ -12,6 +12,9 @@
 -- e.g. filesize. I don't care about this; if I ever have it that wide it's
 -- because I want it like that.
 
+-- attempt to split str into two, separated by the longest run of whitespace
+-- that is at least 3 chars and neither leading nor trailing.
+-- returns nil if str does not include such a run of whitespace.
 local function split(str)
   local i, j = 0, 0
   local max, off = 0, -1
@@ -49,6 +52,7 @@ local function neotree_resize_to_content()
       local max_left, max_right = 0, 0
       for i, line in ipairs(lines) do
         if i > 1 then
+          -- split into filename/decoration
           local left, right = split(line)
           if left then
             local l_len = vim.fn.strdisplaywidth(left)
@@ -56,7 +60,6 @@ local function neotree_resize_to_content()
             if l_len > max_left then max_left = l_len end
             if r_len > max_right then max_right = r_len end
           else
-            -- no decorations, whole line is "left"
             local l_len = vim.fn.strdisplaywidth(vim.trim(line))
             if l_len > max_left then max_left = l_len end
           end
