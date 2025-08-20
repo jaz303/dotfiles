@@ -10,6 +10,7 @@ require('config.lsp')
 require('local.wm')
 require('local.shunt')
 require('local.autoformat')
+require('local.nt-shrink')
 
 require('plugins.deps')
 require('plugins.theme')
