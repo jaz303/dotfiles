@@ -70,9 +70,9 @@ Investigate `lspsaga` plugin.
 
   - [ ] Can autocomplete add argument placeholders?
   - [ ] LLM integration
-  - [x] Full system clipboard integration
   - [ ] Paste with auto format/indent
   - [ ] Block comments - gc, gcc - but trying to get C-/ working to do it too
+  - [x] Full system clipboard integration
   - [x] Block indents
   - [x] `<C-l>` should trigger `:noh`
   - [x] Golang should have automatic imports, like in VSCode
@@ -119,6 +119,7 @@ Once we've got something in place for this we can just assign `F5` - `F8` to the
   - nvim-surround
   - snipe ?
   - easymotion ?
+  - harpoon ?
 
 ### Navigation
 
