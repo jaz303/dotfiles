@@ -62,6 +62,7 @@ vim.keymap.set('n', '<M-S-Enter>', ':LaunchFloatingTerminalF<cr>', { desc = 'Lau
 vim.keymap.set('n', '<leader>g', ':LaunchGitClient<cr>', { desc = 'Launch git client' })
 
 vim.keymap.set('n', '<M-0>', ':Neotree<cr>', { desc = 'Switch to Neotree' })
+vim.keymap.set('n', '<M-S-0>', ':Neotree action=show toggle<cr>', { desc = 'Toggle Neotree' })
 
 for n = 1, 4 do
   vim.keymap.set('n', '<M-' .. n .. '>', ':SwitchToNthWindow ' .. n .. '<cr>', { desc = 'Switch to window ' .. n })

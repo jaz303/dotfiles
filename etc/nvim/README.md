@@ -39,9 +39,10 @@ These aren't all necessarily custom... more of an aide-memoire for me...
 Window numbering is derived on-demand based on geometry, increasing from left to right.
 
   - `<M-0>` - focus on Neotree, open if not visible
+  - `<M-S-0>` - toggle Neotree
   - `<M-{1-4}>` - jump to window 1-4
   - `<M-S-{1-4}>` - move active buffer to window 1-4
-  - `<M-{Left,Right}>` - cycle active window left/right
+  - `<M-{Left,Right}>` - cycle active window left/right (with wraparound)
   - `<M-=>` - equalize width of all windows
   - `<M-S-=>` - focus on active window (make it 70% of the available horizontal space)
 
@@ -62,6 +63,8 @@ Using `K` to trigger hover. It would be better if pressing it again closed the p
 Look into the default LSP bindings; maybe remove the `K` binding and make our own function (should be an autocmd for LspAttach).
 
 We should setup `T` to trigger/toggle a popup for the "best possible" guess at the __type definition__ under consideration.
+
+Investigate `lspsaga` plugin.
 
 ### Misc
 

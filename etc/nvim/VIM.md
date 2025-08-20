@@ -1,6 +1,9 @@
 # vim notes
 
-__*__ = customisation
+Legend:
+
+  - __*__ = customisation
+  - __!__ = built in keybinding, but custom behaviour
 
 ## Searching
   - `/` - enter search string (fwd)
@@ -8,6 +11,12 @@ __*__ = customisation
   - `n` - next match (in backwards mode, this searches back the way)
   - `N` - previous match
   - __*__ `<C-l>` - clear search highlighting (also redraws)
+
+## Navigating
+  - `m[a-z]` to set a mark, `'[a-z]` to jump to that mark
+  - `<C-i>` and `<C-o>` go fwd/back (mnemonic: `o` = old) through jumplist, don't really like this because it can take you unexpectedly to a different file. Ideally there would be a per-file internal jumplist and an external jumplist for keeping track of visited files, which could each be navigated independently. Changing buffers should always be a deliberate choice.
+  - `zz` - centre around cursor
+  - `gi` - go to last insert location and re-enter insert mode. This is useful, say, if you've had to scroll about to find something elsewhere.
 
 ## Visual mode
   - `gv` - restore last visual selection
