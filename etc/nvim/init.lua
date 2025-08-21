@@ -20,6 +20,7 @@ require('plugins.neotree')
 require('plugins.which-key')
 require('plugins.lualine')
 require('plugins.scrollbar')
+require('plugins.treehopper')
 
 require('config.autocmd')
 require('config.keymap')
