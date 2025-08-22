@@ -11,6 +11,7 @@ require('local.wm')
 require('local.shunt')
 require('local.autoformat')
 require('local.nt-shrink')
+require('local.highlight-yank')
 
 require('plugins.deps')
 require('plugins.theme')
@@ -23,7 +24,6 @@ require('plugins.scrollbar')
 require('plugins.treehopper')
 require('plugins.gitsigns')
 
-require('config.autocmd')
 require('config.keymap')
 
 -- Launch a floating terminal with the given working directory
