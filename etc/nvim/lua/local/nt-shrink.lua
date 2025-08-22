@@ -66,9 +66,9 @@ local function neotree_resize_to_content()
         end
       end
 
-      local new_width = max_left + 2
+      local new_width = max_left + 4
       if max_right > 0 then
-        new_width = new_width + 1 + max_right
+        new_width = new_width + max_right
       end
 
       vim.api.nvim_win_set_width(win, new_width)
