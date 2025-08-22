@@ -21,6 +21,7 @@ require('plugins.which-key')
 require('plugins.lualine')
 require('plugins.scrollbar')
 require('plugins.treehopper')
+require('plugins.gitsigns')
 
 require('config.autocmd')
 require('config.keymap')
@@ -61,7 +62,7 @@ vim.api.nvim_create_user_command('LaunchGitClient', LaunchFloatingGitClient, { d
 
 vim.keymap.set('n', '<M-Enter>', ':LaunchFloatingTerminalWS<cr>', { desc = 'Launch workspace terminal' })
 vim.keymap.set('n', '<M-S-Enter>', ':LaunchFloatingTerminalF<cr>', { desc = 'Launch file terminal' })
-vim.keymap.set('n', '<leader>g', ':LaunchGitClient<cr>', { desc = 'Launch git client' })
+vim.keymap.set('n', '<leader>gg', ':LaunchGitClient<cr>', { desc = 'lazygit' })
 
 vim.keymap.set('n', '<M-0>', ':Neotree<cr>', { desc = 'Switch to Neotree' })
 vim.keymap.set('n', '<M-S-0>', ':Neotree action=show toggle<cr>', { desc = 'Toggle Neotree' })

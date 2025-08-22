@@ -1,4 +1,9 @@
 local ts = require('telescope.builtin')
+local gs = require('gitsigns')
+
+local map = function(mode, l, r, opts)
+  vim.keymap.set(mode, l, r, opts or {})
+end
 
 -- Navigate visual lines
 vim.keymap.set({ 'n', 'x' }, 'j', 'gj', { desc = 'Navigate down (visual line)' })
@@ -102,3 +107,16 @@ vim.keymap.set('n', '<leader>s<Enter>', ':ShuntToggle<cr>', { desc = 'Toggle shu
 vim.keymap.set('v', '<leader>s<Enter>', '<cmd>ShuntToggle<cr>', { desc = 'Toggle shunt window' })
 vim.keymap.set('n', '<leader>sc', ':ShuntClear<cr>', { desc = 'Clear shunt window' })
 vim.keymap.set('v', '<leader>sc', '<cmd>ShuntClear<cr>', { desc = 'Clear shunt window' })
+
+--
+-- Git
+
+map('n', '<leader>gb', function() gs.blame_line({ full = true }) end, { desc = 'Popup blame line' })
+map('n', '<leader>gt', gs.toggle_current_line_blame, { desc = 'Toggle line blame' })
+map('n', '<leader>gw', gs.toggle_word_diff, { desc = 'Toggle word diff' })
+map('n', '<leader>gd', gs.diffthis, { desc = 'Diff this' })
+map('n', '<leader>gD', function() gs.diffthis('~') end, { desc = 'Diff this (~)' })
+map('n', '<leader>gsb', gs.stage_buffer, { desc = 'Stage buffer' })
+map('n', '<leader>gsh', gs.stage_hunk, { desc = 'Stage hunk' })
+map('n', '<leader>gsB', gs.reset_buffer, { desc = 'Reset buffer' })
+map('n', '<leader>gsH', gs.reset_hunk, { desc = 'Reset hunk' })
