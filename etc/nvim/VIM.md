@@ -54,7 +54,6 @@ Legend:
   - `@[a-z]` - execute
 
 ## Git
-
   - `<leader>gg` - pop up lazygit in floating terminal
   - `<leader>gs[x]` - git stage, where `[x]` is:
     - `b` - stage buffer
