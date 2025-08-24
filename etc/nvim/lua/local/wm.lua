@@ -1,10 +1,12 @@
 local wm = {}
 
-local function warn(msg)
-  vim.notify(msg, vim.log.levels.WARN)
+local cache = nil
+
+local function invalidate_cache()
+  cache = nil
 end
 
-local function is_valid_target(win_id)
+local function is_target(win_id)
   local buf = vim.api.nvim_win_get_buf(win_id)
   local buf_type = vim.api.nvim_buf_get_option(buf, "buftype")
   if buf_type ~= "" then
@@ -17,6 +19,65 @@ local function is_valid_target(win_id)
   end
 
   return true
+end
+
+local function get_windows()
+  if not cache then
+    local window_ids = vim.api.nvim_tabpage_list_wins(0)
+    local targets = {}
+
+    for _, id in ipairs(window_ids) do
+      local pos = vim.api.nvim_win_get_position(id)
+      local height = vim.api.nvim_win_get_height(id)
+      local width = vim.api.nvim_win_get_width(id)
+
+      if is_target(id) then
+        table.insert(targets, {
+          id = id,
+          x = pos[1],
+          y = pos[2],
+          width = width,
+          height = height,
+        })
+      end
+    end
+
+    table.sort(targets, function(a, b)
+      if a.x == b.x then
+        return a.y < b.y
+      else
+        return a.x < b.x
+      end
+    end)
+
+    local mapping = {}
+    for ix, spec in ipairs(targets) do
+      mapping[spec.id] = ix
+    end
+
+    cache = {
+      mapping = mapping,
+      windows = targets,
+    }
+  end
+
+  return cache
+end
+
+vim.api.nvim_create_autocmd({
+  "WinNew",
+  "WinClosed",
+  "WinResized",
+  "VimResized",
+  "TabEnter",
+  "TabNew",
+  "TabClosed"
+}, {
+  callback = invalidate_cache,
+})
+
+local function warn(msg)
+  vim.notify(msg, vim.log.levels.WARN)
 end
 
 local function set_all_widths(windows)
@@ -33,7 +94,7 @@ local function total_width(windows)
   return out
 end
 
--- 
+--
 local function distribute_missing_widths(windows, available)
   local without_size = 0
   for _, win in ipairs(windows) do
@@ -50,7 +111,7 @@ local function distribute_missing_widths(windows, available)
   local window_rem = available % without_size
 
   for _, win in ipairs(windows) do
-    if win.width == nil then 
+    if win.width == nil then
       local this_width = window_width
       if window_rem > 0 then
         this_width = this_width + 1
@@ -61,35 +122,12 @@ local function distribute_missing_widths(windows, available)
   end
 end
 
+function wm.GetWindowIndex(winid)
+  return get_windows().mapping[winid]
+end
+
 function wm.GetCandidateWindows()
-  local window_ids = vim.api.nvim_list_wins()
-  local targets = {}
-
-  for _, id in ipairs(window_ids) do
-    local pos = vim.api.nvim_win_get_position(id)
-    local height = vim.api.nvim_win_get_height(id)
-    local width = vim.api.nvim_win_get_width(id)
-
-    if is_valid_target(id) then
-      table.insert(targets, {
-        id = id,
-        x = pos[1],
-        y = pos[2],
-        width = width,
-        height = height,
-      })
-    end
-  end
-
-  table.sort(targets, function(a, b)
-    if a.x == b.x then
-      return a.y < b.y
-    else
-      return a.x < b.x
-    end
-  end)
-
-  return targets
+  return get_windows().windows
 end
 
 function wm.EqualizeWindows()
@@ -106,17 +144,17 @@ end
 
 function wm.FocusActiveWindow()
   local windows = wm.GetCandidateWindows()
- 
+
   -- if there's less than 2 windows we can't focus
   if #windows <= 1 then
     return
   end
-    
-  local tot = total_width(windows) -- total available hspace
-  local focus_ratio = 0.70 -- proportion of available space taken by focused window
+
+  local tot = total_width(windows)                  -- total available hspace
+  local focus_ratio = 0.70                          -- proportion of available space taken by focused window
   local focus_width = math.floor(tot * focus_ratio) -- abs width of focussed window
-  local remain = tot - focus_width -- amount of space left for remaining windows
-  
+  local remain = tot - focus_width                  -- amount of space left for remaining windows
+
   for _, win in ipairs(windows) do
     if win.id == vim.api.nvim_get_current_win() then
       win.width = focus_width

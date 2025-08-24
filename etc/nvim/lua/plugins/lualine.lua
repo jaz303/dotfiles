@@ -52,6 +52,13 @@ local function width()
   return "W" .. vim.api.nvim_win_get_width(0)
 end
 
+local wm = require("local.wm")
+
+local function index()
+  return "" .. wm.GetWindowIndex(vim.api.nvim_get_current_win())
+end
+
+
 require('lualine').setup({
   options = {
     disabled_filetypes = {
@@ -73,7 +80,7 @@ require('lualine').setup({
     lualine_c = {},
     lualine_x = {},
     lualine_y = { width },
-    lualine_z = {},
+    lualine_z = { index },
   },
   inactive_winbar = {
     lualine_a = {},
@@ -81,6 +88,6 @@ require('lualine').setup({
     lualine_c = { 'filename' },
     lualine_x = { width },
     lualine_y = {},
-    lualine_z = {}
+    lualine_z = { index }
   }
 })
