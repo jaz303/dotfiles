@@ -1,5 +1,5 @@
 -- wm.lua
--- Implcity window navigation, based on window layout.
+-- Implicit window navigation, based on window layout.
 --
 -- Each window (ignoring non-file windows) on the active tabpage is assigned
 -- a sequential identifier based on its (x,y) coordinates.
