@@ -1,9 +1,15 @@
 # vim notes
 
 Legend:
-
   - __*__ = customisation
   - __!__ = built in keybinding, but custom behaviour
+
+## Basic Stuff
+  - `.` - repeat last edit operation
+  - `;` - repeat last motion operation (`f`, `t` etc)
+
+## Editing
+  - `J` - join current line with line below
 
 ## Searching
   - `/` - enter search string (fwd)
@@ -36,12 +42,16 @@ Legend:
   - in normal mode, `gcc` to toggle line comment
 
 ## System Clipboard
-
   - __*__ `<leader>y` - copy selection to system clipboard
   - __*__ `<leader>p`, `<leader>P` - paste system clipboard before/after
 
 ## Buffer management
   - `:bd` or `:bd!` - delete buffer (latter variant discards changes). this will also close the window.
+
+## Macros
+  - `q[a-z]` - begin recording
+  - `q` - stop recording
+  - `@[a-z]` - execute
 
 ## LSP
 
