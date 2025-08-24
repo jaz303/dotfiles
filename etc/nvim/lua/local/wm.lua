@@ -1,3 +1,19 @@
+-- wm.lua
+-- Implcity window navigation, based on window layout.
+--
+-- Each window (ignoring non-file windows) on the active tabpage is assigned
+-- a sequential identifier based on its (x,y) coordinates.
+--
+-- Features:
+-- Jump to nth window
+-- Jump to prev/next window
+-- Swap with nth window
+-- Focus on active window
+-- Equalise width of all windows
+--
+-- Originally designed for use with vertical splits; focus/equalize functions
+-- currently exhibit undefined behaviour when there are active horizontal splits.
+
 local wm = {}
 
 local cache = nil
