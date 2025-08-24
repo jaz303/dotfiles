@@ -53,6 +53,19 @@ Legend:
   - `q` - stop recording
   - `@[a-z]` - execute
 
+## Git
+
+  - `<leader>gg` - pop up lazygit in floating terminal
+  - `<leader>gs[x]` - git stage, where `[x]` is:
+    - `b` - stage buffer
+    - `h` - stage hunk
+    - `B` - reset buffer
+    - `H` - reset hunk
+  - `<leader>gt` - toggle line blame
+  - `<leader>gw` - toggle word diff
+  - `<leader>gb` - pop up git blame
+  - `<leader>gd`, `<leader>gD` - diff
+
 ## LSP
 
 ### Popups/floats
