@@ -67,7 +67,7 @@ vim.keymap.set('n', '<leader>gg', ':LaunchGitClient<cr>', { desc = 'lazygit' })
 vim.keymap.set('n', '<M-0>', ':Neotree<cr>', { desc = 'Switch to Neotree' })
 vim.keymap.set('n', '<M-S-0>', ':Neotree action=show toggle<cr>', { desc = 'Toggle Neotree' })
 
-for n = 1, 4 do
+for n = 1, 8 do
   vim.keymap.set('n', '<M-' .. n .. '>', ':SwitchToNthWindow ' .. n .. '<cr>', { desc = 'Switch to window ' .. n })
   vim.keymap.set('n', '<M-S-' .. n .. '>', ':MoveActiveBufferToNthWindow ' .. n .. '<cr>',
     { desc = 'Move active buffer to window ' .. n })
