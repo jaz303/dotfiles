@@ -1,3 +1,7 @@
+export LS_OPTIONS="--color"
+
+source $HOME/.dotfiles/etc/zshrc_common
+
 # Use "brew" user for anything homebrew related
 alias brew='sudo -Hu brew brew'
 

@@ -1,8 +1,8 @@
 -- Disable plugin theme on macOS because the default terminal doesn't support
 -- all the pretty colours.
-if vim.loop.os_uname().sysname == "Darwin" then
-  return
-end
+-- if vim.loop.os_uname().sysname == "Darwin" then
+--   return
+-- end
 
 vim.pack.add({
   "https://github.com/folke/tokyonight.nvim.git"

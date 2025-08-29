@@ -53,7 +53,11 @@ function LaunchFloatingTerminalInFileDir()
 end
 
 function LaunchFloatingGitClient()
-  LaunchFloatingTerminalInDir(vim.fn.getcwd(), "lazygit")
+  if vim.loop.os_uname().sysname == "Darwin" then
+    os.execute("open -a \"/Applications/Sublime Merge.app\" .")
+  else
+    LaunchFloatingTerminalInDir(vim.fn.getcwd(), "lazygit")
+  end
 end
 
 vim.api.nvim_create_user_command('LaunchFloatingTerminalWS', LaunchFloatingTerminalInWorkspaceDir,
