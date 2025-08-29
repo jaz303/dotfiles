@@ -24,6 +24,11 @@ Legend:
   - `zz` - centre around cursor
   - `gi` - go to last insert location and re-enter insert mode. This is useful, say, if you've had to scroll about to find something elsewhere.
 
+## Treehopper
+Use `m` to access Treehopper. This can be used in:
+  - operator pending mode, e.g. `ym[x]` to yank the region denoted by char `x`
+  - visual mode: use `m[x]` to visually select region denoted by char `x`
+
 ## Visual mode
   - `gv` - restore last visual selection
   - `o` - jump to other end of selection
@@ -64,6 +69,44 @@ Legend:
   - `<leader>gw` - toggle word diff
   - `<leader>gb` - pop up git blame
   - `<leader>gd`, `<leader>gD` - diff
+
+## [nvim-surround](https://github.com/kylechui/nvim-surround/blob/main/doc/nvim-surround.txt)
+
+These are the basics; there is also specific stuff for adding function calls, and strings.
+
+__Note:__ Using the right delimiter e.g. `]})>`, does not add space; using the left delimiter e.g. `[{(<`, adds space.
+
+  - `ys` - normal mode - `ys{motion}{char}`
+    - `ysiw"`
+    - `yse[`
+    - `yst;}`
+  - `yss` - operates on the current line, e.g. `yss[`
+  - `yS`, `ySS` - these variants place delimiter pair on new lines
+  - `S` - visual, e.g. `S(`
+  - `gS` - visual, place delimiters on new lines
+  - `ds` - delete - e.g. `ds(` changes `(foo)` to `foo`
+  - `cs` - change - e.g. `cs({` changes `(foo)` to `{foo}`
+  - `cS` - change, place delimiters on new lines
+
+### HTML Tags
+
+`t` and `T` are triggers.
+
+Examples:
+
+  - `ysstdiv<CR>` - encloses the current line in `<div>...</div>`
+  - `Sth1 id=foo<CR>` - encloses the selection in `<h1 id="foo">...</h1>`
+  - `dst` - remove outer tag
+  - `csth2` - change outer tag to `h2`, retaining attributes
+  - `csTh3` - change outer tag to `h3`, removing attributes
+
+### Functions
+
+`f` is the trigger; e.g.
+
+  - `ysiwfcall` - encloses in `call(...)`
+  - `Sfcall` - encloses visual selection in `call(...)`
+  - `dsf` - removes function call
 
 ## LSP
 

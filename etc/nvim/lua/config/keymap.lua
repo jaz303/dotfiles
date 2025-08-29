@@ -26,7 +26,11 @@ vim.keymap.set('v', '<C-,>', '<gv', { desc = 'Dedent (retain selection)' })
 -- C-/ to comment
 -- TODO: fix these
 vim.keymap.set('n', '<C-_>', 'gcc', { desc = 'Toggle linewise comment' })
-vim.keymap.set('v', '<C-_>', 'gc', { desc = 'Toggle linewise comment' })
+vim.keymap.set('x', '<C-_>', 'gc', { desc = 'Toggle linewise comment' })
+
+-- Treehopper
+vim.keymap.set("o", "m", ":<C-U>lua require('tsht').nodes()<CR>", { silent = true })
+vim.keymap.set("x", "m", ":lua require('tsht').nodes()<CR>", { silent = true })
 
 -- Move Lines Up/Down in normal/insert modes
 vim.keymap.set({ 'n', 'x' }, '<M-S-Up>', ':move -2<cr>', { desc = 'Move Line Up' })

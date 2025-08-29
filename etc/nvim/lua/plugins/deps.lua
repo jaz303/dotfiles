@@ -1,16 +1,10 @@
 vim.pack.add({
-  { src = "https://github.com/nvim-lua/plenary.nvim", version = "master" }
-})
+  -- Dependencies for other stuff
+  { src = "https://github.com/nvim-lua/plenary.nvim",               version = "master" },
+  { src = "https://github.com/MunifTanjim/nui.nvim",                version = "main" },
+  { src = "https://github.com/nvim-tree/nvim-web-devicons",         version = "master" },
+  { src = "https://github.com/antosha417/nvim-lsp-file-operations", version = "master" },
 
-vim.pack.add({
-  { src = "https://github.com/MunifTanjim/nui.nvim", version = "main" }
+  -- nvim-surround
+  { src = "https://github.com/kylechui/nvim-surround" }
 })
-
-vim.pack.add({
-  { src = "https://github.com/nvim-tree/nvim-web-devicons", version = "master" }
-})
-
-vim.pack.add({
-  { src = "https://github.com/antosha417/nvim-lsp-file-operations", version = "master" }
-})
-

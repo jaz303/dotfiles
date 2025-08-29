@@ -58,8 +58,8 @@ local function calc_window_bounds()
 
   local total_width  = ui.width
   local total_height = ui.height
-  local lines = vim.api.nvim_buf_get_lines(Buf, 0, -1, false)
-  local height = math.min(#lines, total_height)
+  local lines        = vim.api.nvim_buf_get_lines(Buf, 0, -1, false)
+  local height       = math.min(#lines, total_height)
 
   local max_line_len = 0
   for _, line in ipairs(lines) do
@@ -106,9 +106,9 @@ end
 -- show shunt window
 local function show()
   validate_window()
-  
+
   local bounds = calc_window_bounds()
-  
+
   if not Visible then
     if #Entries == 0 then
       print("Shunt buffer empty!")
@@ -141,7 +141,7 @@ end
 -- hide shunt window
 local function hide()
   validate_window()
-  
+
   if not Visible then return end
 
   vim.api.nvim_win_close(Win, true)
@@ -256,12 +256,12 @@ local function clear()
   hide()
 end
 
-vim.api.nvim_create_user_command('ShuntShow', show, {desc = 'Show shunt window'})
-vim.api.nvim_create_user_command('ShuntHide', hide, {desc = 'Hide shunt window'})
-vim.api.nvim_create_user_command('ShuntToggle', toggle, {desc = 'Toggle shunt window'})
+vim.api.nvim_create_user_command('ShuntShow', show, { desc = 'Show shunt window' })
+vim.api.nvim_create_user_command('ShuntHide', hide, { desc = 'Hide shunt window' })
+vim.api.nvim_create_user_command('ShuntToggle', toggle, { desc = 'Toggle shunt window' })
 
-vim.api.nvim_create_user_command('ShuntPushSelection', push_selection, {desc = 'Push selected text to shunt buffer'})
-vim.api.nvim_create_user_command('ShuntPushTypeDef', push_type_def, {desc = 'Push selected type to shunt buffer'})
+vim.api.nvim_create_user_command('ShuntPushSelection', push_selection, { desc = 'Push selected text to shunt buffer' })
+vim.api.nvim_create_user_command('ShuntPushTypeDef', push_type_def, { desc = 'Push selected type to shunt buffer' })
 
 vim.api.nvim_create_user_command(
   'ShuntRemove',
@@ -279,7 +279,7 @@ vim.api.nvim_create_user_command(
   }
 )
 
-vim.api.nvim_create_user_command('ShuntClear', clear, {desc = 'Clear & hide shunt window'})
+vim.api.nvim_create_user_command('ShuntClear', clear, { desc = 'Clear & hide shunt window' })
 
 return {
   show = show,

@@ -110,20 +110,6 @@ function disable_git_prompt() {
 }
 
 ################################################################################
-# platform                                                                     #
-################################################################################
-
-platform='unknown'
-uname=`uname`
-if [[ "$uname" == "Darwin" ]]; then
-  platform="mac"
-  source ~/.dotfiles/etc/zshrc_mac
-elif [[ "$uname" == "Linux" ]]; then
-  platform="linux"
-  source ~/.dotfiles/etc/zshrc_linux
-fi
-
-################################################################################
 # simple aliases + functions                                                   #
 ################################################################################
 
@@ -134,11 +120,6 @@ alias grep='grep --color=auto'
 
 alias h="fc -l"
 alias hf="fc -lm"
-
-nvim_path=$(which nvim)
-if [ -x "$nvim_path" ]; then
-    alias vim="nvim"
-fi
 
 function pf {
     ps $PS_ARGS | grep -i $* | grep -v grep
@@ -241,18 +222,6 @@ function rename_pattern {
 # Find all TODOs etc. in current project/dir
 alias tasks='grep --exclude-dir="{.*,node_modules}" -rnEIo "(TODO|FIXME|HACK).*?$" . 2>/dev/null'
 
-# Usage: f $NAME
-# Find all files with $NAME in current directory or any of its subdirectories.
-function f() {
-    find . -name $1
-}
-
-# Usage: t $DEPTH
-# Display directory tree to specified depth
-function t() {
-    tree -d -L $1
-}
-
 function wake_windows {
     wakeonlan "94:c6:91:1b:33:87"
 }
@@ -267,10 +236,4 @@ function sourcex {
 	source "${1:-.env}"
 	set +o allexport
 }
-
-
-# Source local configuration if present
-if [ -f $HOME/.zshrc_local ]; then
-    source $HOME/.zshrc_local
-fi
 

@@ -48,9 +48,6 @@ for_window [class="^1Password$" instance="1password"] floating enable, move posi
 bindsym $mod+grave exec --no-startup-id scrot -F '/home/jason/screenshots/%Y-%m-%d_%H%M%S_$wx$h.png'
 bindsym $mod+shift+grave exec --no-startup-id scrot -s -F '/home/jason/screenshots/%Y-%m-%d_%H%M%S_$wx$h.png'
 
-# Set keyboard repeat rate, scrolling
-#exec --no-startup-id /home/jason/.config/i3/configure-input
-
 # startup with ChatGPT and Org mode
 exec --no-startup-id i3-msg 'rename workspace 9 to "9:gpt"'
 exec --no-startup-id i3-msg 'rename workspace 10 to "10:org"'
@@ -72,7 +69,7 @@ for_window [class="floating-browser"] resize set width 1600 px height 1000 px, m
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
+# start a terminal (+ Shift modifier for floating)
 bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+Return exec alacritty --class floating-term -o 'window.dimensions.columns=150' -o 'window.dimensions.lines=35'
 
@@ -226,14 +223,14 @@ bar {
 }
 
 # mod+b - launch browser
-# TODO: work out how we can summon a temporary floating browser in the current workspace
 bindsym $mod+b exec --no-startup-id firefox
 bindsym $mod+Shift+b exec --no-startup-id /home/jason/bin/floatingfox
 bindsym $mod+m exec --no-startup-id firefox --app=https://www.fastmail.com
 
-# mod-tab/mod-shift-tab for prev/next workspace
+# mod-tab/mod-shift-tab for prev/next workspace, backspace for prev workspace
 bindsym $mod+Tab workspace next
 bindsym $mod+shift+Tab workspace prev
+bindsym $mod+BackSpace workspace back_and_forth
 
 # mod-x - start file explorer (+ Shift modifier for floating)
 bindsym $mod+x exec --no-startup-id thunar ~
@@ -248,3 +245,4 @@ bindsym $mod+shift+n exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
 
 gaps inner 0
 gaps outer 0
+

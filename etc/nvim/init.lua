@@ -23,6 +23,8 @@ require('plugins.lualine')
 require('plugins.scrollbar')
 require('plugins.treehopper')
 require('plugins.gitsigns')
+require('plugins.surround')
+-- require('plugins.harpoon')
 
 require('config.keymap')
 
