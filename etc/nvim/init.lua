@@ -52,7 +52,7 @@ function LaunchFloatingTerminalInFileDir()
   LaunchFloatingTerminalInDir(vim.fs.dirname(file_path))
 end
 
-function LaunchFloatingGitClient()
+function LaunchGitClient()
   if vim.loop.os_uname().sysname == "Darwin" then
     os.execute("open -a \"/Applications/Sublime Merge.app\" .")
   else
@@ -64,7 +64,7 @@ vim.api.nvim_create_user_command('LaunchFloatingTerminalWS', LaunchFloatingTermi
   { desc = 'Launch workspace terminal' })
 vim.api.nvim_create_user_command('LaunchFloatingTerminalF', LaunchFloatingTerminalInFileDir,
   { desc = 'Launch file terminal' })
-vim.api.nvim_create_user_command('LaunchGitClient', LaunchFloatingGitClient, { desc = 'Launch Lazygit' })
+vim.api.nvim_create_user_command('LaunchGitClient', LaunchGitClient, { desc = 'Launch Lazygit' })
 
 vim.keymap.set('n', '<M-Enter>', ':LaunchFloatingTerminalWS<cr>', { desc = 'Launch workspace terminal' })
 vim.keymap.set('n', '<M-S-Enter>', ':LaunchFloatingTerminalF<cr>', { desc = 'Launch file terminal' })
