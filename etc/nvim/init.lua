@@ -12,6 +12,7 @@ require('local.shunt')
 require('local.autoformat')
 require('local.nt-shrink')
 require('local.highlight-yank')
+require('local.zap')
 
 require('plugins.deps')
 require('plugins.theme')
