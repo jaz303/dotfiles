@@ -124,3 +124,5 @@ map('n', '<leader>gsb', gs.stage_buffer, { desc = 'Stage buffer' })
 map('n', '<leader>gsh', gs.stage_hunk, { desc = 'Stage hunk' })
 map('n', '<leader>gsB', gs.reset_buffer, { desc = 'Reset buffer' })
 map('n', '<leader>gsH', gs.reset_hunk, { desc = 'Reset hunk' })
+
+-- map('v', '<C-u>', '<esc>gUawgi', { desc = 'Uppercase word' })

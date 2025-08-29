@@ -1,5 +1,5 @@
 vim.pack.add({
-  "https://github.com/nvim-neo-tree/neo-tree.nvim"
+  { src = "https://github.com/jaz303/neo-tree.nvim", version = "ea7bdfc" }
 })
 
 local wm = require('local.wm')
@@ -23,9 +23,13 @@ end
 
 local mappings = {}
 for n = 1, 8 do
+  local desc = "open in window 1 (also 2..8)"
+  if n > 1 then
+    desc = "<hidden>"
+  end
   mappings["" .. n] = {
     function(state) open_in_split(n, state) end,
-    desc = "Open in window " .. n,
+    desc = desc,
   }
 end
 

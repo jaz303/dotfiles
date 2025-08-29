@@ -27,7 +27,7 @@ These aren't all necessarily custom... more of an aide-memoire for me...
 
   - `<M-Enter>` - pop up a terminal, working dir = workspace root
   - `<M-S-Enter>` - pop up a terminal, working dir = active file dir
-  - `<leader>gg` - pop up `lazygit`
+  - `<leader>gg` - pop up `lazygit` (Linux) or Sublime Merge (macOS)
 
 ## Editing
 
