@@ -8,6 +8,11 @@ return {
         version = 'LuaJIT',
       },
       diagnostics = {
+        disable = {
+          'empty-block',
+          'trailing-space',
+          'unused-function'
+        },
         globals = { 'vim' }
       },
     },

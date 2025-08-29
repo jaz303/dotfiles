@@ -6,6 +6,3 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
-
--- Use builtin default colorscheme, plugin will override
-vim.cmd.colorscheme('sorbet')

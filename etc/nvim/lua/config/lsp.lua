@@ -1,6 +1,7 @@
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('gopls')
--- TODO: go, zig
+vim.lsp.enable('zls')
+vim.lsp.enable('ts')
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
@@ -16,8 +17,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 vim.diagnostic.config({
-  virtual_lines = {
-    current_line = true
-  }
+  virtual_text = true,
+  --virtual_lines = {
+  --  current_line = true
+  --}
 })
 

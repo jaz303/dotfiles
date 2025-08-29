@@ -1,1 +1,4 @@
 export LS_OPTIONS="--color"
+
+source $HOME/.dotfiles/etc/zshrc_common
+

@@ -1,3 +1,7 @@
+-- Required by nvim-tree
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Relative and absolute line numbers combined
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -20,7 +24,7 @@ vim.opt.smartcase = true
 vim.opt.inccommand = 'split'
 
 -- Text wrapping
-vim.opt.wrap = true
+vim.opt.wrap = false
 vim.opt.breakindent = true
 
 -- Tabstops
@@ -38,4 +42,3 @@ vim.opt.undofile = true
 
 -- Default floating window border
 vim.opt.winborder = 'rounded'
-
