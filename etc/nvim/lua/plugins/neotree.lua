@@ -21,28 +21,18 @@ local function open_in_split(n, state)
   vim.api.nvim_win_set_buf(win.id, new_buf)
 end
 
+local mappings = {}
+for n = 1, 8 do
+  mappings["" .. n] = {
+    function(state) open_in_split(n, state) end,
+    desc = "Open in window " .. n,
+  }
+end
+
 require("neo-tree").setup({
   filesystem = {
     window = {
-      mappings = {
-        ["1"] = {
-          function(state) open_in_split(1, state) end,
-          desc = "Open in window 1",
-        },
-        ["2"] = {
-          function(state) open_in_split(2, state) end,
-          desc = "Open in window 2",
-        },
-        ["3"] = {
-          function(state) open_in_split(3, state) end,
-          desc = "Open in window 3",
-        },
-        ["4"] = {
-          function(state) open_in_split(4, state) end,
-          desc = "Open in window 4",
-        },
-      },
+      mappings = mappings,
     },
   },
 })
-
