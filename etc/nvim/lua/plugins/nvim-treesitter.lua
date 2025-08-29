@@ -9,6 +9,7 @@ require("nvim-treesitter.configs").setup({
     'odin',
     'php',
     'ocaml',
+    'ruby',
     'go',
     'gomod',
     'gosum',
@@ -61,4 +62,3 @@ vim.api.nvim_create_autocmd('PackChanged', {
     end
   end,
 })
-
