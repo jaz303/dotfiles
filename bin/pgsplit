@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+CHUNK_SIZE = 1000
+
+in_copy = false
+copy_line = nil
+count = 0
+
+while line = gets
+  if in_copy
+    if line =~ /^\\\./
+      puts line
+      in_copy = false
+    else
+      puts line
+      count += 1
+      if count == CHUNK_SIZE
+        puts "\\."
+        puts copy_line
+        count = 0
+      end
+    end
+  else
+    if line =~ /^COPY /
+      puts line
+      copy_line = line
+      count = 0
+      in_copy = true
+    else
+      puts line
+    end
+  end
+end
