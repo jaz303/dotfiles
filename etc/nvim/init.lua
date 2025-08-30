@@ -25,6 +25,7 @@ require('plugins.scrollbar')
 require('plugins.treehopper')
 require('plugins.gitsigns')
 require('plugins.surround')
+require('plugins.snacks')
 -- require('plugins.harpoon')
 
 require('config.keymap')
