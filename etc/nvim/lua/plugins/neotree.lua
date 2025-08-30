@@ -2,6 +2,11 @@ vim.pack.add({
   { src = "https://github.com/jaz303/neo-tree.nvim", version = "ea7bdfc" }
 })
 
+local mappings = {}
+
+--
+-- Key map for opening files directly into splits
+
 local wm = require('local.wm')
 
 local function open_in_split(n, state)
@@ -21,7 +26,6 @@ local function open_in_split(n, state)
   vim.api.nvim_win_set_buf(win.id, new_buf)
 end
 
-local mappings = {}
 for n = 1, 8 do
   local desc = "open in window 1 (also 2..8)"
   if n > 1 then
@@ -32,6 +36,63 @@ for n = 1, 8 do
     desc = desc,
   }
 end
+
+--
+-- Copy path to register or clipboard
+-- Adapted from https://github.com/nvim-neo-tree/neo-tree.nvim/discussions/370
+
+local function copy_path(state, reg, desc)
+  -- NeoTree is based on [NuiTree](https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/tree)
+  -- The node is based on [NuiNode](https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/tree#nuitreenode)
+  local node = state.tree:get_node()
+  local filepath = node:get_id()
+  local filename = node.name
+  local modify = vim.fn.fnamemodify
+
+  local results = {
+    filepath,
+    modify(filepath, ":."),
+    modify(filepath, ":~"),
+    filename,
+    modify(filename, ":r"),
+    modify(filename, ":e"),
+  }
+
+  vim.ui.select({
+    "1. Absolute path: " .. results[1],
+    "2. Path relative to CWD: " .. results[2],
+    "3. Path relative to HOME: " .. results[3],
+    "4. Filename: " .. results[4],
+    "5. Filename without extension: " .. results[5],
+    "6. Extension of the filename: " .. results[6],
+  }, { prompt = "Choose to copy to " .. desc .. ":" }, function(choice)
+    if choice then
+      local i = tonumber(choice:sub(1, 1))
+      if i then
+        local result = results[i]
+        vim.fn.setreg(reg, result)
+      else
+        vim.notify("Invalid choice")
+      end
+    else
+      vim.notify("Cancelled")
+    end
+  end)
+end
+
+mappings["y"] = {
+  function(state)
+    copy_path(state, '"', 'register')
+  end,
+  desc = "Copy path to register"
+}
+
+mappings["Y"] = {
+  function(state)
+    copy_path(state, '+', 'clipboard')
+  end,
+  desc = "Copy path to clipboard"
+}
 
 require("neo-tree").setup({
   filesystem = {
