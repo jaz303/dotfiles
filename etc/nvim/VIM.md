@@ -73,6 +73,11 @@ Use `m` to access Treehopper. This can be used in:
   - __*__ `<leader>p`, `<leader>P` - paste system clipboard before/after
 
 ## Buffer management
+  - __*__ `<leader><leader>` - Telescope buffers
+  - __*__ `<leader><BS>` - switch to alternate buffer
+  - __*__ `<leader>[`, `<leader>]` - switch to prev/next buffer
+  - __*__ `<leader>bz` - delete all saved, hidden buffers
+  - __*__ `<leader>b` - general buffer leader (see which-key for commands)
   - `:bd` or `:bd!` - delete buffer (latter variant discards changes). this will also close the window.
 
 ## Macros
@@ -82,7 +87,7 @@ Use `m` to access Treehopper. This can be used in:
   - `@@` - repeat
 
 ## Git
-  - `<leader>gg` - pop up lazygit in floating terminal
+  - `<leader>gg` - pop up lazygit in floating terminal (or Sublime Merge on macOS)
   - `<leader>gs[x]` - git stage, where `[x]` is:
     - `b` - stage buffer
     - `h` - stage hunk
