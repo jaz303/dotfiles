@@ -48,6 +48,14 @@ Use `m` to access Treehopper. This can be used in:
   - operator pending mode, e.g. `ym[x]` to yank the region denoted by char `x`
   - visual mode: use `m[x]` to visually select region denoted by char `x`
 
+## Neotree
+When Neotree is focused:
+  - __*__ `1-8` - open selected file in the corresponding window
+  - __*__ `y` - yank selected file path to register `"`
+  - __*__ `Y` - yank selected file path to system clipboard
+
+The yank operations present a menu to allow selection of relative path, full path, basename, etc.
+
 ## Commenting
   - (N) `gc[motion]` - toggle motion target
     - `gc6j`
