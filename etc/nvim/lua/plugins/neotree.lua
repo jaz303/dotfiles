@@ -102,4 +102,32 @@ require("neo-tree").setup({
   },
 })
 
-vim.keymap.set('n', '<leader>fr', ':Neotree reveal<CR>', { desc = 'Reveal current file in NT' })
+vim.keymap.set('n', '\\', ':Neotree show reveal<CR>', { desc = 'Reveal current file in NT' })
+vim.keymap.set('n', '|', ':NTShrink<CR>', { desc = 'Shrink Neotree' })
+vim.keymap.set('n', '<leader>fr', ':Neotree show reveal<CR>', { desc = 'Reveal current file in NT' })
+
+-- TODO: trying to make a function that will close all expanded Neotree nodes,
+-- then expand the path to the current file. The Neotree "z" command seems to
+-- only take effect after a delay, which I think is causing a problem.
+-- vim.keymap.set('n', '<leader>fR', function()
+--   local win = vim.api.nvim_get_current_win()
+--   vim.cmd("Neotree")
+--
+--   local tree_win
+--   for _, w in ipairs(vim.api.nvim_list_wins()) do
+--     local buf = vim.api.nvim_win_get_buf(w)
+--     local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+--     if ft == "neo-tree" then
+--       tree_win = w
+--       break
+--     end
+--   end
+--
+--   if tree_win then
+--     vim.api.nvim_set_current_win(tree_win)
+--     vim.api.nvim_feedkeys("z", "n", false)
+--     vim.api.nvim_set_current_win(win)
+--   end
+--
+--   vim.cmd("Neotree show reveal")
+-- end, { desc = 'Focus current file in NT' })
