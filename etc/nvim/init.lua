@@ -14,7 +14,7 @@ require('local.nt-shrink')
 require('local.highlight-yank')
 require('local.zap')
 
-require('plugins.deps')
+require('plugins.packs')
 require('plugins.theme')
 require('plugins.nvim-treesitter')
 require('plugins.telescope')
