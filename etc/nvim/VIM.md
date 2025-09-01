@@ -56,6 +56,10 @@ When Neotree is focused:
 
 The yank operations present a menu to allow selection of relative path, full path, basename, etc.
 
+Other helpers:
+  - __*__ `\\` - focus on current file in Neotree
+  - __*__ `|` - resize Neotree to fit content
+
 ## Commenting
   - (N) `gc[motion]` - toggle motion target
     - `gc6j`
