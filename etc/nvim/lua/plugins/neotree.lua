@@ -101,3 +101,5 @@ require("neo-tree").setup({
     },
   },
 })
+
+vim.keymap.set('n', '<leader>fr', ':Neotree reveal<CR>', { desc = 'Reveal current file in NT' })
