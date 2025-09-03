@@ -33,20 +33,18 @@ require('config.keymap')
 
 local os = require('local.os')
 
--- Launch a floating terminal in the workspace dir
-function LaunchFloatingTerminalInWorkspaceDir()
+function LaunchTerminalInWorkspaceDir()
   os.LaunchTerminalInDir(vim.fn.getcwd())
 end
 
--- Launch a floating terminal in the file dir
-function LaunchFloatingTerminalInFileDir()
+function LaunchTerminalInFileDir()
   local file_path = vim.api.nvim_buf_get_name(0)
   os.LaunchTerminalInDir(vim.fs.dirname(file_path))
 end
 
-vim.api.nvim_create_user_command('LaunchFloatingTerminalWS', LaunchFloatingTerminalInWorkspaceDir,
+vim.api.nvim_create_user_command('LaunchFloatingTerminalWS', LaunchTerminalInWorkspaceDir,
   { desc = 'Launch workspace terminal' })
-vim.api.nvim_create_user_command('LaunchFloatingTerminalF', LaunchFloatingTerminalInFileDir,
+vim.api.nvim_create_user_command('LaunchFloatingTerminalF', LaunchTerminalInFileDir,
   { desc = 'Launch file terminal' })
 vim.api.nvim_create_user_command('LaunchGitClient', os.LaunchGitClient, { desc = 'Launch Lazygit' })
 
