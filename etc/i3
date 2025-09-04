@@ -44,6 +44,9 @@ exec --no-startup-id xfsettingsd
 bindsym $mod+p exec 1password
 for_window [class="^1Password$" instance="1password"] floating enable, move position center
 
+# DOSBox staging floats on any workspace with a `dev` suffix
+for_window [workspace="dev$" title="^DOSBox Staging"] floating enable, move position center
+
 # Screenshots
 bindsym $mod+grave exec --no-startup-id scrot -F '/home/jason/screenshots/%Y-%m-%d_%H%M%S_$wx$h.png'
 bindsym $mod+shift+grave exec --no-startup-id scrot -s -F '/home/jason/screenshots/%Y-%m-%d_%H%M%S_$wx$h.png'
@@ -194,7 +197,7 @@ mode "resize" {
         bindsym shift+j resize grow height 10 px or 10 ppt
         bindsym shift+k resize shrink height 10 px or 10 ppt
         bindsym shift+l resize grow width 10 px or 10 ppt
-        
+
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 2 px or 2 ppt
         bindsym Down resize grow height 2 px or 2 ppt
