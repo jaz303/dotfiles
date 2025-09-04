@@ -11,6 +11,8 @@ Legend:
 ## Editing
   - `J` - join current line with line below
   - `S` - substitute; in normal mode, clears current line and enters insert mode (with indentation). In visual mode this is overridden by vim-surround, but that's fine, because in visual mode `c` (change) does the same thing. Tip: use numeric prefix e.g. `5S` to change 5 lines... (need to add 1 to relative line numbers here)
+  - `D` - delete to end of line - great for cutting end of line to paste elsewhere
+  - `=` - format; works with motions e.g. `gg=G` moves to top, then formats to bottom of file.
 
 When in visual mode, entering command mode prepopulates the command line with the range of the visual selection.
 
@@ -34,14 +36,15 @@ When in visual mode, entering command mode prepopulates the command line with th
   - `{H,M,L}` - top/middle/bottom of screen
   - `{`, `}` - "paragraph" back/fwd
   - `(`, `)` - "sentence" back/fwd
+  - `_` - can move to start of line, similar to `^`; not identical though because it can accept a count
 
 ### Word-wise navigation
 
   - `e`, `w`, `b`, `ge` - go fwd/back to end/start of words
   - `E`, `W`, `B`, `gE` - go fwd/back to end/start of WORDs
 
-WORD is always delimited by whitespace.
 word is delimited by non-keyword characters.
+WORD is always delimited by whitespace.
 
 ## Treehopper
 Use `m` to access Treehopper. This can be used in:
