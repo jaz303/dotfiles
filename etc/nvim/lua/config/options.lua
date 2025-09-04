@@ -6,8 +6,8 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- 15 lines scroll offset
-vim.opt.scrolloff = 15
+-- 8 lines scroll offset
+vim.opt.scrolloff = 8
 
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'

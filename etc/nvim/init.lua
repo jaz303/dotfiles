@@ -13,6 +13,7 @@ require('local.autoformat')
 require('local.nt-shrink')
 require('local.highlight-yank')
 require('local.zap')
+require('local.os')
 
 require('plugins.packs')
 require('plugins.theme')
@@ -30,43 +31,22 @@ require('plugins.snacks')
 
 require('config.keymap')
 
--- Launch a floating terminal with the given working directory
-function LaunchFloatingTerminalInDir(dir, cmd)
-  local exec =
-      "exec alacritty --class floating_term -o 'window.dimensions.columns=150' -o 'window.dimensions.lines=35' --working-directory '" ..
-      dir .. "'"
+local os = require('local.os')
 
-  if cmd then
-    exec = exec .. " -e '" .. cmd .. "'"
-  end
-
-  vim.fn.system({ "i3-msg", exec })
+function LaunchTerminalInWorkspaceDir()
+  os.LaunchTerminalInDir(vim.fn.getcwd())
 end
 
--- Launch a floating terminal in the workspace dir
-function LaunchFloatingTerminalInWorkspaceDir()
-  LaunchFloatingTerminalInDir(vim.fn.getcwd())
-end
-
--- Launch a floating terminal in the file dir
-function LaunchFloatingTerminalInFileDir()
+function LaunchTerminalInFileDir()
   local file_path = vim.api.nvim_buf_get_name(0)
-  LaunchFloatingTerminalInDir(vim.fs.dirname(file_path))
+  os.LaunchTerminalInDir(vim.fs.dirname(file_path))
 end
 
-function LaunchGitClient()
-  if vim.loop.os_uname().sysname == "Darwin" then
-    os.execute("open -a \"/Applications/Sublime Merge.app\" .")
-  else
-    LaunchFloatingTerminalInDir(vim.fn.getcwd(), "lazygit")
-  end
-end
-
-vim.api.nvim_create_user_command('LaunchFloatingTerminalWS', LaunchFloatingTerminalInWorkspaceDir,
+vim.api.nvim_create_user_command('LaunchFloatingTerminalWS', LaunchTerminalInWorkspaceDir,
   { desc = 'Launch workspace terminal' })
-vim.api.nvim_create_user_command('LaunchFloatingTerminalF', LaunchFloatingTerminalInFileDir,
+vim.api.nvim_create_user_command('LaunchFloatingTerminalF', LaunchTerminalInFileDir,
   { desc = 'Launch file terminal' })
-vim.api.nvim_create_user_command('LaunchGitClient', LaunchGitClient, { desc = 'Launch Lazygit' })
+vim.api.nvim_create_user_command('LaunchGitClient', os.LaunchGitClient, { desc = 'Launch Lazygit' })
 
 vim.keymap.set('n', '<M-Enter>', ':LaunchFloatingTerminalWS<cr>', { desc = 'Launch workspace terminal' })
 vim.keymap.set('n', '<M-S-Enter>', ':LaunchFloatingTerminalF<cr>', { desc = 'Launch file terminal' })

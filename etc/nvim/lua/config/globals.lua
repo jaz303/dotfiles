@@ -3,7 +3,9 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-if vim.loop.os_uname().sysname == "Darwin" then
+local is_mac = (vim.loop.os_uname().sysname == "Darwin")
+
+if is_mac then
   vim.g.clipboard = 'pbcopy'
 else
   vim.g.clipboard = 'xclip'
