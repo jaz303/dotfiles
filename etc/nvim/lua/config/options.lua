@@ -7,7 +7,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 
 -- 8 lines scroll offset
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 0
 
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
