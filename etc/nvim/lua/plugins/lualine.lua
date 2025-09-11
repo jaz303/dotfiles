@@ -58,6 +58,14 @@ local function index()
   return "" .. wm.GetWindowIndex(vim.api.nvim_get_current_win())
 end
 
+local filename_config = {
+  'filename',
+  path = 1,
+  symbols = {
+    modified = '*',
+    readonly = 'RO'
+  }
+}
 
 require('lualine').setup({
   options = {
@@ -76,7 +84,7 @@ require('lualine').setup({
   },
   winbar = {
     lualine_a = {},
-    lualine_b = { 'filename' },
+    lualine_b = { filename_config },
     lualine_c = {},
     lualine_x = {},
     lualine_y = { width },
@@ -85,7 +93,7 @@ require('lualine').setup({
   inactive_winbar = {
     lualine_a = {},
     lualine_b = {},
-    lualine_c = { 'filename' },
+    lualine_c = { filename_config },
     lualine_x = { width },
     lualine_y = {},
     lualine_z = { index }
