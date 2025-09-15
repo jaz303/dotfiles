@@ -99,6 +99,11 @@ require("neo-tree").setup({
     window = {
       mappings = mappings,
     },
+    filtered_items = {
+      always_show = {
+        ".github",
+      }
+    }
   },
 })
 
