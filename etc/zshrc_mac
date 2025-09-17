@@ -5,33 +5,27 @@ source $HOME/.dotfiles/etc/zshrc_common
 # Use "brew" user for anything homebrew related
 alias brew='sudo -Hu brew brew'
 
-function debug {
-    lldb $(find build -perm +0111 -type f -not -name '*.dylib' | head -n1)
+# Copy file to clipboard
+function copy {
+    cat $1 | pbcopy
 }
 
-function copy_pubkey() {
-    cat ~/.ssh/id_rsa.pub | pbcopy
-}
-
+# Sublime Merge
 alias gg="smerge ."
-
-function spotlight {
-    mdfind "kMDItemDisplayName == '*$1*.$2'c"
-}
 
 # Source an AVR toolchain from Arduino app
 function avrify() {
     export PATH="/Applications/Arduino.app/Contents/Java/hardware/tools/avr/bin:$PATH"
 }
 
-# Usage: pgify $VERSION
 # Add Postgres binaries for a specific version to $PATH.
+# Usage: pgify $VERSION
 function pgify() {
     export PATH="/Applications/Postgres.app/Contents/Versions/$1/bin:$PATH"
 }
 
-# Usage: flash_iso $FILE $TARGET
 # Convert .iso to .img, then flash to a drive
+# Usage: flash_iso $FILE $TARGET
 # NOTE: this doesn't work for Windows installers. They need to be flashed
 # using Rufus or similar!
 function flash_iso {
