@@ -7,7 +7,7 @@
     "border": true,
     "rounded": true
   },
-  "diagonstic.floatConfig": {
+  "diagnostic.floatConfig": {
     "border": true,
     "rounded": true
   },
@@ -28,7 +28,8 @@
       "filetypes": ["zig"]
     },
     "typescript": {
-      "command": ["typescript-language-server", "--stdio"],
+      "command": "typescript-language-server",
+      "args": ["--stdio"],
       "rootPatterns": ["jsconfig.json", "package.json", "tsconfig.json"],
       "initOptions": {
         "hostInfo": "neovim"
