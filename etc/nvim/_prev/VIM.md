@@ -151,16 +151,6 @@ Examples:
   - `Sfcall` - encloses visual selection in `call(...)`
   - `dsf` - removes function call
 
-
-## Completion / LSP
-
-Using `coc` for all of this now. Works much better than the built-in stuff.
-
-
-
-
-
-
 ## LSP
 
 ### Popups/floats
