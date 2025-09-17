@@ -12,6 +12,7 @@ local function has(plugin)
 end
 
 local settings = require("config.settings")
+
 local has_gitsigns = has("gitsigns.nvim")
 local has_telescope = has("telescope.nvim")
 local has_neotree = has("neo-tree.nvim")
