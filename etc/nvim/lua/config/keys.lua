@@ -166,6 +166,11 @@ set('n', '<M-Right>', ':SwitchToRelWindow 1<cr>', { desc = 'Switch window right'
 set('n', '<M-=>', ':EqualizeWindows<cr>', { desc = 'Equalize windows' })
 set('n', '<M-S-=>', ':FocusActiveWindow<cr>', { desc = 'Focus active window' })
 
+--
+-- Zap
+
+set('n', '<leader>bz', ':Zap<cr>', { desc = 'Zap windowless buffers' })
+
 -- 
 -- LSP
 

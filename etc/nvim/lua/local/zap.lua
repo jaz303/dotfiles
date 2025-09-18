@@ -12,5 +12,3 @@ vim.api.nvim_create_user_command('Zap', function()
   end, buffers)
 end, { desc = 'Zap all buffers not shown in a window' })
 
-vim.keymap.set('n', '<leader>bz', ':Zap<cr>', { desc = 'Zap windowless buffers' })
-
