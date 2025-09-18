@@ -6,20 +6,24 @@ local mappings = {}
 local wm = require('local.wm')
 
 local function open_in_split(n, state)
-  local win = wm.GetCandidateWindows()[n]
-  if not win then
-    print("No window " .. n)
-    return
-  end
-
   local node = state.tree:get_node()
   if not node then return end
 
-  local path = node:get_id()
-  local new_buf = vim.fn.bufadd(path)
-  vim.fn.bufload(new_buf)
+  local path = vim.fn.fnamemodify(node:get_id(), ":p")
 
-  vim.api.nvim_win_set_buf(win.id, new_buf)
+  -- if the target window does not exist, just open a new one at the
+  -- rightmost position.
+  local win = wm.GetCandidateWindows()[n]
+  if not win then
+    local current_win = vim.api.nvim_get_current_win()
+    vim.cmd("vsplit " .. vim.fn.fnameescape(path))
+    vim.cmd("wincmd L")
+    vim.api.nvim_set_current_win(current_win)
+  else
+    local new_buf = vim.fn.bufnr(path, true)
+    vim.fn.bufload(new_buf)
+    vim.api.nvim_win_set_buf(win.id, new_buf)
+  end
 end
 
 for n = 1, 8 do
