@@ -81,6 +81,14 @@ return {
         lualine_y = { 'filetype' },
         lualine_z = { 'encoding', 'fileformat' },
       },
+      inactive_sections = {
+        lualine_a = { },
+        lualine_b = { 'filename' },
+        lualine_c = { 'location', 'progress' },
+        lualine_x = { },
+        lualine_y = { },
+        lualine_z = { },
+      },
       winbar = {
         lualine_a = {},
         lualine_b = { filename_config },

@@ -1,44 +1,20 @@
 {
-  "suggest.floatConfig": {
-    "border": true,
-    "rounded": true
-  },
-  "signature.floatConfig": {
-    "border": true,
-    "rounded": true
-  },
-  "diagnostic.floatConfig": {
-    "border": true,
-    "rounded": true
-  },
-  "hover.floatConfig": {
-    "border": true,
-    "rounded": true
-  },
-  "languageserver": {
-    "go": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod"],
-      "trace.server": "verbose",
-      "filetypes": ["go"]
+    "coc.preferences.formatOnSave": true,
+    "suggest.floatConfig": {
+        "border": true,
+        "rounded": true
     },
-    "zig": {
-      "command": "zls",
-      "rootPatterns": ["build.zig", "build.zig.zon"],
-      "filetypes": ["zig"]
+    "signature.floatConfig": {
+        "border": true,
+        "rounded": true
     },
-    "typescript": {
-      "command": "typescript-language-server",
-      "args": ["--stdio"],
-      "rootPatterns": ["jsconfig.json", "package.json", "tsconfig.json"],
-      "initOptions": {
-        "hostInfo": "neovim"
-      },
-      "filetypes": [
-        "typescript",
-        "typescript.tsx",
-        "typescriptreact"
-      ]
-    }
-  }
+    "diagnostic.floatConfig": {
+        "border": true,
+        "rounded": true
+    },
+    "hover.floatConfig": {
+        "border": true,
+        "rounded": true
+    },
+    "languageserver": {}
 }

@@ -10,4 +10,3 @@ return {
     native = lsp_flavour == "native"
   },
 }
-
