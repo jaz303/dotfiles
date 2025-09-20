@@ -1,3 +1,5 @@
+local S = require("config.settings")
+
 --
 -- vim.g
 
@@ -6,9 +8,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-local is_mac = (vim.loop.os_uname().sysname == "Darwin")
-
-if is_mac then
+if S.mac then
   vim.g.clipboard = 'pbcopy'
 else
   vim.g.clipboard = 'xclip'
@@ -61,9 +61,11 @@ vim.opt.splitbelow = true
 -- Save undo history
 vim.opt.undofile = true
 
--- Default floating window border
--- FIXME: I had to disable this otherwise coc.nvim gets *horribly confused*
--- vim.opt.winborder = 'rounded'
+-- Only default to rounded borders if we're not using CoC; something in
+-- that plugin gets completely messed up if this is enabled.
+if not S.lsp.coc then
+  vim.opt.winborder = 'rounded'
+end
 
 -- Disable backups to avoid confusing LSPs
 vim.opt.backup = false

@@ -171,7 +171,7 @@ set('n', '<M-S-=>', ':FocusActiveWindow<cr>', { desc = 'Focus active window' })
 
 set('n', '<leader>bz', ':Zap<cr>', { desc = 'Zap windowless buffers' })
 
--- 
+--
 -- LSP
 
 if settings.lsp.coc then
