@@ -96,6 +96,8 @@ mappings["Y"] = {
 
 return {
   {
+    -- my fork of neo-tree allows keybindings to be hidden by setting
+    -- the desc to "<hidden>"
     "jaz303/neo-tree.nvim",
     commit = "ea7bdfc",
     dependencies = {
