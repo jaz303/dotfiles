@@ -48,10 +48,13 @@ set('v', '<C-,>', '<gv', { desc = 'Dedent (retain selection)' })
 -- key = "Return"
 -- mods = "Shift"
 --
+-- iTerm2 also needs additional config; see more here:
+-- https://stackoverflow.com/questions/16359878/how-to-map-shift-enter
+--
 set('i', '<S-CR>', '<C-O>o', { desc = 'Resume insert on next line' })
 
 -- C-/ to comment
--- TODO: fix these
+-- TODO: fix these (terminal config needed maybe?)
 set('n', '<C-_>', 'gcc', { desc = 'Toggle linewise comment' })
 set('x', '<C-_>', 'gc', { desc = 'Toggle linewise comment' })
 
