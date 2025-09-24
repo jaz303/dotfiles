@@ -166,10 +166,11 @@ function wm.FocusActiveWindow()
     return
   end
 
-  local tot = total_width(windows)                  -- total available hspace
-  local focus_ratio = 0.70                          -- proportion of available space taken by focused window
-  local focus_width = math.floor(tot * focus_ratio) -- abs width of focussed window
-  local remain = tot - focus_width                  -- amount of space left for remaining windows
+  local tot = total_width(windows)                                       -- total available hspace
+  local focus_ratio = 0.70                                               -- proportion of available space taken by focused window
+  local focus_max = 180                                                  -- maximum number of columns for focused window
+  local focus_width = math.min(focus_max, math.floor(tot * focus_ratio)) -- abs width of focussed window
+  local remain = tot - focus_width                                       -- amount of space left for remaining windows
 
   for _, win in ipairs(windows) do
     if win.id == vim.api.nvim_get_current_win() then
@@ -342,4 +343,3 @@ vim.api.nvim_create_user_command(
 )
 
 return wm
-
