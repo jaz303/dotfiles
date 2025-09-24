@@ -30,7 +30,6 @@ vim.keymap.set('n', '<leader>?', '<cmd>lua vim.diagnostic.open_float()<cr>', { d
 vim.keymap.set('n', '<leader>.s', '<cmd>lua vim.lsp.buf.signature_help()<cr>', { desc = "Signature help" })
 vim.keymap.set('n', '<leader>.d', '<cmd>lua vim.diagnostic.open_float()<cr>', { desc = "Diagnostics" })
 
-
 -- Toggle visible whitespace characters
 --vim.keymap.set('n', '<leader>l', ':listchars!<cr>', { desc = 'Toggle [l]istchars' })
 
@@ -45,9 +44,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if client:supports_method('textDocument/completion') then
-      vim.keymap.set('i', '<C-Space>', function()
-        vim.lsp.completion.get()
-      end)
+      -- vim.keymap.set('i', '<C-Space>', function()
+      --   vim.lsp.completion.get()
+      -- end)
     end
   end,
 })

@@ -1,5 +1,15 @@
 Moving the TODOs to its own file...
 
+## Big Stuff
+
+Completion/LSP stuff still isn't good enough. I tried coc, it's good but it feels like sailing against the tide as it basically replaces all of the built-in LSP stuff. Things I really want:
+
+  - Golang auto imports and anonymous function completion
+  - Automatic signature hints for calls
+  - Better formatting/more info in completion list
+
+LLM integration
+
 ## Other peoples' configs
 
   - https://github.com/mcauley-penney/nvim/tree/main/lua/aucmd
@@ -29,7 +39,6 @@ Need a shortcut to toggle Neotree through symbols, files, buffers, etc.
 
   - Ability to cycle Neotree through files/docsyms/git/buffers
     (or maybe distinct command for each?)
-  - Attempting to open file from Neotree into non-existent window should cause creation of a new split.
 
 ## Completion, LSP Floats, more
 

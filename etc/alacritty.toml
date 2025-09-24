@@ -26,3 +26,7 @@ yellow = "#e0af68"
 background = "#1a1b26"
 foreground = "#a9b1d6"
 
+[[keyboard.bindings]]
+chars = "\u001B[13;2u"
+key = "Return"
+mods = "Shift"

@@ -5,6 +5,7 @@ return {
   settings = {
     gopls = {
       completeUnimported = true,
+      completeFunctionCalls = true,
       usePlaceholders = true,
       analyses = {
         unusedparams = true
@@ -12,4 +13,3 @@ return {
     },
   },
 }
-

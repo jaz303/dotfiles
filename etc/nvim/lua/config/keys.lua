@@ -39,6 +39,17 @@ set('i', '<C-BS>', '<C-W>', { desc = 'Delete word' })
 set('v', '<C-.>', '>gv', { desc = 'Indent (retain selection)' })
 set('v', '<C-,>', '<gv', { desc = 'Dedent (retain selection)' })
 
+-- Shift-Enter to move to next line in insert mode
+-- This has become essential since adding nvim-autopairs
+-- NOTE: this requires additional config in Alacritty:
+--
+-- [[keyboard.bindings]]
+-- chars = "\u001B[13;2u"
+-- key = "Return"
+-- mods = "Shift"
+--
+set('i', '<S-CR>', '<C-O>o', { desc = 'Resume insert on next line' })
+
 -- C-/ to comment
 -- TODO: fix these
 set('n', '<C-_>', 'gcc', { desc = 'Toggle linewise comment' })
