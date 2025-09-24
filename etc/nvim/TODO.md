@@ -11,6 +11,7 @@ Completion/LSP stuff still isn't good enough. I tried coc, it's good but it feel
   - [~] Better formatting/more info in completion list
     - blink definitely looks better, still need to dive into customisation options
   - [ ] experiment with completion keybindings until i like them
+  - [ ] better code actions menu
 
 LLM integration
 
