@@ -10,4 +10,8 @@ return {
     coc = lsp_flavour == "coc",
     native = lsp_flavour == "native"
   },
+  disable_auto_comment_filetypes = {
+    "go",
+    "lua",
+  }
 }

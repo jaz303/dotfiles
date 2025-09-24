@@ -1,11 +1,29 @@
+local Config = require("lazy.core.config")
+local function has(plugin)
+  return Config.plugins[plugin] ~= nil
+end
+
+local has_saga = has("lspsaga.nvim")
+
+local toggle_hover = require("local.toggle-hover")
+
 --
 -- Use LSP
+
+
+-- vim.keymap.set("n", "K", toggle_hover, { silent = true })
 
 vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>",
   { desc = 'Goto declaration', noremap = true, silent = true })
 vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>",
   { desc = 'Goto definition', noremap = true, silent = true })
-vim.keymap.set({ 'n', 'i' }, '<C-Enter>', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code action' })
+
+if has_saga then
+  vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<cr>')
+  vim.keymap.set({ 'n', 'i' }, '<C-Enter>', '<cmd>Lspsaga code_action<cr>', { desc = 'Code action' })
+else
+  vim.keymap.set({ 'n', 'i' }, '<C-Enter>', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code action' })
+end
 
 vim.keymap.set('n', '<leader>,', '<cmd>lua vim.lsp.buf.signature_help()<cr>', { desc = "Signature help" })
 vim.keymap.set('n', '<leader>?', '<cmd>lua vim.diagnostic.open_float()<cr>', { desc = "Diagnostics" })
