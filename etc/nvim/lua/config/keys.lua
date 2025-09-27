@@ -107,18 +107,31 @@ set('n', '<leader>bp', ':bprevious<cr>', { desc = 'Previous buffer' })
 
 --
 -- Gitsigns
+--
+-- Ideas for keybinds here:
+-- https://github.com/lewis6991/gitsigns.nvim?tab=readme-ov-file#-keymaps
 
 if has_gitsigns then
   local gs = require("gitsigns")
+  -- TODO: navigation
   set('n', '<leader>gb', function() gs.blame_line({ full = true }) end, { desc = 'Popup blame line' })
+  set('n', '<leader>gB', gs.blame, { desc = 'Open blame' })
   set('n', '<leader>gt', gs.toggle_current_line_blame, { desc = 'Toggle line blame' })
   set('n', '<leader>gw', gs.toggle_word_diff, { desc = 'Toggle word diff' })
   set('n', '<leader>gd', gs.diffthis, { desc = 'Diff this' })
   set('n', '<leader>gD', function() gs.diffthis('~') end, { desc = 'Diff this (~)' })
   set('n', '<leader>gsb', gs.stage_buffer, { desc = 'Stage buffer' })
-  set('n', '<leader>gsh', gs.stage_hunk, { desc = 'Stage hunk' })
   set('n', '<leader>gsB', gs.reset_buffer, { desc = 'Reset buffer' })
+  set('n', '<leader>gsh', gs.stage_hunk, { desc = 'Stage hunk' })
   set('n', '<leader>gsH', gs.reset_hunk, { desc = 'Reset hunk' })
+
+  set('v', '<leader>gsh', function()
+    gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+  end, { desc = 'Stage hunk' })
+
+  set('v', '<leader>gsH', function()
+    gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+  end, { desc = 'Stage hunk' })
 end
 
 --
