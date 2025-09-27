@@ -4,14 +4,14 @@ Moving the TODOs to its own file...
 
 Completion/LSP stuff still isn't good enough. I tried coc, it's good but it feels like sailing against the tide as it basically replaces all of the built-in LSP stuff. Things I really want:
 
-  - [ ] Golang auto imports
+  - [x] Golang auto imports (seems to be sort of working with blink/snippets now? good enough for me)
   - [x] Golang anonymous function completion
   - [~] Automatic signature hints for calls
     - sort of working, but also sort of broken in Go... the blink.cmp feature is experimental though...
   - [~] Better formatting/more info in completion list
     - blink definitely looks better, still need to dive into customisation options
   - [ ] experiment with completion keybindings until i like them
-  - [ ] better code actions menu
+  - [ ] better code actions menu - lspsaga maybe?
 
 LLM integration
 
