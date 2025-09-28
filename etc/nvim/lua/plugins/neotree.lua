@@ -107,6 +107,7 @@ return {
       "antosha417/nvim-lsp-file-operations"
     },
     opts = {
+      sources = { "filesystem", "buffers", "git_status", "document_symbols" },
       filesystem = {
         window = {
           mappings = mappings,
