@@ -69,10 +69,11 @@ return {
   },
 
   --
-  -- Snacks (for indent guides)
+  -- Snacks
   {
     "folke/snacks.nvim",
     opts = {
+      -- indent guides
       indent = {
         enabled = true,
         indent = {
@@ -85,6 +86,7 @@ return {
           enabled = false,
         },
       },
+      -- gitbrowse - open buffer's git repo in browser
       gitbrowse = {}
     }
   },
