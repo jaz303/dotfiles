@@ -1,10 +1,10 @@
-local settings = require("config.settings")
+local S = require("config.settings")
 
 return {
   {
     "saghen/blink.cmp",
     version = "1.*",
-    cond = settings.lsp.native,
+    cond = S.lsp.completion.blink,
     dependencies = {
       "rafamadriz/friendly-snippets"
     },
