@@ -17,6 +17,7 @@ local has_gitsigns = has("gitsigns.nvim")
 local has_telescope = has("telescope.nvim")
 local has_neotree = has("neo-tree.nvim")
 local has_treehopper = has("nvim-treehopper")
+local has_snacks = has("snacks")
 
 -- Augment <C-l> to turn off search highlighting
 set('n', '<C-l>', ':nohl<cr><C-l>', { desc = 'Cancel search highlighting' })
@@ -132,6 +133,12 @@ if has_gitsigns then
   set('v', '<leader>gsH', function()
     gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
   end, { desc = 'Stage hunk' })
+end
+
+-- snacks.gitbrowse - <leader>go to open current repo in a browser
+if has_snacks then
+  local snacks = require("snacks")
+  set('n', '<leader>go', snacks.gitbrowse.open, { desc = 'Open repo in browser' })
 end
 
 --

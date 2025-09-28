@@ -6,6 +6,25 @@ return {
   },
 
   --
+  -- todo-comments
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("todo-comments").setup({
+        highlight = {
+          -- allow pattern to include assignee e.g. "TODO(jwf):"
+          pattern = [[.*<((KEYWORDS)\s*%(\(.{-1,}\))?)s*:]],
+        },
+        search = {
+          -- allow pattern to include assignee e.g. "TODO(jwf):"
+          pattern = [[\b(KEYWORDS)\s*(\(\w*\))?\s*:]],
+        }
+      })
+    end,
+  },
+
+  --
   -- Scrollbar
   {
     "petertriho/nvim-scrollbar",
@@ -21,14 +40,15 @@ return {
     config = function()
       local wk = require("which-key")
       wk.add({
-        { "<leader>f",  group = "File" },
         { "<leader>b",  group = "Buffer" },
+        { "<leader>f",  group = "File" },
+        { "<leader>g",  group = "git" },
+        { "<leader>.",  group = "Floating" },
+        { "<leader>gs", group = "Stage" },
         { "<leader>l",  group = "LSP" },
         { "<leader>r",  group = "Refactor" },
         { "<leader>s",  group = "Shunt" },
-        { "<leader>.",  group = "Floating" },
-        { "<leader>g",  group = "git" },
-        { "<leader>gs", group = "Stage" },
+        { "<leader>x",  group = "Diagnostics" },
       })
     end
   },
@@ -64,7 +84,8 @@ return {
         scope = {
           enabled = false,
         },
-      }
+      },
+      gitbrowse = {}
     }
   },
 }

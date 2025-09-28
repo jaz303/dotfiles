@@ -4,6 +4,6 @@ return {
   {
     "neoclide/coc.nvim",
     branch = "release",
-    cond = settings.lsp.coc
+    cond = settings.lsp.coc,
   }
 }

@@ -15,6 +15,11 @@ Completion/LSP stuff still isn't good enough. I tried coc, it's good but it feel
 
 LLM integration
 
+## Small Stuff
+
+  - [ ] `todo-comments.nvim` - colours are too bold/bright
+  - [ ] `todo-comments.nvim` - add keybindings for navigation
+
 ## Other peoples' configs
 
   - https://github.com/mcauley-penney/nvim/tree/main/lua/aucmd
@@ -33,12 +38,40 @@ Need a shortcut to toggle Neotree through symbols, files, buffers, etc.
 
 ## Misc plugins to look into
 
-  - `nvim-treesitter-textobjects`
+  - `neovim/nvim-lspconfig` - my LSPs are currently all configured manually, and seem to be working fine, not sure if there's any benefit to using this
+  - `nvim-treesitter-textobjects` - looks cool but I have treehopper installed and basically never use it
+  - `mason.nvim` - could make it easier to set up new machines
+  - `conform.nvim` - for formatting
+  - `trouble.nvim` - improved diagnostics
+  - `flash.nvim` - improves navigating built-in search results, and treehopper-like functionality
+  - `nvim-lint` -
+  - `mini.ai` - improved text objects with args, calls etc.
+  - [`grug-far.nvim`](https://www.lazyvim.org/plugins/editor#grug-farnvim) - search/replace in multiple files
   - `snipe`
   - `easymotion`
   - [hop.nvim](https://github.com/smoka7/hop.nvim)
   - [fzf-lua](https://github.com/ibhagwan/fzf-lua)
   - [vim-fugitive](https://github.com/tpope/vim-fugitive)
+
+### Done
+
+  - `snacks.nvim`
+    - using: indent, gitbrowse
+    - considering: input
+    - not using:
+      - notifier - i hate notifications
+      - scope
+      - scroll - i hate animations
+      - statuscolumn
+      - toggle
+      - words
+
+### Not Using
+
+List of plugins I've decided not to use here, so I can remind myself later.
+
+  - `mini.pairs` - I'm using autopairs and happy with it, plus a lot of people say they prefer autopairs anyway.
+
 
 ## Window Stuff
 

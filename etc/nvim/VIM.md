@@ -13,6 +13,9 @@ Legend:
   - `S` - substitute; in normal mode, clears current line and enters insert mode (with indentation). In visual mode this is overridden by vim-surround, but that's fine, because in visual mode `c` (change) does the same thing. Tip: use numeric prefix e.g. `5S` to change 5 lines... (need to add 1 to relative line numbers here)
   - `D` - delete to end of line - great for cutting end of line to paste elsewhere
   - `=` - format; works with motions e.g. `gg=G` moves to top, then formats to bottom of file.
+  - `==` - format line
+  - `<C-r-$reg>` - paste in insert mode
+  - `<C-o>` - leave insert mode, execute next command, re-enter insert mode
 
 When in visual mode, entering command mode prepopulates the command line with the range of the visual selection.
 
@@ -28,6 +31,7 @@ When in visual mode, entering command mode prepopulates the command line with th
   - `<C-i>` and `<C-o>` go fwd/back (mnemonic: `o` = old) through jumplist, don't really like this because it can take you unexpectedly to a different file. deally there would be a per-file internal jumplist and an external jumplist for keeping track of visited files, which could each be navigated independently. Changing buffers should always be a deliberate choice.
   - `zz` - centre around cursor
   - `gi` - go to last insert location and re-enter insert mode. This is useful, say, if you've had to scroll about to find something elsewhere.
+  - `gv` - go to last visual selection
   - `gg`/`G` - top/bottom of doc
   - `[x]G` - go to line x
   - `%` - jump to matching paren
@@ -103,15 +107,16 @@ Other helpers:
 
 ## Git
   - `<leader>gg` - pop up lazygit in floating terminal (or Sublime Merge on macOS)
+  - `<leader>gt` - toggle line blame
+  - `<leader>gw` - toggle word diff
+  - `<leader>gb` - pop up git blame
+  - `<leader>gd`, `<leader>gD` - diff
+  - `<leader>go` - open current file in browser (e.g. GitHub)
   - `<leader>gs[x]` - git stage, where `[x]` is:
     - `b` - stage buffer
     - `h` - stage hunk
     - `B` - reset buffer
     - `H` - reset hunk
-  - `<leader>gt` - toggle line blame
-  - `<leader>gw` - toggle word diff
-  - `<leader>gb` - pop up git blame
-  - `<leader>gd`, `<leader>gD` - diff
 
 ## [nvim-surround](https://github.com/kylechui/nvim-surround/blob/main/doc/nvim-surround.txt)
 
@@ -150,7 +155,6 @@ Examples:
   - `ysiwfcall` - encloses in `call(...)`
   - `Sfcall` - encloses visual selection in `call(...)`
   - `dsf` - removes function call
-
 
 ## Completion / LSP
 
