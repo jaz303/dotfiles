@@ -1,51 +1,52 @@
 Moving the TODOs to its own file...
 
-## Big Stuff
+## Completion
 
-Completion/LSP stuff still isn't good enough. I tried coc, it's good but it feels like sailing against the tide as it basically replaces all of the built-in LSP stuff. Things I really want:
-
-  - [x] Golang auto imports (seems to be sort of working with blink/snippets now? good enough for me)
-  - [x] Golang anonymous function completion
-  - [~] Automatic signature hints for calls
-    - sort of working, but also sort of broken in Go... the blink.cmp feature is experimental though...
-  - [~] Better formatting/more info in completion list
-    - blink definitely looks better, still need to dive into customisation options
+  - [~] Automatic signature hints for calls - sort of working, but also sort of broken in Go... the blink.cmp feature is experimental though...
+  - [~] Better formatting/more info in completion list - blink definitely looks better, still need to dive into customisation options
   - [ ] experiment with completion keybindings until i like them
   - [ ] better code actions menu - lspsaga maybe?
 
+## Other Big Stuff
+
+I've installed `trouble.nvim`. Looks cool but need to play about with the various functions. Also need to decide on what leader prefixes we're going to be using going forward; I'm learning towards:
+
+  - `<leader>x` - diagnostics
+  - `<leader>c` - general LSP querying
+  - `<leader>g` - goto (inc. LSP based navigation)
+
+Look at `flash.nvim` - could be better than Treehopper.
+
+Look at `mini.ai` - advanced text objects including ars + function calls.
+
+Look at `nvim-treesitter-textobjects`
+
+Should I just bite the bullet and use `nvim-lspconfig` and `mason` rather than setting up all the LSP stuff manually? Could help with setting up new machines.
+
+We should setup `T` to trigger/toggle a popup for the "best possible" guess at the __type definition__ under the cursor.
+
+Investigate `lspsaga` plugin.
+
 LLM integration
+  - [mcphub.nvim](https://github.com/ravitemer/mcphub.nvim)
+  - [CodeCompanion.nvim](https://codecompanion.olimorris.dev/)
+  - [copilot.vim](https://github.com/github/copilot.vim)
 
 ## Small Stuff
 
   - [ ] `todo-comments.nvim` - colours are too bold/bright
   - [ ] `todo-comments.nvim` - add keybindings for navigation
-
-## Other peoples' configs
-
-  - https://github.com/mcauley-penney/nvim/tree/main/lua/aucmd
-
-## General
-
-Auto imports for e.g. Go, TypeScript? At the moment I need to do `C-Enter` to summon the code-actions.
-
-We have [gitsigns](https://github.com/lewis6991/gitsigns.nvim) installed, pretty good, need to look into customisation.
-
-Need a shortcut to toggle Neotree through symbols, files, buffers, etc.
+  - [ ] need a shortcut to toggle Neotree through symbols, files, buffers, etc (although `trouble` might take care of this)
+  - [ ] Auto imports for e.g. Go, TypeScript? At the moment I need to do `C-Enter` to summon the code-actions.
 
 ## Bugs
 
   - need to get block commenting working with `C-/` - seem to remember this was working on my desktop but not on the laptop.
 
-## Misc plugins to look into
+## Misc other plugins to look into
 
-  - `neovim/nvim-lspconfig` - my LSPs are currently all configured manually, and seem to be working fine, not sure if there's any benefit to using this
-  - `nvim-treesitter-textobjects` - looks cool but I have treehopper installed and basically never use it
-  - `mason.nvim` - could make it easier to set up new machines
   - `conform.nvim` - for formatting
-  - `trouble.nvim` - improved diagnostics
-  - `flash.nvim` - improves navigating built-in search results, and treehopper-like functionality
   - `nvim-lint` -
-  - `mini.ai` - improved text objects with args, calls etc.
   - [`grug-far.nvim`](https://www.lazyvim.org/plugins/editor#grug-farnvim) - search/replace in multiple files
   - `snipe`
   - `easymotion`
@@ -53,61 +54,18 @@ Need a shortcut to toggle Neotree through symbols, files, buffers, etc.
   - [fzf-lua](https://github.com/ibhagwan/fzf-lua)
   - [vim-fugitive](https://github.com/tpope/vim-fugitive)
 
-### Done
-
-  - `snacks.nvim`
-    - using: indent, gitbrowse
-    - considering: input
-    - not using:
-      - notifier - i hate notifications
-      - scope
-      - scroll - i hate animations
-      - statuscolumn
-      - toggle
-      - words
-
-### Not Using
+## Plugins I'm Not Using
 
 List of plugins I've decided not to use here, so I can remind myself later.
 
   - `mini.pairs` - I'm using autopairs and happy with it, plus a lot of people say they prefer autopairs anyway.
-
-
-## Window Stuff
-
-  - Ability to cycle Neotree through files/docsyms/git/buffers
-    (or maybe distinct command for each?)
-
-## Completion, LSP Floats, more
-
-Look into [blink.cmp](https://github.com/saghen/blink.cmp).
-
-Using `K` to trigger hover. It would be better if pressing it again closed the popup, rather than focus.
-Look into the default LSP bindings; maybe remove the `K` binding and make our own function (should be an autocmd for LspAttach).
-
-We should setup `T` to trigger/toggle a popup for the "best possible" guess at the __type definition__ under consideration.
-
-Investigate `lspsaga` plugin.
+  - `harpoon`, `miniharp` - tried them, unconvinced
 
 ## shunt
 
 Rewrite this plugin so it creates a window per item.
 Add support for capturing types.
 `nui` plugin might be a good starting point?
-
-## harpoon/miniharp
-
-Tried these, unconvinced... will revisit.
-
-## Autocompletion
-
-Would be good if we got inline hints for call signatures.
-
-## LLM Integration
-
-  - [mcphub.nvim](https://github.com/ravitemer/mcphub.nvim)
-  - [CodeCompanion.nvim](https://codecompanion.olimorris.dev/)
-  - [copilot.vim](https://github.com/github/copilot.vim)
 
 ## Build system integration
 
