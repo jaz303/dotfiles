@@ -6,12 +6,13 @@ vim.pack.add({
 
 local wk = require('which-key')
 wk.add({
-  { "<leader>f",  group = "File" },
   { "<leader>b",  group = "Buffer" },
+  { "<leader>f",  group = "File" },
+  { "<leader>g",  group = "git" },
+  { "<leader>.",  group = "Floating" },
+  { "<leader>gs", group = "Stage" },
   { "<leader>l",  group = "LSP" },
   { "<leader>r",  group = "Refactor" },
   { "<leader>s",  group = "Shunt" },
-  { "<leader>.",  group = "Floating" },
-  { "<leader>g",  group = "git" },
-  { "<leader>gs", group = "Stage" },
+  { "<leader>x",  group = "Diagnostics" },
 })

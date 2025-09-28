@@ -36,6 +36,38 @@ if S.lsp.completion.native then
   })
 end
 
+--
+-- Diagnostics
+
+vim.keymap.set('n', '<leader>xx', '<cmd>lua vim.diagnostic.open_float()<cr>', { desc = "Floating diagnostics" })
+vim.keymap.set('n', '<leader>xo', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', {
+  desc = "Toggle Trouble buffer diagnostics"
+})
+vim.keymap.set('n', '<leader>xO', '<cmd>Trouble diagnostics toggle<cr>', { desc = "Toggle Trouble diagnostics" })
+
+--
+-- Other LSP stuff
+
+vim.keymap.set("n", "<leader>cs", "<cmd>Trouble symbols toggle focus=false win.position=right<cr>", {
+  desc = "Toggle symbols"
+})
+
+vim.keymap.set("n", "<leader>cS", "<cmd>Trouble symbols open focus=true win.position=right<cr>", {
+  desc = "Toggle symbols & focus"
+})
+
+vim.keymap.set("n", "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", {
+  desc = "Toggle symbols"
+})
+
+-- close Trouble
+vim.keymap.set("n", "<leader>cq", "<cmd>Trouble close<cr>", {
+  desc = "Close Trouble window"
+})
+
+--
+--
+
 if has_saga then
   vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<cr>')
   vim.keymap.set({ 'n', 'i' }, '<C-Enter>', '<cmd>Lspsaga code_action<cr>', { desc = 'Code action' })
@@ -46,7 +78,6 @@ end
 vim.keymap.set('n', '<leader>,', '<cmd>lua vim.lsp.buf.signature_help()<cr>', { desc = "Signature help" })
 vim.keymap.set('n', '<leader>?', '<cmd>lua vim.diagnostic.open_float()<cr>', { desc = "Diagnostics" })
 vim.keymap.set('n', '<leader>.s', '<cmd>lua vim.lsp.buf.signature_help()<cr>', { desc = "Signature help" })
-vim.keymap.set('n', '<leader>.d', '<cmd>lua vim.diagnostic.open_float()<cr>', { desc = "Diagnostics" })
 
 -- Toggle visible whitespace characters
 --vim.keymap.set('n', '<leader>l', ':listchars!<cr>', { desc = 'Toggle [l]istchars' })
