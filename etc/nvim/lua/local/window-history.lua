@@ -61,8 +61,8 @@ local function on_buf_enter()
       table.remove(h.buffers, i)
     end
 
-    -- -- Check the history list for the same buffer. If it's found,
-    -- -- swap it to the front
+    -- Check the history list for the same buffer. If it's found,
+    -- swap it to the front
     for i = 1, #h.buffers - 1 do
       if h.buffers[i].nr == ent.nr then
         for j = i + 1, #h.buffers do
@@ -84,6 +84,7 @@ local function on_buf_delete()
   -- to the current buffer, taking care to update index appropriately.
 end
 
+-- Discard history after a window is closed
 local function on_win_closed(args)
   local winid = tonumber(args.match)
   if winid ~= nil then
