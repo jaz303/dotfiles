@@ -61,18 +61,17 @@ local function on_buf_enter()
       table.remove(h.buffers, i)
     end
 
-    -- TODO: not sure if I like this behaviour?
     -- -- Check the history list for the same buffer. If it's found,
     -- -- swap it to the front
-    -- for i = 1, #h.buffers - 1 do
-    --   if h.buffers[i].nr == ent.nr then
-    --     for j = i + 1, #h.buffers do
-    --       h.buffers[j - 1] = h.buffers[j]
-    --     end
-    --     h.buffers[#h.buffers] = ent
-    --     return
-    --   end
-    -- end
+    for i = 1, #h.buffers - 1 do
+      if h.buffers[i].nr == ent.nr then
+        for j = i + 1, #h.buffers do
+          h.buffers[j - 1] = h.buffers[j]
+        end
+        h.buffers[#h.buffers] = ent
+        return
+      end
+    end
 
     -- Otherwise, insert a new history entry at the end
     table.insert(h.buffers, ent)
