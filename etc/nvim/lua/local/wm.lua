@@ -14,7 +14,7 @@
 -- Originally designed for use with vertical splits; focus/equalize functions
 -- currently exhibit undefined behaviour when there are active horizontal splits.
 
-local wm = {}
+local M = {}
 
 local cache = nil
 
@@ -138,16 +138,21 @@ local function distribute_missing_widths(windows, available)
   end
 end
 
-function wm.GetWindowIndex(winid)
+function M.GetWindowIndex(winid)
   return get_windows().mapping[winid]
 end
 
-function wm.GetCandidateWindows()
+-- Returns true if the window manager is managing the given window ID
+function M.HasWindow(winid)
+  return M.GetWindowIndex(winid) ~= nil
+end
+
+function M.GetCandidateWindows()
   return get_windows().windows
 end
 
-function wm.EqualizeWindows()
-  local windows = wm.GetCandidateWindows()
+function M.EqualizeWindows()
+  local windows = M.GetCandidateWindows()
   local tot = total_width(windows)
 
   for _, win in ipairs(windows) do
@@ -158,8 +163,8 @@ function wm.EqualizeWindows()
   set_all_widths(windows)
 end
 
-function wm.FocusActiveWindow()
-  local windows = wm.GetCandidateWindows()
+function M.FocusActiveWindow()
+  local windows = M.GetCandidateWindows()
 
   -- if there's less than 2 windows we can't focus
   if #windows <= 1 then
@@ -184,8 +189,8 @@ function wm.FocusActiveWindow()
   set_all_widths(windows)
 end
 
-function wm.SwitchToRelWindow(offset)
-  local windows = wm.GetCandidateWindows()
+function M.SwitchToRelWindow(offset)
+  local windows = M.GetCandidateWindows()
   local curr = vim.api.nvim_get_current_win()
   local target = nil
   for ix, win in ipairs(windows) do
@@ -205,8 +210,8 @@ function wm.SwitchToRelWindow(offset)
   vim.api.nvim_set_current_win(windows[target].id)
 end
 
-function wm.SwitchToNthWindow(n)
-  local win = wm.GetCandidateWindows()[n]
+function M.SwitchToNthWindow(n)
+  local win = M.GetCandidateWindows()[n]
   if not win then
     warn("No window " .. n)
     return
@@ -214,8 +219,8 @@ function wm.SwitchToNthWindow(n)
   vim.api.nvim_set_current_win(win.id)
 end
 
-function wm.MoveActiveBufferToNthWindow(n)
-  local win = wm.GetCandidateWindows()[n]
+function M.MoveActiveBufferToNthWindow(n)
+  local win = M.GetCandidateWindows()[n]
   if not win then
     warn("No window " .. n)
     return
@@ -241,8 +246,8 @@ function wm.MoveActiveBufferToNthWindow(n)
   end
 end
 
-function wm.SwapActiveBufferWithNthWindow(n)
-  local windows = wm.GetCandidateWindows()
+function M.SwapActiveBufferWithNthWindow(n)
+  local windows = M.GetCandidateWindows()
   if n < 1 or n > #windows then
     vim.notify("No window " .. n, vim.log.levels.WARN)
     return
@@ -264,7 +269,7 @@ end
 
 vim.api.nvim_create_user_command(
   'EqualizeWindows',
-  wm.EqualizeWindows,
+  M.EqualizeWindows,
   {
     desc = 'Equalize window widths',
   }
@@ -272,7 +277,7 @@ vim.api.nvim_create_user_command(
 
 vim.api.nvim_create_user_command(
   'FocusActiveWindow',
-  wm.FocusActiveWindow,
+  M.FocusActiveWindow,
   {
     desc = 'Focus active window'
   }
@@ -283,7 +288,7 @@ vim.api.nvim_create_user_command(
   function(opts)
     local n = tonumber(opts.args)
     if n then
-      wm.SwitchToNthWindow(n)
+      M.SwitchToNthWindow(n)
     else
       warn("Invalid window number")
     end
@@ -299,7 +304,7 @@ vim.api.nvim_create_user_command(
   function(opts)
     local n = tonumber(opts.args)
     if n then
-      wm.SwitchToRelWindow(n)
+      M.SwitchToRelWindow(n)
     else
       warn("Invalid window number")
     end
@@ -315,7 +320,7 @@ vim.api.nvim_create_user_command(
   function(opts)
     local n = tonumber(opts.args)
     if n then
-      wm.MoveActiveBufferToNthWindow(n)
+      M.MoveActiveBufferToNthWindow(n)
     else
       warn("Invalid window number")
     end
@@ -331,7 +336,7 @@ vim.api.nvim_create_user_command(
   function(opts)
     local n = tonumber(opts.args)
     if n then
-      wm.SwapActiveBufferWithNthWindow(n)
+      M.SwapActiveBufferWithNthWindow(n)
     else
       warn("Invalid window number")
     end
@@ -342,4 +347,4 @@ vim.api.nvim_create_user_command(
   }
 )
 
-return wm
+return M

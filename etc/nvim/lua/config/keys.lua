@@ -94,17 +94,20 @@ if has_telescope then
   set('n', '<leader><leader>', ts.buffers, { desc = 'Telescope buffers' })
 end
 set('n', '<leader><BS>', '<C-^>', { desc = 'Alternate buffer' })
-set('n', '<leader>]', ':bnext<cr>', { desc = 'Next buffer' })
-set('n', '<leader>[', ':bprevious<cr>', { desc = 'Previous buffer' })
+set('n', '<leader>[', ':WinHist prev<cr>', { desc = 'Previous window buffer' })
+set('n', '<leader>]', ':WinHist next<cr>', { desc = 'Next window buffer' })
+set('n', '<leader><Enter>', ':WinHist list<cr>', { desc = 'List window buffers' })
 
 -- which-key discoverable versions
 if has_telescope then
   local ts = require("telescope.builtin")
-  set('n', '<leader>bt', ts.buffers, { desc = 'Telescope buffers' })
+  set('n', '<leader>bb', ts.buffers, { desc = 'Telescope buffers' })
 end
-set('n', '<leader>bb', '<C-^>', { desc = 'Alternate buffer' })
-set('n', '<leader>bn', ':bnext<cr>', { desc = 'Next buffer' })
+set('n', '<leader>b[', ':WinHist prev<cr>', { desc = 'Previous window buffer' })
+set('n', '<leader>b]', ':WinHist next<cr>', { desc = 'Next window buffer' })
+set('n', '<leader>bl', ':WinHist list<cr>', { desc = 'List window buffers' })
 set('n', '<leader>bp', ':bprevious<cr>', { desc = 'Previous buffer' })
+set('n', '<leader>bn', ':bnext<cr>', { desc = 'Next buffer' })
 
 --
 -- Gitsigns
