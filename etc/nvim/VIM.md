@@ -29,6 +29,7 @@ When in visual mode, entering command mode prepopulates the command line with th
 ## Navigating
   - `m[a-z]` to set a mark, `'[a-z]` to jump to that mark
   - `<C-i>` and `<C-o>` go fwd/back (mnemonic: `o` = old) through jumplist, don't really like this because it can take you unexpectedly to a different file. deally there would be a per-file internal jumplist and an external jumplist for keeping track of visited files, which could each be navigated independently. Changing buffers should always be a deliberate choice.
+  - __*__ `<leader>[`, `<leader>]` - move back/forward through per-window buffer history
   - `zz` - centre around cursor
   - `gi` - go to last insert location and re-enter insert mode. This is useful, say, if you've had to scroll about to find something elsewhere.
   - `gv` - go to last visual selection
