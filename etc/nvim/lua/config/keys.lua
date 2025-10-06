@@ -156,17 +156,15 @@ end
 --
 -- Shunt
 
--- This is a work in progress
--- local shunt = require('local.shunt')
--- vim.keymap.set('n', '<leader>ss', shunt.push_selection, { desc = 'Shunt selection' })
--- vim.keymap.set('v', '<leader>ss', shunt.push_selection, { desc = 'Shunt selection' })
--- vim.keymap.set('n', '<leader>st', ':ShuntPushType<cr>', { desc = 'Shunt type' })
--- vim.keymap.set('n', '<leader>sh', ':ShuntHide<cr>', { desc = 'Hide shunt window' })
--- vim.keymap.set('v', '<leader>sh', '<cmd>ShuntHide<cr>', { desc = 'Hide shunt window' })
--- vim.keymap.set('n', '<leader>s<Enter>', ':ShuntToggle<cr>', { desc = 'Toggle shunt window' })
--- vim.keymap.set('v', '<leader>s<Enter>', '<cmd>ShuntToggle<cr>', { desc = 'Toggle shunt window' })
--- vim.keymap.set('n', '<leader>sc', ':ShuntClear<cr>', { desc = 'Clear shunt window' })
--- vim.keymap.set('v', '<leader>sc', '<cmd>ShuntClear<cr>', { desc = 'Clear shunt window' })
+local shunt = require("local.shunt")
+set({ "n" }, '<leader>ss', shunt.guess, { desc = 'Shunt' })
+set({ "v" }, '<leader>ss', shunt.selection, { desc = 'Shunt selection' })
+set({ "n" }, '<leader>sh', shunt.hover, { desc = 'Shunt hover' })
+set({ "n" }, '<leader>st', shunt.type, { desc = 'Shunt type' })
+set({ "n" }, '<leader>sd', shunt.docs, { desc = 'Shunt docs' })
+set({ "n" }, '<leader>sg', shunt.signature, { desc = 'Shunt signature' })
+set({ "n", "v" }, '<leader>sc', shunt.clear, { desc = 'Clear shuntlist' })
+set({ "n", "v" }, '<leader>st', shunt.toggle, { desc = 'Toggle' })
 
 --
 -- Neotree
