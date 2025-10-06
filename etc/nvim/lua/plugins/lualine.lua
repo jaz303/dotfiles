@@ -69,8 +69,8 @@ return {
     opts = {
       options = {
         disabled_filetypes = {
-          statusline = { 'neo-tree', 'neo-tree-popup' },
-          winbar = { 'neo-tree', 'neo-tree-popup' },
+          statusline = { 'neo-tree', 'neo-tree-popup', 'rtb-shunt' },
+          winbar = { 'neo-tree', 'neo-tree-popup', 'rtb-shunt' },
         }
       },
       sections = {
@@ -82,12 +82,12 @@ return {
         lualine_z = { 'encoding', 'fileformat' },
       },
       inactive_sections = {
-        lualine_a = { },
+        lualine_a = {},
         lualine_b = { 'filename' },
         lualine_c = { 'location', 'progress' },
-        lualine_x = { },
-        lualine_y = { },
-        lualine_z = { },
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {},
       },
       winbar = {
         lualine_a = {},
