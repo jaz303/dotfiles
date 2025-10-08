@@ -1,9 +1,10 @@
 local mappings = {}
 
+local wm = require('local.wm')
+local os = require('local.os')
+
 --
 -- Key map for opening files directly into splits
-
-local wm = require('local.wm')
 
 local function open_in_split(n, state)
   local node = state.tree:get_node()
@@ -92,6 +93,15 @@ mappings["Y"] = {
     copy_path(state, '+', 'clipboard')
   end,
   desc = "Copy path to clipboard"
+}
+
+mappings["O"] = {
+  function(state)
+    local node = state.tree:get_node()
+    local path = node:get_id()
+    os.ShowInFileExplorer(path)
+  end,
+  desc = "System Open Dir"
 }
 
 return {

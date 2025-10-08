@@ -5,7 +5,9 @@
 local is_mac = (vim.loop.os_uname().sysname == "Darwin")
 
 local function launch_terminal_i3(dir, cmd)
-  local exec = "exec alacritty --class floating_term -o 'window.dimensions.columns=150' -o 'window.dimensions.lines=35' --working-directory '" .. dir .. "'"
+  local exec =
+      "exec alacritty --class floating_term -o 'window.dimensions.columns=150' -o 'window.dimensions.lines=35' --working-directory '" ..
+      dir .. "'"
 
   if cmd then
     exec = exec .. " -e '" .. cmd .. "'"
@@ -18,9 +20,28 @@ local function launch_terminal_macos(dir, cmd)
   os.execute("open -a \"/Applications/iTerm.app\" " .. dir)
 end
 
+
+local function show_file_nautilus(file)
+  -- TODO
+end
+
+local function show_file_finder(file)
+  if vim.fn.isdirectory(file) == 1 then
+    vim.fn.jobstart({ "open", file }, { detach = true })
+  else
+    vim.fn.jobstart({ "open", "-R", file }, { detach = true })
+  end
+end
+
+--
+-- Use correct function for each OS
+
 local launch_terminal_in_dir = launch_terminal_i3
+local show_in_file_explorer = show_file_nautilus
+
 if is_mac then
   launch_terminal_in_dir = launch_terminal_macos
+  show_in_file_explorer = show_file_finder
 end
 
 local M = {
@@ -38,7 +59,10 @@ local M = {
   LaunchTerminalInFileDir = function()
     local file_path = vim.api.nvim_buf_get_name(0)
     launch_terminal_in_dir(vim.fs.dirname(file_path))
-  end
+  end,
+  ShowInFileExplorer = function(dir)
+    show_in_file_explorer(dir)
+  end,
 }
 
 vim.api.nvim_create_user_command('LaunchFloatingTerminalWS', M.LaunchTerminalInWorkspaceDir,
@@ -48,4 +72,3 @@ vim.api.nvim_create_user_command('LaunchFloatingTerminalF', M.LaunchTerminalInFi
 vim.api.nvim_create_user_command('LaunchGitClient', M.LaunchGitClient, { desc = 'Launch git client' })
 
 return M
-
