@@ -72,7 +72,7 @@ if has_saga then
   vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<cr>')
   vim.keymap.set({ 'n', 'i' }, '<C-Enter>', '<cmd>Lspsaga code_action<cr>', { desc = 'Code action' })
 else
-  vim.keymap.set({ 'n', 'i' }, '<C-Enter>', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code action' })
+  vim.keymap.set({ 'n', 'i', 'v' }, '<C-Enter>', '<cmd>lua vim.lsp.buf.code_action()<cr>', { desc = 'Code action' })
 end
 
 vim.keymap.set('n', '<leader>,', '<cmd>lua vim.lsp.buf.signature_help()<cr>', { desc = "Signature help" })
