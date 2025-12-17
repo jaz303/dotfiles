@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+# Scans the given tf files and generates "moved" blocks to move them all
+# to the given module.
+
+set -euo pipefail
+
+if [ "$#" -lt 2 ]; then
+  echo "usage: $0 <target_module> <tf files...>" >&2
+  echo "example: $0 my_module *.tf" >&2
+  exit 1
+fi
+
+TARGET_MODULE="$1"
+shift
+
+for file in "$@"; do
+  awk -v target="$TARGET_MODULE" '
+    # resource "aws_foo" "bar" {
+    /^resource[[:space:]]+"[^"]+"[[:space:]]+"[^"]+"[[:space:]]*\{/ {
+      type=$2
+      name=$3
+      gsub(/"/, "", type)
+      gsub(/"/, "", name)
+
+      print "moved {"
+      print "  from = " type "." name
+      print "  to   = module." target "." type "." name
+      print "}"
+      print ""
+    }
+
+    # module "foo" {
+    /^module[[:space:]]+"[^"]+"[[:space:]]*\{/ {
+      name=$2
+      gsub(/"/, "", name)
+
+      print "moved {"
+      print "  from = module." name
+      print "  to   = module." target ".module." name
+      print "}"
+      print ""
+    }
+  ' "$file"
+done
+
