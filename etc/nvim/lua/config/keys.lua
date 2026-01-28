@@ -40,6 +40,9 @@ set('i', '<C-BS>', '<C-W>', { desc = 'Delete word' })
 set('v', '<C-.>', '>gv', { desc = 'Indent (retain selection)' })
 set('v', '<C-,>', '<gv', { desc = 'Dedent (retain selection)' })
 
+-- C-A - select all
+set('n', '<C-a>', 'ggVG', { desc = 'Select All' })
+
 -- Shift-Enter to move to next line in insert mode
 -- This has become essential since adding nvim-autopairs
 -- NOTE: this requires additional config in Alacritty:
