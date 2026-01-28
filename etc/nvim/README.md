@@ -34,6 +34,11 @@ These aren't all necessarily custom... more of an aide-memoire for me...
   - (I) `<C-BS>` - delete word
   - (N/I) - `<M-S-{Up,Down}>` - move line up/down
 
+## Yank/Paste
+
+  - `:%Y` - yank all lines (or any other range) to system clipboard
+  - `:%P` - paste over given range from system clipboard (not currently working)
+
 ## Windows
 
 Window numbering is derived on-demand based on geometry, increasing from left to right.
