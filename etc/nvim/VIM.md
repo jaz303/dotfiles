@@ -12,6 +12,8 @@ Legend:
   - `J` - join current line with line below
   - `S` - substitute; in normal mode, clears current line and enters insert mode (with indentation). In visual mode this is overridden by vim-surround, but that's fine, because in visual mode `c` (change) does the same thing. Tip: use numeric prefix e.g. `5S` to change 5 lines... (need to add 1 to relative line numbers here)
   - `D` - delete to end of line - great for cutting end of line to paste elsewhere
+  - `A` - append at end of line
+  - `I` - insert at beginning of line
   - `=` - format; works with motions e.g. `gg=G` moves to top, then formats to bottom of file.
   - `==` - format line
   - `<C-r-$reg>` - paste in insert mode

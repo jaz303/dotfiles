@@ -1,4 +1,4 @@
-# Jason's Janky nvim Config
+# My nvim Config
 
 ## Shortcuts
 
