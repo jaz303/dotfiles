@@ -1,3 +1,6 @@
 source $HOME/.dotfiles/etc/zshrc_mac
 
+export PATH="$HOME/.local/bin:$PATH"
+
+
 alias vim=nvim

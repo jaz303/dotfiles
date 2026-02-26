@@ -30,7 +30,7 @@ bindkey "^[[B" history-beginning-search-forward
 ################################################################################
 
 autoload -U colors
-colors     
+colors
 setopt prompt_subst
 
 #
@@ -121,6 +121,8 @@ alias grep='grep --color=auto'
 alias h="fc -l"
 alias hf="fc -lm"
 
+alias lg="lazygit"
+
 function pf {
     ps $PS_ARGS | grep -i $* | grep -v grep
 }
@@ -169,7 +171,7 @@ function portscan() {
 # Serve the current directory over HTTP
 function servedir() {
     nvmify
-    http-server . -a 0.0.0.0 -p $1 -i -c-1 
+    http-server . -a 0.0.0.0 -p $1 -i -c-1
 }
 
 # Usage: base64_bytes $N
@@ -216,7 +218,7 @@ function tabs_to_spaces {
 # e.g. rename_pattern '*.png' apple banana
 # The above would replace the substring 'apple' with 'banana' in all files matching '*.png'
 function rename_pattern {
-    find . -name $1 -exec bash -c "mv \"\$0\" \"\${0/$2/$3}"\" {} \; 
+    find . -name $1 -exec bash -c "mv \"\$0\" \"\${0/$2/$3}"\" {} \;
 }
 
 # Usage: tasks
