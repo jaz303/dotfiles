@@ -3,6 +3,7 @@ require("config.lazy")
 require("config.lsp")
 
 require("local.autoformat")
+require("local.autowrap")
 require("local.disable-auto-comment")
 require("local.highlight-yank")
 require("local.os")
