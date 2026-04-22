@@ -25,7 +25,10 @@
     user = jaz303
 [core]
 	quotepath = false
+	excludesfile = ~/.gitignore
 [url "ssh://git@github.com/"]
     insteadOf = https://github.com/
 [pull]
 	rebase = false
+[safe]
+	directory = /opt/homebrew/Caskroom/flutter/3.32.2/flutter
