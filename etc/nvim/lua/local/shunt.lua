@@ -143,6 +143,19 @@ local function lsp_request(qbuf, method, params, cb)
   end)
 end
 
+local function trim_to_first_fence(lines)
+  local fence_start, fence_lang
+  for i, l in ipairs(lines) do
+    if not fence_start then
+      local fl = l:match("^```(.*)$")
+      if fl then fence_start, fence_lang = i, (fl ~= "" and fl or nil) end
+    elseif l:match("^```%s*$") then
+      return vim.list_slice(lines, fence_start + 1, i - 1), fence_lang
+    end
+  end
+  return nil, nil
+end
+
 local function trim_trailing_blank(lines)
   while #lines > 0 and lines[#lines]:match("^%s*$") do
     table.remove(lines)
@@ -247,7 +260,7 @@ M.selection = function()
   })
 end
 
-M.hover = function()
+local function hover_impl(trim)
   local params = vim.lsp.util.make_position_params(0, "utf-8")
   local qbuf   = vim.api.nvim_get_current_buf()
   local source = relative_path(vim.api.nvim_buf_get_name(qbuf))
@@ -258,9 +271,16 @@ M.hover = function()
       return
     end
     local lang, lines = normalize_hover(result.contents)
+    if trim then
+      local inner, fence_lang = trim_to_first_fence(lines)
+      if inner then lang, lines = fence_lang or lang, inner end
+    end
     push({ source = source, lang = lang, lines = lines })
   end)
 end
+
+M.hover      = function() hover_impl(true) end
+M.hover_full = function() hover_impl(false) end
 
 M.type = function()
   local params = vim.lsp.util.make_position_params(0, "utf-8")
