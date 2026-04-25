@@ -23,20 +23,6 @@ local function has_formatter(buf)
 end
 
 local code_actions_on_save_group = vim.api.nvim_create_augroup("CodeActionsOnSave", { clear = true })
---
--- vim.api.nvim_create_autocmd("BufWritePre", {
---   group = group,
---   pattern = "*",
---   callback = function(args)
---     if has_formatter(args.buf) then
---       vim.lsp.buf.format({ bufnr = args.buf })
---     else
---       local save = vim.fn.winsaveview()
---       vim.cmd([[%s/\s\+$//e]])
---       vim.fn.winrestview(save)
---     end
---   end,
--- })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
   group = code_actions_on_save_group,
