@@ -20,5 +20,10 @@ return {
   disable_auto_comment_filetypes = {
     "go",
     "lua",
-  }
+  },
+  shunt = {
+    narrow_width = function() return 60 end,
+    wide_width   = function() return 100 end,
+    height       = function() return vim.o.lines - 3 end,
+  },
 }

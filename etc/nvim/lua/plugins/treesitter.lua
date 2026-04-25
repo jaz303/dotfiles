@@ -34,6 +34,8 @@ return {
           'json',
           'lua',
           'make',
+          'markdown',
+          'markdown_inline',
           'objc',
           'objc',
           'ocaml',

@@ -1,185 +1,140 @@
--- shunt.lua
---
--- TODO: tabpage support
--- TODO: remove indentation from shunted entries
-
 local M = {}
-local Entries = {}
 
-local FILETYPE = "rtb-shunt"
+local Path     = require("plenary.path")
+local settings = require("config.settings")
 
---
--- Buffer
+local cfg          = settings.shunt or {}
+local narrow_width = cfg.narrow_width or function() return 60 end
+local wide_width   = cfg.wide_width   or function() return 100 end
+local get_height   = cfg.height       or function() return vim.o.lines - 2 end
 
--- Buffer used to store current shunt list
-local buf = nil
+-- State
+local entries = {}
+local buf     = nil
+local win     = nil
+local is_wide = false
 
-local function create_buffer()
-  local b = vim.api.nvim_create_buf(false, true)
-  vim.bo[b].buftype = "nofile"
-  vim.bo[b].swapfile = false
-  vim.bo[b].bufhidden = "hide"
-  vim.bo[b].modifiable = false
-  vim.bo[b].filetype = FILETYPE
-  vim.bo[b].readonly = true
-  vim.bo[b].syntax = "markdown"
-  vim.api.nvim_buf_set_option(b, "wrap", true)
-  vim.api.nvim_buf_set_option(b, "linebreak", true)
-  vim.api.nvim_buf_set_name(b, '~shunt~')
-  return b
+-- ─── Helpers ─────────────────────────────────────────────────────────────────
+
+local function get_width()
+  return is_wide and wide_width() or narrow_width()
 end
 
+local function relative_path(abs)
+  if not abs or abs == "" then return "[No Name]" end
+  return Path:new(abs):make_relative(vim.loop.cwd())
+end
+
+-- ─── Buffer ──────────────────────────────────────────────────────────────────
+
 local function get_buffer()
-  if not buf then
-    buf = create_buffer()
-  end
+  if buf and vim.api.nvim_buf_is_valid(buf) then return buf end
+  buf = vim.api.nvim_create_buf(false, true)
+  vim.bo[buf].buftype   = "nofile"
+  vim.bo[buf].swapfile  = false
+  vim.bo[buf].bufhidden = "hide"
+  vim.bo[buf].modifiable = false
+  vim.bo[buf].readonly  = true
+  vim.bo[buf].filetype  = "shunt"
+  vim.bo[buf].syntax    = "markdown"
+  vim.api.nvim_buf_set_name(buf, "[Shunt]")
+  vim.treesitter.start(buf, "markdown")
   return buf
 end
 
---
--- Window
---
--- This is all a bit of a mess right now because my first-pass integrated
--- tightly with my dubious home-grown window manager. I've just put the
--- minimum in here to make it work.
+-- ─── Window ──────────────────────────────────────────────────────────────────
 
-local WIDTH = 60
-
-local function find_side_window()
-  for _, w in ipairs(vim.api.nvim_list_wins()) do
-    local b = vim.api.nvim_win_get_buf(w)
-    local ft = vim.bo[b].filetype
-    if ft == FILETYPE or ft == "neo-tree" or ft == "trouble" or ft == "aerial" then
-      return w
-    end
-  end
+local function win_config(width)
+  return {
+    relative = "editor",
+    anchor   = "NE",
+    row      = 0,
+    col      = vim.o.columns,
+    width    = width,
+    height   = get_height(),
+    style    = "minimal",
+    border   = "single",
+    zindex   = 50,
+  }
 end
 
--- When this project is eventually packaged as a plugin, this function will be
--- a configuration option so users can control the window placement. For now we
--- just place it on the right with a fixed width.
 local function open_window()
-  local w = find_side_window()
-  if w then
-    vim.api.nvim_win_set_buf(w, get_buffer())
-    return w
-  else
-    return vim.api.nvim_open_win(get_buffer(), false, {
-      win = -1,
-      split = 'right',
-      width = WIDTH,
-    })
+  if win and vim.api.nvim_win_is_valid(win) then return win end
+  win = vim.api.nvim_open_win(get_buffer(), false, win_config(get_width()))
+  vim.wo[win].wrap      = true
+  vim.wo[win].linebreak = true
+  return win
+end
+
+local function close_window()
+  if win and vim.api.nvim_win_is_valid(win) then
+    vim.api.nvim_win_close(win, true)
   end
+  win = nil
 end
 
-local function hide_window()
-  vim.api.nvim_win_close(open_window(), true)
-end
-
---
--- Rendering
+-- ─── Rendering ───────────────────────────────────────────────────────────────
 
 local function render()
   local b = get_buffer()
-  local out_lines = {}
+  local out = {}
 
-  for ix, entry in ipairs(Entries) do
-    table.insert(out_lines, string.format("# [%d] %s", ix, entry.file))
-    table.insert(out_lines, "")
-    for _, l in ipairs(entry.lines) do
-      table.insert(out_lines, l)
+  for ix, entry in ipairs(entries) do
+    table.insert(out, string.format("# (%d) %s", ix, entry.source))
+    table.insert(out, "")
+
+    if entry.lang and entry.lang ~= "" then
+      table.insert(out, "```" .. entry.lang)
+      for _, l in ipairs(entry.lines) do table.insert(out, l) end
+      table.insert(out, "```")
+    else
+      for _, l in ipairs(entry.lines) do table.insert(out, l) end
     end
-    table.insert(out_lines, "")
-  end
 
-  if #out_lines > 0 and out_lines[#out_lines] == "" then
-    table.remove(out_lines, #out_lines)
+    if ix < #entries then
+      table.insert(out, "")
+      table.insert(out, "---")
+      table.insert(out, "")
+    end
   end
 
   vim.bo[b].modifiable = true
-  vim.bo[b].readonly = false
-  vim.api.nvim_buf_set_lines(b, 0, -1, false, out_lines)
-  vim.bo[b].readonly = true
+  vim.bo[b].readonly   = false
+  vim.api.nvim_buf_set_lines(b, 0, -1, false, out)
+  vim.bo[b].readonly   = true
   vim.bo[b].modifiable = false
 end
 
---
--- Helpers
-
--- TODO: think plenary.nvim has more robust tools for this
-local function get_current_relative_path()
-  local name = vim.api.nvim_buf_get_name(0)
-  if name == "" then
-    return "[No Name]"
-  end
-
-  local cwd = vim.fn.getcwd()
-  local relpath = vim.fn.fnamemodify(name, ":." .. cwd)
-  return relpath
-end
-
-local function extract_visual_selection()
-  local b = vim.api.nvim_get_current_buf()
-  local mode = vim.fn.mode()
-
-  local vstart = vim.fn.getpos("v") -- {bufnum, lnum, col, off}
-  local vend = vim.fn.getpos(".")
-
-  local line_start, col_start = vstart[2], vstart[3]
-  local line_end, col_end = vend[2], vend[3]
-
-  -- Adjust for reversed selections
-  if (line_end < line_start) or (line_end == line_start and col_end < col_start) then
-    line_start, col_start, line_end, col_end = line_end, col_end, line_start, col_start
-  end
-
-  local raw_lines = vim.api.nvim_buf_get_lines(b, line_start - 1, line_end, false)
-
-  if mode == "v" then
-    -- Characterwise
-    raw_lines[1] = string.sub(raw_lines[1], col_start, #raw_lines[1])
-    raw_lines[#raw_lines] = string.sub(raw_lines[#raw_lines], 1, col_end)
-  elseif mode == "V" then
-    -- Linewise - nothing to do
-  elseif mode == "\22" then
-    -- Blockwise
-    for i, l in ipairs(raw_lines) do
-      raw_lines[i] = string.sub(l, col_start, col_end)
+local function dedent(lines)
+  local min_indent = math.huge
+  for _, l in ipairs(lines) do
+    if l:match("%S") then
+      min_indent = math.min(min_indent, #l:match("^%s*"))
     end
   end
-
-  return {
-    range = { line_start, col_start, line_end, col_end },
-    lines = raw_lines,
-  }
+  if min_indent == 0 or min_indent == math.huge then return lines end
+  local out = {}
+  for _, l in ipairs(lines) do out[#out + 1] = l:sub(min_indent + 1) end
+  return out
 end
 
-local function extract_normal_selection()
-  local b = vim.api.nvim_get_current_buf()
-  local cur = vim.api.nvim_win_get_cursor(0)
-  local lnum, col = cur[1], cur[2] + 1
-  local line = vim.api.nvim_buf_get_lines(b, lnum - 1, lnum, false)[1]
-  return {
-    range = { lnum, col, lnum, col + #line },
-    lines = { line },
-  }
+local function push(entry)
+  table.insert(entries, entry)
+  render()
+  if not (win and vim.api.nvim_win_is_valid(win)) then
+    open_window()
+  end
 end
 
-local function lsp_query(qbuf, op, params, cb)
-  vim.lsp.buf_request_all(qbuf, op, params, function(results)
-    for client_id, res in pairs(results or {}) do
-      local err = res.err or res.error
-      if err then
-        -- TODO: do we notify about this?
-        -- vim.notify(("LSP %d error: %s"):format(client_id, vim.inspect(err)), vim.log.levels.WARN)
-      else
+-- ─── LSP helpers ─────────────────────────────────────────────────────────────
+
+local function lsp_request(qbuf, method, params, cb)
+  vim.lsp.buf_request_all(qbuf, method, params, function(results)
+    for _, res in pairs(results or {}) do
+      if not (res.err or res.error) then
         local r = res.result
         if r and not vim.tbl_isempty(r) then
-          -- r may be a single Location or an array; take the first item if it's a list
-          -- local loc = (vim.tbl_islist(r) and r[1]) or r
-          -- schedule UI actions to be safe
-          cb(nil, client_id, r)
-          -- print(vim.inspect(r))
+          cb(nil, r)
           return
         end
       end
@@ -188,138 +143,203 @@ local function lsp_query(qbuf, op, params, cb)
   end)
 end
 
-local function error(msg)
-  vim.notify(msg, vim.log.levels.ERROR)
-end
-
---
--- Public Interface
-
--- toggle visibility of the shuntlist
-M.toggle    = function()
-end
-
--- clear the shuntlist and hide the window
-M.clear     = function()
-  Entries = {}
-  render()
-  hide_window()
-end
-
--- remove the nth item from the shuntlist
-M.remove    = function()
-  local victim = 1
-
-  local new_entries = {}
-  for ix, ent in ipairs(Entries) do
-    if ix ~= victim then
-      table.insert(new_entries, ent)
-    end
+local function trim_trailing_blank(lines)
+  while #lines > 0 and lines[#lines]:match("^%s*$") do
+    table.remove(lines)
   end
-  Entries = new_entries
-
-  render()
-  open_window()
+  return lines
 end
 
-M.guess     = function()
-  error("not implemented!")
+-- Normalise the three possible hover content shapes to { lang, lines }.
+local function normalize_hover(contents)
+  if type(contents) == "string" then
+    return nil, trim_trailing_blank(vim.split(contents, "\n", { plain = true }))
+  end
+  if contents.kind then
+    -- MarkupContent { kind, value }
+    return nil, trim_trailing_blank(vim.split(contents.value, "\n", { plain = true }))
+  end
+  if contents.language then
+    -- Single MarkedString { language, value }
+    return contents.language, trim_trailing_blank(vim.split(contents.value, "\n", { plain = true }))
+  end
+  -- MarkedString[] — concatenate values as plain text
+  local lines = {}
+  for _, ms in ipairs(contents) do
+    local v = type(ms) == "string" and ms or ms.value
+    vim.list_extend(lines, vim.split(v, "\n", { plain = true }))
+    table.insert(lines, "")
+  end
+  return nil, trim_trailing_blank(lines)
 end
 
--- push the current selection to the shunt buffer
-M.selection = function()
+-- ─── Selection extraction ────────────────────────────────────────────────────
+
+local function extract_selection(b)
   local mode = vim.fn.mode()
 
-  local entry
   if mode == "v" or mode == "V" or mode == "\22" then
-    entry = extract_visual_selection()
-    vim.schedule(function()
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
-    end)
-  else
-    entry = extract_normal_selection()
-  end
+    local vs = vim.fn.getpos("v")
+    local ve = vim.fn.getpos(".")
+    local ls, cs = vs[2], vs[3]
+    local le, ce = ve[2], ve[3]
 
-  entry.file = get_current_relative_path()
-
-  table.insert(entry.lines, 1, "```" .. vim.bo.filetype)
-  table.insert(entry.lines, "```")
-
-  table.insert(Entries, entry)
-
-  render()
-  open_window()
-end
-
--- push the LSP docs for the current item under the cursor
-M.docs      = function()
-  render()
-  open_window()
-end
-
-
--- push the LSP signature for the current item under the cursor
-M.signature = function()
-  render()
-  open_window()
-end
-
-M.hover     = function()
-  local params = vim.lsp.util.make_position_params(0, "utf-8")
-  local search_buf = vim.api.nvim_get_current_buf()
-
-  lsp_query(search_buf, "textDocument/hover", params, function(err, cli, res)
-    if err then
-      -- TODO: handle error
-    else
-      table.insert(Entries, {
-        file = get_current_relative_path(),
-        lines = vim.split(res.contents.value, "\n", { plain = true })
-      })
-      render()
-      open_window()
+    if le < ls or (le == ls and ce < cs) then
+      ls, cs, le, ce = le, ce, ls, cs
     end
-  end)
-end
 
--- push the LSP type for the current item under the cursor
-M.type      = function()
-  local params = vim.lsp.util.make_position_params(0, "utf-8")
-  local search_buf = vim.api.nvim_get_current_buf()
+    local lines = vim.api.nvim_buf_get_lines(b, ls - 1, le, false)
 
-  open_window()
-
-  vim.lsp.buf_request_all(search_buf, "textDocument/typeDefinition", params, function(results)
-    -- results is a map: client_id -> { err? | error?, result? }
-    for client_id, res in pairs(results or {}) do
-      local err = res.err or res.error
-      if err then
-        vim.notify(("LSP %d error: %s"):format(client_id, vim.inspect(err)), vim.log.levels.WARN)
-      else
-        local r = res.result
-        if r and not vim.tbl_isempty(r) then
-          -- r may be a single Location or an array; take the first item if it's a list
-          local loc = (vim.tbl_islist(r) and r[1]) or r
-          -- schedule UI actions to be safe
-          print(vim.inspect(r))
-          return
-        end
+    if mode == "v" then
+      lines[1]       = string.sub(lines[1], cs)
+      lines[#lines]  = string.sub(lines[#lines], 1, ce)
+    elseif mode == "\22" then
+      for i, l in ipairs(lines) do
+        lines[i] = string.sub(l, cs, ce)
       end
     end
-    vim.notify("No type definition found", vim.log.levels.INFO)
+
+    return lines, true
+  end
+
+  -- Normal mode: current line
+  local lnum = vim.api.nvim_win_get_cursor(0)[1]
+  return vim.api.nvim_buf_get_lines(b, lnum - 1, lnum, false), false
+end
+
+-- ─── Public API ──────────────────────────────────────────────────────────────
+
+M.toggle = function()
+  if win and vim.api.nvim_win_is_valid(win) then
+    close_window()
+  elseif #entries == 0 then
+    vim.notify("Shunt: nothing to show", vim.log.levels.INFO)
+  else
+    render()
+    open_window()
+  end
+end
+
+M.toggle_width = function()
+  is_wide = not is_wide
+  if win and vim.api.nvim_win_is_valid(win) then
+    vim.api.nvim_win_set_config(win, win_config(get_width()))
+  end
+end
+
+M.selection = function()
+  local b = vim.api.nvim_get_current_buf()
+  local lang = vim.bo[b].filetype
+  local lines, was_visual = extract_selection(b)
+
+  if was_visual then
+    vim.schedule(function()
+      vim.api.nvim_feedkeys(
+        vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true
+      )
+    end)
+  end
+
+  push({
+    source = relative_path(vim.api.nvim_buf_get_name(b)),
+    lang   = (lang ~= "" and lang or nil),
+    lines  = dedent(lines),
+  })
+end
+
+M.hover = function()
+  local params = vim.lsp.util.make_position_params(0, "utf-8")
+  local qbuf   = vim.api.nvim_get_current_buf()
+  local source = relative_path(vim.api.nvim_buf_get_name(qbuf))
+
+  lsp_request(qbuf, "textDocument/hover", params, function(err, result)
+    if err then
+      vim.notify("Shunt hover: " .. err, vim.log.levels.WARN)
+      return
+    end
+    local lang, lines = normalize_hover(result.contents)
+    push({ source = source, lang = lang, lines = lines })
   end)
 end
 
-vim.api.nvim_create_user_command('Shunt', function(opts)
-  local fn = M[opts.args]
-  if fn ~= nil then
-    fn(opts)
-  else
-    error("Shunt: unknown command")
+M.type = function()
+  local params = vim.lsp.util.make_position_params(0, "utf-8")
+  local qbuf   = vim.api.nvim_get_current_buf()
+  local ft     = vim.bo[qbuf].filetype
+
+  lsp_request(qbuf, "textDocument/typeDefinition", params, function(err, result)
+    if err then
+      vim.notify("Shunt type: " .. err, vim.log.levels.WARN)
+      return
+    end
+    local tbl_islist = vim.islist or vim.tbl_islist
+    local loc = tbl_islist(result) and result[1] or result
+    require("local.shunt_type").resolve(loc, ft, function(resolve_err, entry)
+      if resolve_err then
+        vim.notify("Shunt type: " .. resolve_err, vim.log.levels.WARN)
+        return
+      end
+      entry.source = relative_path(entry.source)
+      entry.lines  = dedent(entry.lines)
+      push(entry)
+    end)
+  end)
+end
+
+M.yank = function()
+  if #entries == 0 then
+    vim.notify("Shunt: nothing to yank", vim.log.levels.INFO)
+    return
   end
-end, {
-  desc = "Shunt",
-  nargs = 1,
+  local input = vim.fn.input(string.format("Yank entry # (1-%d): ", #entries))
+  local n = tonumber(input)
+  if not n or n < 1 or n > #entries then
+    if input ~= "" then
+      vim.notify("Shunt: invalid index", vim.log.levels.WARN)
+    end
+    return
+  end
+  vim.fn.setreg('"', table.concat(entries[n].lines, "\n"))
+  vim.notify(string.format("Shunt: yanked entry %d", n), vim.log.levels.INFO)
+end
+
+M.clear = function()
+  entries = {}
+  render()
+  close_window()
+end
+
+M.kill = function()
+  if #entries == 0 then
+    vim.notify("Shunt: nothing to kill", vim.log.levels.INFO)
+    return
+  end
+  local input = vim.fn.input(string.format("Kill entry # (1-%d): ", #entries))
+  local n = tonumber(input)
+  if not n or n < 1 or n > #entries then
+    if input ~= "" then
+      vim.notify("Shunt: invalid index", vim.log.levels.WARN)
+    end
+    return
+  end
+  table.remove(entries, n)
+  render()
+  if #entries == 0 then close_window() end
+end
+
+-- ─── Autocmds ────────────────────────────────────────────────────────────────
+
+local group = vim.api.nvim_create_augroup("shunt", { clear = true })
+
+vim.api.nvim_create_autocmd("VimResized", {
+  group = group,
+  callback = function()
+    if win and vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_set_config(win, win_config(get_width()))
+    end
+  end,
 })
+
+vim.keymap.set("n", "q", close_window, { buffer = get_buffer(), silent = true })
 
 return M

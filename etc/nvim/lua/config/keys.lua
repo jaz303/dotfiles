@@ -160,14 +160,14 @@ end
 -- Shunt
 
 local shunt = require("local.shunt")
-set({ "n" }, '<leader>ss', shunt.guess, { desc = 'Shunt' })
-set({ "v" }, '<leader>ss', shunt.selection, { desc = 'Shunt selection' })
-set({ "n" }, '<leader>sh', shunt.hover, { desc = 'Shunt hover' })
-set({ "n" }, '<leader>st', shunt.type, { desc = 'Shunt type' })
-set({ "n" }, '<leader>sd', shunt.docs, { desc = 'Shunt docs' })
-set({ "n" }, '<leader>sg', shunt.signature, { desc = 'Shunt signature' })
-set({ "n", "v" }, '<leader>sc', shunt.clear, { desc = 'Clear shuntlist' })
-set({ "n", "v" }, '<leader>st', shunt.toggle, { desc = 'Toggle' })
+set({ "n" },        '<leader>ss',    shunt.toggle,       { desc = 'Toggle shunt' })
+set({ "n", "v" },   '<leader>s<CR>', shunt.selection,    { desc = 'Shunt selection' })
+set({ "n" },        '<leader>sh',    shunt.hover,        { desc = 'Shunt hover' })
+set({ "n" },        '<leader>st',    shunt.type,         { desc = 'Shunt type' })
+set({ "n" },        '<leader>sw',    shunt.toggle_width, { desc = 'Toggle shunt width' })
+set({ "n", "v" },   '<leader>sc',    shunt.clear,        { desc = 'Clear shuntlist' })
+set({ "n" },        '<leader>sk',    shunt.kill,         { desc = 'Kill shunt entry' })
+set({ "n" },        '<leader>sy',    shunt.yank,         { desc = 'Yank shunt entry' })
 
 --
 -- Neotree
