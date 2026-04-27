@@ -35,6 +35,8 @@ local adopted               = {}
 -- prevWidths[winId] = last zoom width before contracting, for Z to restore
 local widths                = {}
 local prevWidths            = {}
+-- fullscreened[winId] = true when window is filling the entire display
+local fullscreened          = {}
 
 -- ─── Layout helpers ───────────────────────────────────────────────────────────
 
@@ -164,9 +166,10 @@ local function toggleAdopt()
 
   if adopted[id] then
     win:setFrame(adopted[id].originalFrame)
-    adopted[id]    = nil
-    widths[id]     = nil
-    prevWidths[id] = nil
+    adopted[id]      = nil
+    widths[id]       = nil
+    prevWidths[id]   = nil
+    fullscreened[id] = nil
   else
     local screen = win:screen()
     if not screen then return end
@@ -213,6 +216,7 @@ local function toggleZoom()
   local win = hs.window.focusedWindow()
   if not win or not adopted[win:id()] then return end
   local id       = win:id()
+  fullscreened[id] = nil
   local screen   = win:screen()
   local sf       = screen:frame()
   local regions  = getRegions(screen)
@@ -234,6 +238,7 @@ local function adjustWidth(delta)
   local win = hs.window.focusedWindow()
   if not win or not adopted[win:id()] then return end
   local id       = win:id()
+  fullscreened[id] = nil
   local screen   = win:screen()
   local sf       = screen:frame()
   local regions  = getRegions(screen)
@@ -277,6 +282,7 @@ local function moveToAdjacentRegion(dir)
   adopted[id].regionByLayout[getLayoutName(screen)] = target
   widths[id]                                        = nil
   prevWidths[id]                                    = nil
+  fullscreened[id]                                  = nil
   win:setFrame(regionFrame(screen:frame(), regions[target], nil))
   win:focus()
 end
@@ -287,7 +293,7 @@ end
 local function reflow()
   for _, win in ipairs(hs.window.visibleWindows()) do
     local id = win:id()
-    if adopted[id] then
+    if adopted[id] and not fullscreened[id] then
       local screen                     = win:screen()
       local sf                         = screen:frame()
       local name                       = getLayoutName(screen)
@@ -297,6 +303,26 @@ local function reflow()
       win:setFrame(regionFrame(sf, regions[ri], widths[id]))
     end
   end
+end
+
+-- Hyper+F: fill the entire display, toggling back to region frame on repeat.
+-- Zoom state (widths/prevWidths) is preserved and restored on exit.
+local function toggleFullscreen()
+  local win = hs.window.focusedWindow()
+  if not win or not adopted[win:id()] then return end
+  local id = win:id()
+  if fullscreened[id] then
+    fullscreened[id] = nil
+    local screen  = win:screen()
+    local regions = getRegions(screen)
+    local region  = regions[currentRegionIndex(id, screen)]
+    win:setFrame(regionFrame(screen:frame(), region, widths[id]))
+  else
+    fullscreened[id] = true
+    local sf = win:screen():frame()
+    win:setFrame(hs.geometry.rect(sf.x + GAP, sf.y + GAP, sf.w - 2 * GAP, sf.h - 2 * GAP))
+  end
+  win:focus()
 end
 
 -- ─── Launchers ────────────────────────────────────────────────────────────────
@@ -399,7 +425,8 @@ hs.hotkey.bind(Hyper, "=", function() adjustWidth(STEP) end)
 hs.hotkey.bind(Hyper, "r", reflow)
 hs.hotkey.bind(Hyper, "tab", cycleRegion)
 hs.hotkey.bind(Hyper, "t", openTerminal)
-hs.hotkey.bind(Hyper, "f", openFinder)
+hs.hotkey.bind(Hyper, "o", openFinder)
+hs.hotkey.bind(Hyper, "f", toggleFullscreen)
 
 for i = 1, 5 do
   hs.hotkey.bind(Hyper, tostring(i), function() focusRegionN(i) end)
