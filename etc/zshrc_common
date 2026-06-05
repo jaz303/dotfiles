@@ -98,9 +98,18 @@ terraform_prompt() {
 }
 
 #
+# Check for SSH session
+
+if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
+    non_root_color="%F{208}"
+else
+    non_root_color="%F{green}"
+fi
+
+#
 # Put it all together
 
-PS1='%B%(?.%F{green}-.%K{red}%F{black}%?)%f%k%b %B%(!.%F{red}.%F{green})%n@%m%f%b %B%F{blue}%1~%f%b %# '
+PS1="%B%(?.%F{green}-.%K{red}%F{black}%?)%f%k%b %B%(!.%F{red}.${non_root_color})%n@%m%f%b %B%F{blue}%1~%f%b %# "
 #PS1="%(?,%{$fg_bold[green]%}-,%{$fg_bold[red]%}!)%{$reset_color%} %{$fg_bold[green]%}%n@%m %{$fg_bold[blue]%}%1~ %#%{$reset_color%} "
 RPS1='$(terraform_prompt)$(git_prompt_string)${HISTORY_PROMPT}'
 
