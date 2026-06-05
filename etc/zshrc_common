@@ -55,7 +55,7 @@ parse_git_state() {
   local GIT_STATE=""
 
   local GIT_DIR="$(git rev-parse --git-dir 2> /dev/null)"
-  if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
+  if [ -n "$GIT_DIR" ] && test -r $GIT_DIR/MERGE_HEAD; then
     GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
   fi
 
@@ -109,8 +109,10 @@ fi
 #
 # Put it all together
 
-PS1="%B%(?.%F{green}-.%K{red}%F{black}%?)%f%k%b %B%(!.%F{red}.${non_root_color})%n@%m%f%b %B%F{blue}%1~%f%b %# "
-#PS1="%(?,%{$fg_bold[green]%}-,%{$fg_bold[red]%}!)%{$reset_color%} %{$fg_bold[green]%}%n@%m %{$fg_bold[blue]%}%1~ %#%{$reset_color%} "
+# Double quotes are fine here - nothing varies per command
+PS1="%B%(?.%F{green}-.%F{red}! %K{red}%F{black}%?)%f%k%b %B%(!.%F{red}.${non_root_color})%n@%m%f%b %B%F{blue}%1~%f%b %# "
+
+# Single quotes because this all needs to be re-evaluated
 RPS1='$(terraform_prompt)$(git_prompt_string)${HISTORY_PROMPT}'
 
 # Disable git prompt; useful for massive repos
