@@ -1,0 +1,8 @@
+---
+BasedOnStyle: WebKit
+IndentWidth: 4
+BreakBeforeBraces: Attach
+AllowShortFunctionsOnASingleLine: All
+AlignConsecutiveMacros: Consecutive
+SortIncludes: Never
+---
