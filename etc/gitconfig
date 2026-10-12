@@ -2,7 +2,7 @@
 	email = jwf@jasonframe.co.uk
 	name = Jason Frame
 [alias]
-    branches = branch -a
+    bs = branch -a
     co = checkout
     ci = commit
     me = merge
@@ -32,3 +32,6 @@
 	rebase = false
 [safe]
 	directory = /opt/homebrew/Caskroom/flutter/3.32.2/flutter
+[include]
+    path = ~/Dropbox/etc/gitconfig
+
