@@ -2,5 +2,55 @@ source $HOME/.dotfiles/etc/zshrc_mac
 
 export PATH="$HOME/.local/bin:$PATH"
 
+source "$HOME/.cargo/env"
 
 alias vim=nvim
+
+#
+# iTerm2 tab styling
+
+autoload -Uz add-zsh-hook
+
+# Set iTerm2 tab colour to given RGB
+_it2_tab_color() {  # r g b
+  printf '\e]6;1;bg;red;brightness;%d\a'   $1
+  printf '\e]6;1;bg;green;brightness;%d\a' $2
+  printf '\e]6;1;bg;blue;brightness;%d\a'  $3
+}
+
+# Detect ~/projects/$foo/$bar/** and set iTerm2 title as <$foo/bar>
+_it2_title() {
+  local title parts
+  if [[ $PWD/ == $HOME/projects/* ]]; then
+    parts=(${(s:/:)${PWD#$HOME/projects/}})
+    title="<${(j:/:)parts[1,2]}>"
+  else
+    title=${PWD:t}
+  fi
+  printf '\e]1;%s\a' "$title"
+}
+
+# Set up colours for different foreground processes
+_it2_color_for() {
+  case $1 in
+    nvim|vim) _it2_tab_color  76 175  80 ;;  # green
+    claude)   _it2_tab_color 255 149   0 ;;  # orange
+    '')       _it2_tab_color  33 150 243 ;;  # blue - shell prompt
+    *)        _it2_tab_color 156  39 176 ;;  # purple - anything else
+  esac
+}
+
+# Set up hooks
+_it2_precmd()  { _it2_title; _it2_color_for '' }
+_it2_preexec() {
+  local -a words=(${(z)1})
+  local cmd=${words[1]}
+  # skip leading VAR=val, sudo, command, env
+  while [[ -n $cmd && ( $cmd == *=* || $cmd == (sudo|command|env|time|nohup) ) ]]; do
+    shift words; cmd=${words[1]}
+  done
+  _it2_color_for ${cmd:t}
+}
+
+add-zsh-hook precmd  _it2_precmd
+add-zsh-hook preexec _it2_preexec
