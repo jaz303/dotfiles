@@ -45,17 +45,11 @@ bindsym $mod+p exec 1password
 for_window [class="^1Password$" instance="1password"] floating enable, move position center
 
 # DOSBox staging floats on any workspace with a `dev` suffix
-for_window [workspace="dev$" title="^DOSBox Staging"] floating enable, move position center
+for_window [workspace="dev$" title="^DOSBox"] floating enable, move position center
 
 # Screenshots
-bindsym $mod+grave exec --no-startup-id scrot -F '/home/jason/screenshots/%Y-%m-%d_%H%M%S_$wx$h.png'
-bindsym $mod+shift+grave exec --no-startup-id scrot -s -F '/home/jason/screenshots/%Y-%m-%d_%H%M%S_$wx$h.png'
-
-# startup with ChatGPT and Org mode
-exec --no-startup-id i3-msg 'rename workspace 9 to "9:gpt"'
-exec --no-startup-id i3-msg 'rename workspace 10 to "10:org"'
-exec --no-startup-id i3-msg 'workspace "9:gpt"; exec firefox --new-window "https://chatgpt.com"; workspace 1'
-exec --no-startup-id i3-msg 'workspace "10:org"; exec emacs ~/Dropbox/org/index.org; workspace 1'
+# bindsym $mod+grave exec --no-startup-id scrot -F '/home/jason/screenshots/%Y-%m-%d_%H%M%S_$wx$h.png'
+# bindsym $mod+shift+grave exec --no-startup-id scrot -s -F '/home/jason/screenshots/%Y-%m-%d_%H%M%S_$wx$h.png'
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -75,6 +69,22 @@ floating_modifier $mod
 # start a terminal (+ Shift modifier for floating)
 bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+Return exec alacritty --class floating-term -o 'window.dimensions.columns=150' -o 'window.dimensions.lines=35'
+
+# mod+` - capture region
+bindsym $mod+grave exec maim -s | xclip -selection clipboard -t image/png
+
+#
+# Scratchpad
+
+# mod+shift+minus, mod+minus - move window to/from scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# mod+[ - pull terminal from scratchpad
+# mod+] - pull browser from scratchpad
+bindsym $mod+bracketleft [class="floating-term"] scratchpad show
+bindsym $mod+bracketright [class="firefox"] scratchpad show
+# bindsym $mod+bracketright [class="Chromium"] scratchpad show
 
 # kill focused window
 bindsym $mod+Shift+q kill
